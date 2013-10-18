@@ -1,9 +1,10 @@
 Introduction
 ============
 
-Foobar is a template for a typicaly Python library package. It's licenced as
+Foobar is a template for a typical Python library package. It's licenced as
 WTFPL, but you probably want to change that (LGPL works well for libraries).
-You'll also want to find/replace all instances of "Foobar" and "foobar".
+You'll also want to find/replace all instances of "Foobar" and "foobar" with
+your project name and package name, respectively (they might be the same).
 
 
 Getting Started
