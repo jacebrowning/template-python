@@ -1,0 +1,14 @@
+*.pyc
+*.egg-info
+__pycache__
+
+@/.cache
+@/env
+
+@/apidocs
+@/docs/README.html
+
+.coverage
+
+@/build
+@/dist
