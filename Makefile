@@ -13,7 +13,7 @@ BIN := $(VIRTUALENV)/Scripts
 EXE := .exe
 OPEN := cmd /c start
 else
-VERSION := python3.3
+VERSION := python3
 BIN := $(VIRTUALENV)/bin
 OPEN := open
 endif
@@ -58,6 +58,9 @@ $(DEPENDS):
 ifeq ($(shell uname),Windows)
 .pylint: .env
 	@echo pylint cannot be installed on Windows
+else ifeq ($(shell uname),CYGWIN_NT-6.1)
+.pylint: .env
+	@echo pylint cannot be installed on Cygwin
 else ifeq ($(shell uname),CYGWIN_NT-6.1-WOW64)
 .pylint: .env
 	@echo pylint cannot be installed on Cygwin
@@ -91,6 +94,9 @@ pep8: depends
 ifeq ($(shell uname),Windows)
 pylint: depends
 	@echo pylint cannot be run on Windows
+else ifeq ($(shell uname),CYGWIN_NT-6.1)
+pylint: depends
+	@echo pylint cannot be run on Cygwin
 else ifeq ($(shell uname),CYGWIN_NT-6.1-WOW64)
 pylint: depends
 	@echo pylint cannot be run on Cygwin
@@ -112,11 +118,11 @@ check: depends
 
 .PHONY: test
 test: develop depends
-	$(NOSE) --logging-format="%(message)s"
+	$(NOSE)
 
 .PHONY: tests
 tests: develop depends
-	TEST_INTEGRATION=1 $(NOSE) --logging-format="%(message)s" --verbose --stop
+	TEST_INTEGRATION=1 $(NOSE) --verbose --stop
 
 # Cleanup ####################################################################
 

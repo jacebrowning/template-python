@@ -2,13 +2,13 @@
 *.egg-info
 __pycache__
 
-@/.cache
-@/env
+.cache
+env
 
-@/apidocs
-@/docs/README.html
+apidocs
+docs/README.html
 
 .coverage
 
-@/build
-@/dist
+build
+dist
