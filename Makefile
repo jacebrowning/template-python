@@ -40,8 +40,8 @@ $(EGG_INFO): $(SOURCES)
 	touch $(EGG_INFO)  # flag to indicate package is installed
 
 .PHONY: .env
-.env: $(PYTHON)
-$(PYTHON):
+.env: $(PIP)
+$(PIP):
 	virtualenv --python $(VERSION) $(VIRTUALENV)
 
 .PHONY: depends
@@ -128,9 +128,11 @@ clean-all: clean
 # Release ####################################################################
 
 .PHONY: dist
-dist: .clean-dist
+dist: develop
 	$(PYTHON) setup.py sdist
+	$(PYTHON) setup.py bdist_wheel
 
 .PHONY: upload
-upload: .clean-dist
+upload: develop
 	$(PYTHON) setup.py register sdist upload
+	$(PYTHON) setup.py bdist_wheel upload
