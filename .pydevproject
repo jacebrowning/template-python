@@ -4,6 +4,6 @@
 <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">Foobar</pydev_property>
 
 <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
-<path>/Foobar</path>
+<path>/${PROJECT_DIR_NAME}</path>
 </pydev_pathproperty>
 </pydev_project>

@@ -16,16 +16,16 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1386690164737</id>
+			<id>1387293318632</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-projectRelativePath-matches-false-false-env</arguments>
+				<arguments>1.0-name-matches-false-false-__pycache__</arguments>
 			</matcher>
 		</filter>
 		<filter>
-			<id>1386690164741</id>
+			<id>1387293318639</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
@@ -34,30 +34,66 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1386690164745</id>
+			<id>1387293318646</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-projectRelativePath-matches-false-false-dist</arguments>
+				<arguments>1.0-name-matches-false-false-env</arguments>
 			</matcher>
 		</filter>
 		<filter>
-			<id>1386690164750</id>
+			<id>1387293318654</id>
 			<name></name>
-			<type>26</type>
+			<type>22</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-projectRelativePath-matches-false-false-dist</arguments>
+				<arguments>1.0-name-matches-false-false-README.rst</arguments>
 			</matcher>
 		</filter>
 		<filter>
-			<id>1386690164753</id>
+			<id>1387293318662</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-__pycache__</arguments>
+				<arguments>1.0-name-matches-false-false-apidocs</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1387293318670</id>
+			<name></name>
+			<type>22</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.sublime-project</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1387293318678</id>
+			<name></name>
+			<type>22</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-README*.html</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1387293318687</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-build</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1387293318696</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-dist</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

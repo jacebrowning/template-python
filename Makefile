@@ -8,14 +8,16 @@ DEPENDS := $(VIRTUALENV)/.depends
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 ifeq ($(OS),Windows_NT)
-VERSION := C:\\Python33\\python.exe
-BIN := $(VIRTUALENV)/Scripts
-EXE := .exe
-OPEN := cmd /c start
+	VERSION := C:\\Python33\\python.exe
+	BIN := $(VIRTUALENV)/Scripts
+	EXE := .exe
+	OPEN := cmd /c start
+	# https://bugs.launchpad.net/virtualenv/+bug/449537
+	export TCL_LIBRARY=C:\\Python33\\tcl\\tcl8.5
 else
-VERSION := python3
-BIN := $(VIRTUALENV)/bin
-OPEN := open
+	VERSION := python3
+	BIN := $(VIRTUALENV)/bin
+	OPEN := open
 endif
 MAN := man
 SHARE := share
@@ -47,7 +49,8 @@ $(PIP):
 .PHONY: depends
 depends: .env $(DEPENDS) $(SOURCES)
 $(DEPENDS):
-	$(PIP) install docutils pdoc pep8 nose coverage --download-cache=$(CACHE)
+	$(PIP) install docutils pdoc pep8 nose coverage wheel \
+	       --use-mirrors --download-cache=$(CACHE)
 	$(MAKE) .pylint
 	touch $(DEPENDS)  # flag to indicate dependencies are installed
 
@@ -61,20 +64,29 @@ ifeq ($(shell uname),$(filter $(shell uname),Windows CYGWIN_NT-6.1 CYGWIN_NT-6.1
 	$(PIP) install https://bitbucket.org/logilab/pylint/get/8200a32b14597c24f0f4706417bf30aec1e25386.zip --download-cache=$(CACHE)
 else
 .pylint: .env
-	$(PIP) install pylint --download-cache=$(CACHE)
+	$(PIP) install pylint --use-mirrors --download-cache=$(CACHE)
 endif
 
 # Documentation ##############################################################
 
 .PHONY: doc
-doc: depends
-	$(PYTHON) $(RST2HTML) README.rst docs/README.html
+doc: depends readme
 	$(PYTHON) $(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
-.PHONY: doc-open
-doc-open: doc
-	$(OPEN) docs/README.html
+.PHONY: readme
+readme: docs/README-github.html docs/README-pypi.html
+docs/README-github.html: README.md
+	pandoc -f markdown_github -t html -o docs/README-github.html README.md
+docs/README-pypi.html: README.rst
+	$(PYTHON) $(RST2HTML) README.rst docs/README-pypi.html
+README.rst: README.md
+	pandoc -f markdown_github -t rst -o README.rst README.md
+
+.PHONY: read
+read: doc
 	$(OPEN) apidocs/$(PACKAGE)/index.html
+	$(OPEN) docs/README-pypi.html
+	$(OPEN) docs/README-github.html
 
 # Static Analysis ############################################################
 
@@ -85,8 +97,8 @@ pep8: depends
 .PHONY: pylint
 pylint: depends
 	$(PYLINT) $(PACKAGE) --reports no \
-	                     --msg-template="{msg_id}: {msg}: {obj} line:{line}" \
-	                     --max-line-length=99 \
+	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
+	                     --max-line-length=79 \
 	                     --disable=I0011,W0142,W0511,R0801
 
 .PHONY: check
@@ -103,7 +115,7 @@ test: develop depends
 
 .PHONY: tests
 tests: develop depends
-	TEST_INTEGRATION=1 $(NOSE) --verbose --stop
+	TEST_INTEGRATION=1 $(NOSE) --verbose --stop --cover-package=$(PACKAGE)
 
 # Cleanup ####################################################################
 
@@ -119,7 +131,7 @@ tests: develop depends
 clean: .clean-env .clean-dist
 	rm -rf */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc
 	rm -rf */__pycache__ */*/__pycache__ */*/*/__pycache__ */*/*/*/__pycache__
-	rm -rf apidocs docs/README.html .coverage
+	rm -rf apidocs docs/README.html .coverage README.rst
 
 .PHONY: clean-all
 clean-all: clean
@@ -128,11 +140,11 @@ clean-all: clean
 # Release ####################################################################
 
 .PHONY: dist
-dist: develop
+dist: develop depends doc
 	$(PYTHON) setup.py sdist
 	$(PYTHON) setup.py bdist_wheel
 
 .PHONY: upload
-upload: develop
+upload: develop depends doc
 	$(PYTHON) setup.py register sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
