@@ -8,6 +8,8 @@ To adopt for a new project:
 * change the license
 * change Foobar/foobar to your project/package name (they might be the same)
 
+[![Build Status](https://travis-ci.org/jacebrowning/template-python.png?branch=master)](https://travis-ci.org/jacebrowning/template-python)
+[![Coverage Status](https://coveralls.io/repos/jacebrowning/template-python/badge.png?branch=master)](https://coveralls.io/r/jacebrowning/template-python?branch=master)
 
 
 Getting Started
