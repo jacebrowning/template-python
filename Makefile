@@ -2,7 +2,6 @@ PROJECT := Foobar
 PACKAGE := foobar
 SOURCES := Makefile setup.py
 
-CACHE := .cache
 VIRTUALENV := env
 DEPENDS := $(VIRTUALENV)/.depends
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
@@ -49,15 +48,13 @@ $(PIP):
 .PHONY: depends
 depends: .env $(DEPENDS) $(SOURCES)
 $(DEPENDS):
-	$(PIP) install docutils pdoc pep8 pylint nose coverage wheel \
-	       --use-mirrors --download-cache=$(CACHE)
+	$(PIP) install docutils pdoc pep8 pylint nose coverage wheel
 	touch $(DEPENDS)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
 
 .PHONY: doc
-doc: depends readme
-	$(PYTHON) $(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
+doc: depends readme apidocs
 
 .PHONY: readme
 readme: docs/README-github.html docs/README-pypi.html
@@ -67,6 +64,11 @@ docs/README-pypi.html: README.rst
 	$(PYTHON) $(RST2HTML) README.rst docs/README-pypi.html
 README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
+
+.PHONY: apidocs
+apidocs: depends apidocs/$(PACKAGE)/index.html
+apidocs/$(PACKAGE)/index.html: $(shell find $(PACKAGE) -name '*.py')
+	$(PYTHON) $(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
 .PHONY: read
 read: doc
@@ -109,19 +111,24 @@ tests: develop depends
 .clean-env:
 	rm -rf $(VIRTUALENV)
 
+.PHONY: .clean-build
+.clean-build:
+		find . -name '*.pyc' -delete; find . -name '__pycache__' -delete
+
+.PHONY: .clean-doc
+.clean-doc:
+	rm -rf apidocs docs/README*.html README.rst
+
+.PHONY: .clean-test
+.clean-test:
+	rm -rf .coverage
+
 .PHONY: .clean-dist
 .clean-dist:
 	rm -rf dist build *.egg-info 
 
 .PHONY: clean
-clean: .clean-env .clean-dist
-	rm -rf */*.pyc */*/*.pyc */*/*/*.pyc */*/*/*/*.pyc
-	rm -rf */__pycache__ */*/__pycache__ */*/*/__pycache__ */*/*/*/__pycache__
-	rm -rf apidocs docs/README*.html .coverage README.rst
-
-.PHONY: clean-all
-clean-all: clean
-	rm -rf $(CACHE)
+clean: .clean-dist .clean-test .clean-doc .clean-build .clean-env 
 
 # Release ####################################################################
 
