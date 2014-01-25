@@ -1,3 +1,3 @@
 [run]
 omit =
-    env
+    */env/*
