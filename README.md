@@ -3,6 +3,7 @@ Foobar
 
 [![Build Status](https://travis-ci.org/jacebrowning/template-python.png?branch=master)](https://travis-ci.org/jacebrowning/template-python)
 [![Coverage Status](https://coveralls.io/repos/jacebrowning/template-python/badge.png?branch=master)](https://coveralls.io/r/jacebrowning/template-python?branch=master)
+[![PyPI Version](https://badge.fury.io/py/Foobar.png)](http://badge.fury.io/py/Foobar)
 
 Foobar is a template for a typical Python library package.
 
