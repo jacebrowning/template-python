@@ -5,12 +5,12 @@ Foobar
 [![Coverage Status](https://coveralls.io/repos/jacebrowning/template-python/badge.png?branch=master)](https://coveralls.io/r/jacebrowning/template-python?branch=master)
 [![PyPI Version](https://badge.fury.io/py/Foobar.png)](http://badge.fury.io/py/Foobar)
 
-Foobar is a template for a typical Python library package.
+Foobar is a template for a typical Python 3 library package.
 
 To adopt for a new project:
 
-* change Foobar/foobar to your project/package name (they might be the same)
-* change the links to point to your code repository
+* replace Foobar/foobar with your project/package name (they might be the same)
+* update the links to point to your code repository and badges
 * change the license
 
 
@@ -69,16 +69,24 @@ Installation
 
 Create a virtualenv:
 
-    make develop
+    make env
 
 Run the tests:
 
     make test
     make tests  # includes integration tests
 
-Run static analysis:
+Build the documentation:
 
     make doc
+
+Run static analysis:
+
     make pep8
     make pylint
-    make check  # all of the above
+    make check  # pep8 and pylint
+
+Prepare a release:
+
+    make dist  # dry run
+    make upload
