@@ -13,6 +13,7 @@ README = 'README.rst'
 import os
 if not os.path.exists(README):
     open(README, 'w').close()
+CHANGES = 'CHANGES.md'
 
 
 setuptools.setup(
@@ -28,7 +29,8 @@ setuptools.setup(
 
     entry_points={'console_scripts': []},
 
-    long_description=open(README).read(),
+    long_description=(open(README).read() + '\n' +
+                      open(CHANGES).read()),
     license='WTFPL',
     classifiers=[
         'Development Status :: 1 - Planning',
