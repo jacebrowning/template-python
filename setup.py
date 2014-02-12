@@ -6,19 +6,19 @@ Setup script for Foobar.
 
 import setuptools
 
-from foobar import __project__
+from foobar import __project__, __version__
 
-# Touch the README, it will be generated on release (`make doc`)
-README = 'README.rst'
 import os
-if not os.path.exists(README):
-    open(README, 'w').close()
-CHANGES = 'CHANGES.md'
+if os.path.exists('README.rst'):
+    README = open('README.rst').read()
+else:
+    README = ""  # a placeholder, readme is generated on release
+CHANGES = open('CHANGES.md').read()
 
 
 setuptools.setup(
     name=__project__,
-    version='0.0.0',
+    version=__version__,
 
     description="Foobar is a Python 3 package template.",
     url='http://pypi.python.org/pypi/Foobar',
@@ -29,8 +29,7 @@ setuptools.setup(
 
     entry_points={'console_scripts': []},
 
-    long_description=(open(README).read() + '\n' +
-                      open(CHANGES).read()),
+    long_description=(README + '\n' + CHANGES),
     license='WTFPL',
     classifiers=[
         'Development Status :: 1 - Planning',

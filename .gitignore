@@ -14,3 +14,9 @@ docs/README*.html
 build
 dist
 
+*.sublime-workspace
+
+*.gdoc
+*.gsheet
+*.gslides
+
