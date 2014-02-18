@@ -1,11 +1,9 @@
 PROJECT := Foobar
 PACKAGE := foobar
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
-TEST_DIR := test
 
 ENV := env
 DEPENDS := $(ENV)/.depends
-TEST_DEPENDS := $(ENV)/.test_depends
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 PLATFORM := $(shell python -c 'import sys; print sys.platform')
@@ -55,14 +53,8 @@ $(PIP):
 .PHONY: depends
 depends: .virtualenv $(DEPENDS) Makefile
 $(DEPENDS):
-	$(PIP) install docutils pdoc pep8 pylint nose coverage wheel
+	$(PIP) install docutils pdoc pep8 pylint nose coverage wheel mock
 	touch $(DEPENDS)  # flag to indicate dependencies are installed
-
-.PHONY: test_depends
-test_depends: .virtualenv $(TEST_DEPENDS) Makefile
-$(TEST_DEPENDS):
-	$(PIP) install -f $(TEST_DIR)/requirements.txt
-	touch $(TEST_DEPENDS)  # flag to indicate test dependencies are installed
 
 # Documentation ##############################################################
 
