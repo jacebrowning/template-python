@@ -6,7 +6,9 @@ ENV := env
 DEPENDS := $(ENV)/.depends
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
-ifeq ($(OS),Windows_NT)
+PLATFORM := $(shell python -c 'import sys; print sys.platform')
+
+ifneq ($(findstring win32, $(PLATFORM)), )
     SYS_PYTHON := C:\\Python33\\python.exe
     SYS_VIRTUALENV := C:\\Python33\\Scripts\\virtualenv.exe
     BIN := $(ENV)/Scripts
@@ -20,6 +22,7 @@ else
     BIN := $(ENV)/bin
 	OPEN := open
 endif
+
 MAN := man
 SHARE := share
 
@@ -58,6 +61,10 @@ $(DEPENDS):
 .PHONY: doc
 doc: readme apidocs
 
+version:
+	@echo $(PLATFORM)
+	@echo $(SYS_PYTHON)
+
 .PHONY: readme
 readme: depends docs/README-github.html docs/README-pypi.html
 docs/README-github.html: README.md
@@ -82,7 +89,7 @@ read: doc
 
 .PHONY: pep8
 pep8: depends
-	$(PEP8) $(PACKAGE) --ignore=E501 
+	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pylint
 pylint: depends
@@ -112,7 +119,7 @@ tests: env depends
 clean: .clean-dist .clean-test .clean-doc .clean-build
 
 .PHONY: clean-all
-clean-all: clean .clean-env 
+clean-all: clean .clean-env
 
 .PHONY: .clean-env
 .clean-env:
@@ -143,7 +150,7 @@ dist: env depends check test tests doc
 	$(PYTHON) setup.py sdist
 	$(PYTHON) setup.py bdist_wheel
 	$(MAKE) read
- 
+
 .PHONY: upload
 upload: env depends doc
 	$(PYTHON) setup.py register sdist upload
