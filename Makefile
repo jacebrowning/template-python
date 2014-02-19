@@ -6,20 +6,20 @@ ENV := env
 DEPENDS := $(ENV)/.depends
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
-PLATFORM := $(shell python -c 'import sys; print sys.platform')
+PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 
 ifneq ($(findstring win32, $(PLATFORM)), )
-    SYS_PYTHON := C:\\Python33\\python.exe
-    SYS_VIRTUALENV := C:\\Python33\\Scripts\\virtualenv.exe
-    BIN := $(ENV)/Scripts
+	SYS_PYTHON := C:\\Python33\\python.exe
+	SYS_VIRTUALENV := C:\\Python33\\Scripts\\virtualenv.exe
+	BIN := $(ENV)/Scripts
 	EXE := .exe
 	OPEN := cmd /c start
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=C:\\Python33\\tcl\\tcl8.5
 else
-    SYS_PYTHON := python3
-    SYS_VIRTUALENV := virtualenv
-    BIN := $(ENV)/bin
+	SYS_PYTHON := python3
+	SYS_VIRTUALENV := virtualenv
+	BIN := $(ENV)/bin
 	OPEN := open
 endif
 
