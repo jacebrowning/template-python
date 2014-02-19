@@ -112,7 +112,7 @@ tests: env depends
 clean: .clean-dist .clean-test .clean-doc .clean-build
 
 .PHONY: clean-all
-clean-all: clean .clean-env 
+clean-all: clean .clean-env
 
 .PHONY: .clean-env
 .clean-env:
@@ -143,7 +143,7 @@ dist: env depends check test tests doc
 	$(PYTHON) setup.py sdist
 	$(PYTHON) setup.py bdist_wheel
 	$(MAKE) read
- 
+
 .PHONY: upload
 upload: env depends doc
 	$(PYTHON) setup.py register sdist upload
