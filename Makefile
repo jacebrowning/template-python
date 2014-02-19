@@ -6,7 +6,9 @@ ENV := env
 DEPENDS := $(ENV)/.depends
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
-ifeq ($(OS),Windows_NT)
+PLATFORM := $(shell python -c 'import sys; print sys.platform')
+
+ifneq ($(findstring win32, $(PLATFORM)), )
     SYS_PYTHON := C:\\Python33\\python.exe
     SYS_VIRTUALENV := C:\\Python33\\Scripts\\virtualenv.exe
     BIN := $(ENV)/Scripts
@@ -20,6 +22,7 @@ else
     BIN := $(ENV)/bin
 	OPEN := open
 endif
+
 MAN := man
 SHARE := share
 
@@ -50,7 +53,7 @@ $(PIP):
 .PHONY: depends
 depends: .virtualenv $(DEPENDS) Makefile
 $(DEPENDS):
-	$(PIP) install docutils pdoc pep8 pylint nose coverage wheel
+	$(PIP) install docutils pdoc pep8 pylint nose coverage wheel mock
 	touch $(DEPENDS)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
@@ -82,7 +85,7 @@ read: doc
 
 .PHONY: pep8
 pep8: depends
-	$(PEP8) $(PACKAGE) --ignore=E501 
+	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pylint
 pylint: depends
