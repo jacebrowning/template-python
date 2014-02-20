@@ -27,7 +27,7 @@ Requirements
 Installation
 ------------
 
-Foobar can be installed with ``pip``:
+Foobar can be installed with 'pip':
 
     pip install Foobar
 

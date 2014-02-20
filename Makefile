@@ -6,7 +6,7 @@ ENV := env
 DEPENDS := $(ENV)/.depends
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
-PLATFORM := $(shell python -c 'import sys; print sys.platform')
+PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 
 ifneq ($(findstring win32, $(PLATFORM)), )
     SYS_PYTHON := C:\\Python33\\python.exe
