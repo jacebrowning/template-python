@@ -88,7 +88,7 @@ read: doc
 # Static Analysis ############################################################
 
 .PHONY: pep8
-pep8: depends
+pep8: $(TEST_DEPENDS)
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pylint
