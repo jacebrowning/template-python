@@ -52,11 +52,11 @@ $(PIP):
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 
 .PHONY: depends
-depends: .virtualenv $(TEST_DEPENDS) $(DEV_DEPENDS) Makefile
-$(TEST_DEPENDS):
+depends: $(TEST_DEPENDS) $(DEV_DEPENDS)
+$(TEST_DEPENDS): .virtualenv Makefile
 	$(PIP) install pep8 nose coverage
 	touch $(TEST_DEPENDS)  # flag to indicate dependencies are installed
-$(DEV_DEPENDS):
+$(DEV_DEPENDS): .virtualenv Makefile
 	$(PIP) install docutils pdoc pylint wheel
 	touch $(DEV_DEPENDS)  # flag to indicate dependencies are installed
 
