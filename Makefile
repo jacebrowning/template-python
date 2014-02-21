@@ -21,7 +21,11 @@ else
 	SYS_PYTHON := python3
 	SYS_VIRTUALENV := virtualenv
 	BIN := $(ENV)/bin
-	OPEN := open
+	ifneq ($(findstring cygwin, $(PLATFORM)), )
+		OPEN := cygstart
+	else
+		OPEN := open
+	endif
 endif
 
 MAN := man
