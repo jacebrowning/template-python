@@ -10,17 +10,17 @@ EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 
 ifneq ($(findstring win32, $(PLATFORM)), )
-    SYS_PYTHON := C:\\Python33\\python.exe
-    SYS_VIRTUALENV := C:\\Python33\\Scripts\\virtualenv.exe
-    BIN := $(ENV)/Scripts
+	SYS_PYTHON := C:\\Python33\\python.exe
+	SYS_VIRTUALENV := C:\\Python33\\Scripts\\virtualenv.exe
+	BIN := $(ENV)/Scripts
 	EXE := .exe
 	OPEN := cmd /c start
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=C:\\Python33\\tcl\\tcl8.5
 else
-    SYS_PYTHON := python3
-    SYS_VIRTUALENV := virtualenv
-    BIN := $(ENV)/bin
+	SYS_PYTHON := python3
+	SYS_VIRTUALENV := virtualenv
+	BIN := $(ENV)/bin
 	ifneq ($(findstring cygwin, $(PLATFORM)), )
 		OPEN := cygstart
 	else
@@ -104,9 +104,9 @@ pep8: .depends-test
 .PHONY: pylint
 pylint: depends
 	$(PYLINT) $(PACKAGE) --reports no \
-	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
-	                     --max-line-length=79 \
-	                     --disable=I0011,W0142,W0511,R0801
+						 --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
+						 --max-line-length=79 \
+						 --disable=I0011,W0142,W0511,R0801
 
 .PHONY: check
 check: depends
