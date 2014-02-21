@@ -3,8 +3,8 @@ PACKAGE := foobar
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 ENV := env
-TEST_DEPENDS := $(ENV)/.test.depends
-DEV_DEPENDS := $(ENV)/.dev.depends
+DEPENDS_TEST := $(ENV)/.depends.test
+DEPENDS_DEV := $(ENV)/.depends.dev
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
@@ -52,13 +52,19 @@ $(PIP):
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 
 .PHONY: depends
-depends: $(TEST_DEPENDS) $(DEV_DEPENDS)
-$(TEST_DEPENDS): .virtualenv Makefile
+depends: .depends-test .depends-dev
+
+.PHONY: .depends-test
+.depends-test: .virtualenv Makefile $(DEPENDS_TEST)
+$(DEPENDS_TEST):
 	$(PIP) install pep8 nose coverage
-	touch $(TEST_DEPENDS)  # flag to indicate dependencies are installed
-$(DEV_DEPENDS): .virtualenv Makefile
+	touch $(DEPENDS_TEST)  # flag to indicate dependencies are installed
+
+.PHONY: .depends-dev
+.depends-dev: .virtualenv Makefile $(DEPENDS_DEV)
+$(DEPENDS_DEV):
 	$(PIP) install docutils pdoc pylint wheel
-	touch $(DEV_DEPENDS)  # flag to indicate dependencies are installed
+	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
 
@@ -88,7 +94,7 @@ read: doc
 # Static Analysis ############################################################
 
 .PHONY: pep8
-pep8: $(TEST_DEPENDS)
+pep8: .depends-test
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pylint
@@ -106,11 +112,11 @@ check: depends
 # Testing ####################################################################
 
 .PHONY: test
-test: env $(TEST_DEPENDS)
+test: env .depends-test
 	$(NOSE)
 
 .PHONY: tests
-tests: env $(TEST_DEPENDS)
+tests: env .depends-test
 	TEST_INTEGRATION=1 $(NOSE) --verbose --stop --cover-package=$(PACKAGE)
 
 # Cleanup ####################################################################
