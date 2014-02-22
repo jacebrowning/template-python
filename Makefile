@@ -98,15 +98,15 @@ read: doc
 # Static Analysis ############################################################
 
 .PHONY: pep8
-pep8: .depends-test
+pep8: env .depends-test
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pep257
-pep257: .depends-test
+pep257: env .depends-test
 	$(PEP257) $(PACKAGE) --ignore=E501
 
 .PHONY: pylint
-pylint: depends
+pylint: env depends
 	$(PYLINT) $(PACKAGE) --reports no \
 	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
 	                     --max-line-length=79 \
