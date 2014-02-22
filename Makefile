@@ -36,6 +36,7 @@ PIP := $(BIN)/pip$(EXE)
 RST2HTML := $(BIN)/rst2html.py
 PDOC := $(BIN)/pdoc
 PEP8 := $(BIN)/pep8$(EXE)
+PEP257 := $(BIN)/pep257$(EXE)
 PYLINT := $(BIN)/pylint$(EXE)
 NOSE := $(BIN)/nosetests$(EXE)
 
@@ -61,13 +62,13 @@ depends: .depends-test .depends-dev
 .PHONY: .depends-test
 .depends-test: .virtualenv Makefile $(DEPENDS_TEST)
 $(DEPENDS_TEST):
-	$(PIP) install pep8 pep257 nose coverage
+	$(PIP) install nose coverage
 	touch $(DEPENDS_TEST)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
 .depends-dev: .virtualenv Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV):
-	$(PIP) install docutils pdoc pylint wheel
+	$(PIP) install docutils pdoc pep8 pep257 pylint wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
@@ -98,25 +99,22 @@ read: doc
 # Static Analysis ############################################################
 
 .PHONY: pep8
-pep8: .depends-test
+pep8: .depends-dev
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pep257
-pep257: .depends-test
-	$(PEP257) $(PACKAGE) --ignore=E501
+pep257: .depends-dev
+	$(PEP257) $(PACKAGE)
 
 .PHONY: pylint
-pylint: depends
+pylint: .depends-dev
 	$(PYLINT) $(PACKAGE) --reports no \
 	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
 	                     --max-line-length=79 \
 	                     --disable=I0011,W0142,W0511,R0801
 
 .PHONY: check
-check: pep8 pylint pep257
-	$(MAKE) pep8
-	$(MAKE) pep257
-	$(MAKE) pylint
+check: pep8 pep257 pylint
 
 # Testing ####################################################################
 
