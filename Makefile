@@ -3,7 +3,7 @@ PACKAGE := foobar
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 ENV := env
-DEPENDS_TEST := $(ENV)/.depends.test
+DEPENTS_CI := $(ENV)/.depends.ci
 DEPENDS_DEV := $(ENV)/.depends.dev
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
@@ -36,6 +36,7 @@ PIP := $(BIN)/pip$(EXE)
 RST2HTML := $(BIN)/rst2html.py
 PDOC := $(BIN)/pdoc
 PEP8 := $(BIN)/pep8$(EXE)
+PEP257 := $(BIN)/pep257$(EXE)
 PYLINT := $(BIN)/pylint$(EXE)
 NOSE := $(BIN)/nosetests$(EXE)
 
@@ -56,13 +57,13 @@ $(PIP):
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 
 .PHONY: depends
-depends: .depends-test .depends-dev
+depends: .depends-ci .depends-dev
 
-.PHONY: .depends-test
-.depends-test: .virtualenv Makefile $(DEPENDS_TEST)
-$(DEPENDS_TEST):
+.PHONY: .depends-ci
+.depends-ci: .virtualenv Makefile $(DEPENTS_CI)
+$(DEPENTS_CI):
 	$(PIP) install pep8 pep257 nose coverage
-	touch $(DEPENDS_TEST)  # flag to indicate dependencies are installed
+	touch $(DEPENTS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
 .depends-dev: .virtualenv Makefile $(DEPENDS_DEV)
@@ -76,7 +77,7 @@ $(DEPENDS_DEV):
 doc: readme apidocs
 
 .PHONY: readme
-readme: depends docs/README-github.html docs/README-pypi.html
+readme: .depends-ci docs/README-github.html docs/README-pypi.html
 docs/README-github.html: README.md
 	pandoc -f markdown_github -t html -o docs/README-github.html README.md
 docs/README-pypi.html: README.rst
@@ -85,7 +86,7 @@ README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
 
 .PHONY: apidocs
-apidocs: depends apidocs/$(PACKAGE)/index.html
+apidocs: .depends-ci apidocs/$(PACKAGE)/index.html
 apidocs/$(PACKAGE)/index.html: $(SOURCES)
 	$(PYTHON) $(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
@@ -98,15 +99,15 @@ read: doc
 # Static Analysis ############################################################
 
 .PHONY: pep8
-pep8: env .depends-test
+pep8: env .depends-ci
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pep257
-pep257: env .depends-test
+pep257: env .depends-ci
 	$(PEP257) $(PACKAGE) --ignore=E501
 
 .PHONY: pylint
-pylint: env depends
+pylint: env .depends-ci
 	$(PYLINT) $(PACKAGE) --reports no \
 	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
 	                     --max-line-length=79 \
@@ -118,12 +119,15 @@ check: pep8 pep257 pylint
 # Testing ####################################################################
 
 .PHONY: test
-test: env .depends-test
+test: env .depends-ci
 	$(NOSE)
 
 .PHONY: tests
-tests: env .depends-test
+tests: env .depends-ci
 	TEST_INTEGRATION=1 $(NOSE) --verbose --stop --cover-package=$(PACKAGE)
+
+.PHONY: ci
+ci: pep8 pep257 test tests
 
 # Cleanup ####################################################################
 
