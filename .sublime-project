@@ -16,6 +16,11 @@
     {
         "linters":
         {
+            "pep257": {
+                "@disable": false,
+                "args": [],
+                "excludes": []
+            },
             "pep8": {
                 "@disable": false,
                 "args": [],

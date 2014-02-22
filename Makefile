@@ -61,7 +61,7 @@ depends: .depends-test .depends-dev
 .PHONY: .depends-test
 .depends-test: .virtualenv Makefile $(DEPENDS_TEST)
 $(DEPENDS_TEST):
-	$(PIP) install pep8 nose coverage
+	$(PIP) install pep8 pep257 nose coverage
 	touch $(DEPENDS_TEST)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
@@ -101,6 +101,10 @@ read: doc
 pep8: .depends-test
 	$(PEP8) $(PACKAGE) --ignore=E501
 
+.PHONY: pep257
+pep257: .depends-test
+	$(PEP257) $(PACKAGE) --ignore=E501
+
 .PHONY: pylint
 pylint: depends
 	$(PYLINT) $(PACKAGE) --reports no \
@@ -109,8 +113,9 @@ pylint: depends
 	                     --disable=I0011,W0142,W0511,R0801
 
 .PHONY: check
-check: depends
+check: pep8 pylint pep257
 	$(MAKE) pep8
+	$(MAKE) pep257
 	$(MAKE) pylint
 
 # Testing ####################################################################
