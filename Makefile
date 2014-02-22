@@ -62,13 +62,13 @@ depends: .depends-test .depends-dev
 .PHONY: .depends-test
 .depends-test: .virtualenv Makefile $(DEPENDS_TEST)
 $(DEPENDS_TEST):
-	$(PIP) install nose coverage
+	$(PIP) install pep8 pep257 nose coverage
 	touch $(DEPENDS_TEST)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
 .depends-dev: .virtualenv Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV):
-	$(PIP) install docutils pdoc pep8 pep257 pylint wheel
+	$(PIP) install docutils pdoc pylint wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
@@ -99,15 +99,15 @@ read: doc
 # Static Analysis ############################################################
 
 .PHONY: pep8
-pep8: .depends-dev
+pep8: env .depends-test
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pep257
-pep257: .depends-dev
-	$(PEP257) $(PACKAGE)
+pep257: env .depends-test
+	$(PEP257) $(PACKAGE) --ignore=E501
 
 .PHONY: pylint
-pylint: .depends-dev
+pylint: env .depends-test
 	$(PYLINT) $(PACKAGE) --reports no \
 	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
 	                     --max-line-length=79 \
