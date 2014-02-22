@@ -113,10 +113,7 @@ pylint: depends
 	                     --disable=I0011,W0142,W0511,R0801
 
 .PHONY: check
-check: pep8 pylint pep257
-	$(MAKE) pep8
-	$(MAKE) pep257
-	$(MAKE) pylint
+check: pep8 pep257 pylint
 
 # Testing ####################################################################
 
