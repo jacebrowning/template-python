@@ -61,13 +61,13 @@ depends: .depends-ci .depends-dev
 
 .PHONY: .depends-ci
 .depends-ci: .virtualenv Makefile $(DEPENTS_CI)
-$(DEPENTS_CI):
+$(DEPENTS_CI): Makefile
 	$(PIP) install pep8 pep257 nose coverage
 	touch $(DEPENTS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
 .depends-dev: .virtualenv Makefile $(DEPENDS_DEV)
-$(DEPENDS_DEV):
+$(DEPENDS_DEV): Makefile
 	$(PIP) install docutils pdoc pylint wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
