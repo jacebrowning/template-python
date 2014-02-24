@@ -3,7 +3,7 @@ PACKAGE := foobar
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 ENV := env
-DEPENTS_CI := $(ENV)/.depends.ci
+DEPENDS_CI := $(ENV)/.depends.ci
 DEPENDS_DEV := $(ENV)/.depends.dev
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
@@ -60,10 +60,10 @@ $(PIP):
 depends: .depends-ci .depends-dev
 
 .PHONY: .depends-ci
-.depends-ci: .virtualenv Makefile $(DEPENTS_CI)
-$(DEPENTS_CI): Makefile
+.depends-ci: .virtualenv Makefile $(DEPENDS_CI)
+$(DEPENDS_CI): Makefile
 	$(PIP) install pep8 pep257 nose coverage
-	touch $(DEPENTS_CI)  # flag to indicate dependencies are installed
+	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
 .depends-dev: .virtualenv Makefile $(DEPENDS_DEV)
