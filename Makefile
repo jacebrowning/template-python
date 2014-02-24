@@ -161,14 +161,25 @@ clean-all: clean .clean-env
 
 # Release ####################################################################
 
+.PHONY: .git-no-changes
+.git-no-changes:
+	@if git diff --name-only --exit-code;         \
+	then                                          \
+		echo Git working copy is clean...;        \
+	else                                          \
+		echo ERROR: Git working copy is dirty!;   \
+		echo Commit your changes and try again.;  \
+		exit -1;                                  \
+	fi;
+
 .PHONY: dist
-dist: env depends check test tests doc
+dist: .git-no-changes env depends check test tests doc
 	$(PYTHON) setup.py sdist
 	$(PYTHON) setup.py bdist_wheel
 	$(MAKE) read
 
 .PHONY: upload
-upload: env depends doc
+upload: .git-no-changes env depends doc
 	$(PYTHON) setup.py register sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
 	$(MAKE) dev  # restore the development environment
