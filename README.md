@@ -33,6 +33,8 @@ Foobar can be installed with 'pip':
 
 Or directly from the source code:
 
+    git clone https://github.com/jacebrowning/template-python.git
+    cd template-python
     python setup.py install
 
 
