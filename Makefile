@@ -1,5 +1,5 @@
-PROJECT := ${patsubst ./%.sublime-project, %, ${shell find . -type f -name '*.sublime-p*'}}
-PACKAGE := ${patsubst ./%/__init__.py, %, ${shell find -maxdepth 2 -name '__init__.py'}}
+PROJECT := ${patsubst ./%.sublime-project,"%", ${shell find . -type f -name '*.sublime-p*'}}
+PACKAGE := ${patsubst ./%/__init__.py,"%", ${shell find -maxdepth 2 -name '__init__.py'}}
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 ENV := env
