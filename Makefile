@@ -1,5 +1,5 @@
-PROJECT := $(shell python -c 'import glob; name=glob.glob("*.sublime-project")[0].split(".")[0] ; print(name)')
-PACKAGE := $(shell python -c 'import glob; name=glob.glob("*/__init__.py")[0].split("/")[0] ; print(name)')
+PROJECT := ${patsubst ./%.sublime-project, %, ${shell find . -type f -name '*.sublime-p*'}}
+PACKAGE := ${patsubst ./%/__init__.py, %, ${shell find -maxdepth 2 -name '__init__.py'}}
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 ENV := env
@@ -44,8 +44,6 @@ NOSE := $(BIN)/nosetests$(EXE)
 
 .PHONY: all
 all: env
-	@echo $(PROJECT)
-	@echo $(PACKAGE)
 
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
