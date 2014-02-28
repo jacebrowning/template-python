@@ -1,5 +1,5 @@
-PROJECT := Foobar
-PACKAGE := foobar
+PROJECT := $(shell python -c 'import glob; name=glob.glob("*.sublime-project")[0].split(".")[0] ; print(name)')
+PACKAGE := $(shell python -c 'import glob; name=glob.glob("*/__init__.py")[0].split("/")[0] ; print(name)')
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 ENV := env
@@ -44,6 +44,8 @@ NOSE := $(BIN)/nosetests$(EXE)
 
 .PHONY: all
 all: env
+	@echo $(PROJECT)
+	@echo $(PACKAGE)
 
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
