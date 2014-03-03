@@ -104,7 +104,7 @@ pep8: env .depends-ci
 
 .PHONY: pep257
 pep257: env .depends-ci
-	$(PEP257) $(PACKAGE) --ignore=E501
+	$(PEP257) $(PACKAGE) --ignore=E501,D102
 
 .PHONY: pylint
 pylint: env .depends-dev
