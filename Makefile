@@ -107,7 +107,7 @@ pep257: env .depends-ci
 	$(PEP257) $(PACKAGE) --ignore=E501
 
 .PHONY: pylint
-pylint: env .depends-ci
+pylint: env .depends-dev
 	$(PYLINT) $(PACKAGE) --reports no \
 	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
 	                     --max-line-length=79 \
