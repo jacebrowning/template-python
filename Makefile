@@ -13,7 +13,6 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 	SYS_PYTHON := C:\\Python33\\python.exe
 	SYS_VIRTUALENV := C:\\Python33\\Scripts\\virtualenv.exe
 	BIN := $(ENV)/Scripts
-	EXE := .exe
 	OPEN := cmd /c start
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=C:\\Python33\\tcl\\tcl8.5
@@ -31,14 +30,14 @@ endif
 MAN := man
 SHARE := share
 
-PYTHON := $(BIN)/python$(EXE)
-PIP := $(BIN)/pip$(EXE)
+PYTHON := $(BIN)/python
+PIP := $(BIN)/pip
 RST2HTML := $(BIN)/rst2html.py
 PDOC := $(BIN)/pdoc
-PEP8 := $(BIN)/pep8$(EXE)
+PEP8 := $(BIN)/pep8
 PEP257 := $(BIN)/pep257
-PYLINT := $(BIN)/pylint$(EXE)
-NOSE := $(BIN)/nosetests$(EXE)
+PYLINT := $(BIN)/pylint
+NOSE := $(BIN)/nosetests
 
 # Development Installation ###################################################
 
