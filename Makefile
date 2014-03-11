@@ -186,4 +186,4 @@ upload: .git-no-changes env depends doc
 
 .PHONY: dev
 dev:
-	python setup.py develop
+	$(PYTHON) setup.py develop
