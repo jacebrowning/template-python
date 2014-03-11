@@ -40,7 +40,7 @@ PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint$(EXE)
 NOSE := $(BIN)/nosetests$(EXE)
 
-# Installation ###############################################################
+# Development Installation ###################################################
 
 .PHONY: all
 all: env
@@ -182,8 +182,18 @@ dist: .git-no-changes env depends check test tests doc
 upload: .git-no-changes env depends doc
 	$(PYTHON) setup.py register sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
-	$(MAKE) dev  # restore the development environment
 
-.PHONY: dev
-dev:
-	$(PYTHON) setup.py develop
+
+# System Installation ########################################################
+
+.PHONY: develop
+develop:
+	python setup.py develop
+
+.PHONY: install
+install:
+	python setup.py install
+
+.PHONY: download
+download:
+	pip install $(PROJECT)
