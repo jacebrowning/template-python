@@ -1,0 +1,24 @@
+box: flenter/multi-python@0.0.4
+# Build definition
+build:
+  # The steps that will be executed on build
+  steps:
+    - flenter/py-virtualenv
+    - script:
+        name: create virtualenv
+        code: make env
+    - script:
+        name: install package
+        code: make
+    - script:
+        name: install dependencies
+        code: make .depends-ci
+    - script:
+        name: run static analysis
+        code: make pep8 pep257
+    - script:
+        name: run unit tests
+        code: make test
+    - script:
+        name: run integration tests
+        code: make tests
