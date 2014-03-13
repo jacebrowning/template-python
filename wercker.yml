@@ -1,0 +1,44 @@
+box: flenter/multi-python@0.0.4
+build:
+  steps:
+    - flenter/py-virtualenv
+    - script:
+        name: create virtualenv
+        code: make env
+    - script:
+        name: install package
+        code: make
+    - script:
+        name: install dependencies
+        code: make depends
+    - script:
+        name: run static analysis
+        code: make pep8 pep257
+    - script:
+        name: run unit tests
+        code: make test
+    - script:
+        name: run integration tests
+        code: make tests
+deploy:
+  steps:
+    - script:
+        name: install dependencies
+        code: make depends
+    - script:
+        name: generate documentation
+        code: make apidocs
+    - script:
+        name: configure git
+        code: |-
+          git config --global user.email "pleasemailus@wercker.com"
+          git config --global user.name "wercker"
+          # remove current .git folder
+          rm -rf .git
+    - script:
+        name: deploy to github pages
+        code: |-
+          git init
+          git add .
+          git commit -m "deploy commit from $WERCKER_STARTED_BY"
+          git push -f $GIT_REMOTE master:gh-pages

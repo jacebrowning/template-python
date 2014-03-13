@@ -5,6 +5,8 @@ Foobar
 [![Coverage Status](https://coveralls.io/repos/jacebrowning/template-python/badge.png?branch=master)](https://coveralls.io/r/jacebrowning/template-python?branch=master)
 [![PyPI Version](https://badge.fury.io/py/Foobar.png)](http://badge.fury.io/py/Foobar)
 
+[![wercker status](https://app.wercker.com/status/7c50d732cc289a862cab2613b151e867/m/ "wercker status")](https://app.wercker.com/project/bykey/7c50d732cc289a862cab2613b151e867)
+
 Foobar is a template for a typical Python 3 library package.
 
 To adopt for a new project:
