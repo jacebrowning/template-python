@@ -10,7 +10,7 @@ build:
         code: make
     - script:
         name: install dependencies
-        code: make .depends-ci
+        code: make depends
     - script:
         name: run static analysis
         code: make pep8 pep257
@@ -22,6 +22,9 @@ build:
         code: make tests
 deploy:
   steps:
+    - script:
+        name: generate documentation
+        code: make doc
     - script:
         name: configure git
         code: |-
