@@ -76,7 +76,7 @@ $(DEPENDS_DEV): Makefile
 doc: readme apidocs
 
 .PHONY: readme
-readme: .depends-ci docs/README-github.html docs/README-pypi.html
+readme: .depends-dev docs/README-github.html docs/README-pypi.html
 docs/README-github.html: README.md
 	pandoc -f markdown_github -t html -o docs/README-github.html README.md
 docs/README-pypi.html: README.rst
