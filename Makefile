@@ -182,6 +182,11 @@ upload: .git-no-changes env depends doc
 	$(PYTHON) setup.py register sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
 
+.PHONY: exe
+exe: env depends doc
+	$(BIN)/easy_install http://downloads.sourceforge.net/project/pywin32/pywin32/Build%20218/pywin32-218.win32-py3.3.exe
+	$(PIP) install pyinstaller
+	$(BIN)/pyinstaller $(PACKAGE)/main.py
 
 # System Installation ########################################################
 
