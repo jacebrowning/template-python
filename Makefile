@@ -184,7 +184,9 @@ upload: .git-no-changes env depends doc
 
 .PHONY: exe
 exe: env depends doc
+ifneq ($(findstring win32, $(PLATFORM)), )
 	$(BIN)/easy_install http://downloads.sourceforge.net/project/pywin32/pywin32/Build%20218/pywin32-218.win32-py3.3.exe
+endif
 	$(PIP) install pyinstaller
 	$(BIN)/pyinstaller $(PACKAGE)/main.py
 
