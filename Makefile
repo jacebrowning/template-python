@@ -37,6 +37,7 @@ PDOC := $(BIN)/pdoc
 PEP8 := $(BIN)/pep8
 PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
+PYREVERSE := $(BIN)/pyreverse
 NOSE := $(BIN)/nosetests
 
 # Development Installation ###################################################
@@ -73,7 +74,7 @@ $(DEPENDS_DEV): Makefile
 # Documentation ##############################################################
 
 .PHONY: doc
-doc: readme apidocs
+doc: readme apidocs uml
 
 .PHONY: readme
 readme: .depends-dev docs/README-github.html docs/README-pypi.html
@@ -88,6 +89,10 @@ README.rst: README.md
 apidocs: .depends-ci apidocs/$(PACKAGE)/index.html
 apidocs/$(PACKAGE)/index.html: $(SOURCES)
 	$(PYTHON) $(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
+
+.PHONY: uml
+uml: $(SOURCES)
+	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -f ALL -o png --ignore test
 
 .PHONY: read
 read: doc
