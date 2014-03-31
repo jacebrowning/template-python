@@ -91,8 +91,11 @@ apidocs/$(PACKAGE)/index.html: $(SOURCES)
 	$(PYTHON) $(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
 .PHONY: uml
-uml: $(SOURCES)
+uml: .depends-dev docs/*.png $(SOURCES)
+docs/*.png:
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -f ALL -o png --ignore test
+	- mv -f classes_$(PACKAGE).png docs/classes.png
+	- mv -f packages_$(PACKAGE).png docs/packages.png
 
 .PHONY: read
 read: doc
@@ -153,7 +156,7 @@ clean-all: clean .clean-env
 
 .PHONY: .clean-doc
 .clean-doc:
-	rm -rf apidocs docs/README*.html README.rst
+	rm -rf apidocs docs/README*.html README.rst docs/*.png
 
 .PHONY: .clean-test
 .clean-test:
