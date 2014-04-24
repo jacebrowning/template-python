@@ -59,15 +59,18 @@ $(PIP):
 depends: .depends-ci .depends-dev
 
 .PHONY: .depends-ci
-.depends-ci: .virtualenv Makefile $(DEPENDS_CI)
+.depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
 	$(PIP) install pep8 pep257 nose coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
-.depends-dev: .virtualenv Makefile $(DEPENDS_DEV)
+.depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install docutils pdoc pylint wheel
+ifneq ($(findstring win32, $(PLATFORM)), )
+	$(BIN)/easy_install http://downloads.sourceforge.net/project/pywin32/pywin32/Build%20218/pywin32-218.win32-py3.3.exe
+endif
+	$(PIP) install docutils pdoc pylint wheel pyinstaller
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
@@ -98,15 +101,15 @@ read: doc
 # Static Analysis ############################################################
 
 .PHONY: pep8
-pep8: env .depends-ci
+pep8: .depends-ci
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pep257
-pep257: env .depends-ci
+pep257: .depends-ci
 	$(PEP257) $(PACKAGE) --ignore=E501,D102
 
 .PHONY: pylint
-pylint: env .depends-dev
+pylint: .depends-dev
 	$(PYLINT) $(PACKAGE) --reports no \
 	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
 	                     --max-line-length=79 \
@@ -118,11 +121,11 @@ check: pep8 pep257 pylint
 # Testing ####################################################################
 
 .PHONY: test
-test: env .depends-ci
+test: .depends-ci
 	$(NOSE)
 
 .PHONY: tests
-tests: env .depends-ci
+tests: .depends-ci
 	TEST_INTEGRATION=1 $(NOSE) --verbose --stop --cover-package=$(PACKAGE)
 
 .PHONY: ci
@@ -172,22 +175,18 @@ clean-all: clean .clean-env
 	fi;
 
 .PHONY: dist
-dist: .git-no-changes env depends check test tests doc
+dist: .git-no-changes depends check test tests doc
 	$(PYTHON) setup.py sdist
 	$(PYTHON) setup.py bdist_wheel
 	$(MAKE) read
 
 .PHONY: upload
-upload: .git-no-changes env depends doc
+upload: .git-no-changes depends doc
 	$(PYTHON) setup.py register sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
 
 .PHONY: exe
-exe: env depends doc
-ifneq ($(findstring win32, $(PLATFORM)), )
-	$(BIN)/easy_install http://downloads.sourceforge.net/project/pywin32/pywin32/Build%20218/pywin32-218.win32-py3.3.exe
-endif
-	$(PIP) install pyinstaller
+exe: depends
 	$(BIN)/pyinstaller $(PACKAGE)/main.py
 
 # System Installation ########################################################
