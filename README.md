@@ -9,7 +9,8 @@ Foobar is a template for a typical Python 3 library package.
 
 To adopt for a new project:
 
-* replace Foobar/foobar with your project/package name (they might be the same)
+* replace foobar/template-python with your package name
+* replace Foobar with your project name (might be the same as the project)
 * update the links to point to your code repository and badges
 * change the license
 
