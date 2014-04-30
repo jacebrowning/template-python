@@ -16,7 +16,7 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 	OPEN := cmd /c start
 	BAT := .bat
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
-	export TCL_LIBRARY=C:\\Python33\\tcl\\tcl8.5
+	export TCL_LIBRARY=C:\\Python34\\tcl\\tcl8.5
 else
 	SYS_PYTHON := python3
 	SYS_VIRTUALENV := virtualenv
