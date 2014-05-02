@@ -191,7 +191,6 @@ upload: .git-no-changes doc
 	$(PYTHON) setup.py register sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
 
-
 # System Installation ########################################################
 
 .PHONY: develop
