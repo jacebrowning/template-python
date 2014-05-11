@@ -78,7 +78,10 @@ $(DEPENDS_CI): Makefile
 .PHONY: .depends-dev
 .depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install docutils pdoc pylint wheel
+ifneq ($(findstring win32, $(PLATFORM)), )
+	$(BIN)/easy_install http://downloads.sourceforge.net/project/pywin32/pywin32/Build%20218/pywin32-218.win32-py3.3.exe
+endif
+	$(PIP) install docutils pdoc pylint wheel pyinstaller
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
@@ -196,6 +199,10 @@ dist: check doc test tests
 upload: .git-no-changes doc
 	$(PYTHON) setup.py register sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
+
+.PHONY: exe
+exe: depends
+	$(BIN)/pyinstaller $(PACKAGE)/main.py
 
 # System Installation ########################################################
 

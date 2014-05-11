@@ -27,7 +27,7 @@ setuptools.setup(
 
     packages=setuptools.find_packages(),
 
-    entry_points={'console_scripts': []},
+    entry_points={'console_scripts': ['foobar = foobar.main:main']},
 
     long_description=(README + '\n' + CHANGES),
     license='WTFPL',
