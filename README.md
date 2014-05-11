@@ -9,7 +9,8 @@ Foobar is a template for a typical Python 3 library package.
 
 To adopt for a new project:
 
-* replace Foobar/foobar with your project/package name (they might be the same)
+* replace foobar/template-python with your package name
+* replace Foobar with your project name (might be the same as the package)
 * update the links to point to your code repository and badges
 * change the license
 
@@ -21,7 +22,7 @@ Getting Started
 Requirements
 ------------
 
-* Python 3.3: http://www.python.org/download/releases/3.3.4/#download
+* Python 3.3+
 
 
 Installation
@@ -64,6 +65,7 @@ Requirements
     * Linux: http://www.gnu.org/software/make (likely already installed)
 * virtualenv: https://pypi.python.org/pypi/virtualenv#installation
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
+* Graphviz: http://www.graphviz.org/Download.php
 
 
 Installation
