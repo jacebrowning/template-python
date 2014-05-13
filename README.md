@@ -1,9 +1,10 @@
 Foobar
 ======
 
-[![Build Status](https://travis-ci.org/jacebrowning/template-python.png?branch=master)](https://travis-ci.org/jacebrowning/template-python)
-[![Coverage Status](https://coveralls.io/repos/jacebrowning/template-python/badge.png?branch=master)](https://coveralls.io/r/jacebrowning/template-python?branch=master)
-[![PyPI Version](https://badge.fury.io/py/Foobar.png)](http://badge.fury.io/py/Foobar)
+[![Build Status](http://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
+[![Coverage Status](http://img.shields.io/coveralls/jacebrowning/template-python/master.svg)](https://coveralls.io/r/jacebrowning/template-python)
+[![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
+[![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
 
 Foobar is a template for a typical Python 3 library package.
 
