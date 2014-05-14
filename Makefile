@@ -128,10 +128,7 @@ pep257: .depends-ci
 
 .PHONY: pylint
 pylint: .depends-dev
-	$(PYLINT) $(PACKAGE) --reports no \
-	                     --msg-template="{msg_id}:{line:3d},{column}:{msg}" \
-	                     --max-line-length=79 \
-	                     --disable=I0011,W0142,W0511,R0801
+	$(PYLINT) $(PACKAGE) --rcfile .pylintrc
 
 # Testing ####################################################################
 
