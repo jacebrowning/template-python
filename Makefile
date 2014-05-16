@@ -19,7 +19,6 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 	SYS_VIRTUALENV := C:\\Python34\\Scripts\\virtualenv.exe
 	BIN := $(ENV)/Scripts
 	OPEN := cmd /c start
-	BAT := .bat
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=C:\\Python34\\tcl\\tcl8.5
 else
@@ -41,13 +40,13 @@ PDOC := $(PYTHON) $(BIN)/pdoc
 PEP8 := $(BIN)/pep8
 PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
-PYREVERSE := $(BIN)/pyreverse$(BAT)
+PYREVERSE := $(BIN)/pyreverse
 NOSE := $(BIN)/nosetests
 
 # Main Targets ###############################################################
 
 .PHONY: all
-all: doc $(ALL)
+all: depends doc $(ALL)
 $(ALL): $(SOURCES)
 	$(MAKE) check
 	touch $(ALL)  # flag to indicate all setup steps were successful
