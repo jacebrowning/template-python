@@ -47,9 +47,9 @@ NOSE := $(BIN)/nosetests
 # Main Targets ###############################################################
 
 .PHONY: all
-all: $(ALL)
+all: doc $(ALL)
 $(ALL): $(SOURCES)
-	$(MAKE) doc check
+	$(MAKE) check
 	touch $(ALL)  # flag to indicate all setup steps were succesful
 
 .PHONY: ci
