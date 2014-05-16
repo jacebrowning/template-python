@@ -48,8 +48,8 @@ NOSE := $(BIN)/nosetests
 
 .PHONY: all
 all: $(ALL)
-$(ALL): $(SOURCES) doc
-	$(MAKE) check
+$(ALL): $(SOURCES)
+	$(MAKE) doc check
 	touch $(ALL)  # flag to indicate all setup steps were succesful
 
 .PHONY: ci
