@@ -35,6 +35,7 @@ endif
 # virtualenv executables
 PYTHON := $(BIN)/python
 PIP := $(BIN)/pip
+EASY_INSTALL := $(BIN)/easy_install
 RST2HTML := $(PYTHON) $(BIN)/rst2html.py
 PDOC := $(PYTHON) $(BIN)/pdoc
 PEP8 := $(BIN)/pep8
