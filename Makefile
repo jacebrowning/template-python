@@ -36,8 +36,8 @@ endif
 # virtualenv executables
 PYTHON := $(BIN)/python
 PIP := $(BIN)/pip
-RST2HTML := $(BIN)/rst2html.py
-PDOC := $(BIN)/pdoc
+RST2HTML := $(PYTHON) $(BIN)/rst2html.py
+PDOC := $(PYTHON) $(BIN)/pdoc
 PEP8 := $(BIN)/pep8
 PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
@@ -93,14 +93,14 @@ readme: .depends-dev docs/README-github.html docs/README-pypi.html
 docs/README-github.html: README.md
 	pandoc -f markdown_github -t html -o docs/README-github.html README.md
 docs/README-pypi.html: README.rst
-	$(PYTHON) $(RST2HTML) README.rst docs/README-pypi.html
+	$(RST2HTML) README.rst docs/README-pypi.html
 README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
 
 .PHONY: apidocs
-apidocs: .depends-ci apidocs/$(PACKAGE)/index.html
+apidocs: .depends-dev apidocs/$(PACKAGE)/index.html
 apidocs/$(PACKAGE)/index.html: $(SOURCES)
-	$(PYTHON) $(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
+	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
 .PHONY: uml
 uml: .depends-dev docs/*.png $(SOURCES)
