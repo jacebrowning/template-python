@@ -50,7 +50,7 @@ NOSE := $(BIN)/nosetests
 all: doc $(ALL)
 $(ALL): $(SOURCES)
 	$(MAKE) check
-	touch $(ALL)  # flag to indicate all setup steps were succesful
+	touch $(ALL)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
 ci: pep8 pep257 test tests
