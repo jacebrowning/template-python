@@ -5,6 +5,8 @@ SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 # virtualenv settings
+MAJOR := 3
+MINOR := 4
 ENV := env
 
 # Flags for PHONY targets
@@ -15,14 +17,15 @@ ALL := $(ENV)/.all
 # OS-specific paths (detected automatically from the system Python)
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
-	SYS_PYTHON := C:\\Python34\\python.exe
-	SYS_VIRTUALENV := C:\\Python34\\Scripts\\virtualenv.exe
+	SYS_DIR := C:\\Python$(MAJOR)$(MINOR)
+	SYS_PYTHON := $(SYS_DIR)\\python.exe
+	SYS_VIRTUALENV := $(SYS_DIR)\\Scripts\\virtualenv.exe
 	BIN := $(ENV)/Scripts
 	OPEN := cmd /c start
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
-	export TCL_LIBRARY=C:\\Python34\\tcl\\tcl8.5
+	export TCL_LIBRARY=$(SYS_DIR)\\tcl\\tcl8.5
 else
-	SYS_PYTHON := python3
+	SYS_PYTHON := python$(MAJOR)
 	SYS_VIRTUALENV := virtualenv
 	BIN := $(ENV)/bin
 	ifneq ($(findstring cygwin, $(PLATFORM)), )
@@ -92,6 +95,7 @@ doc: readme apidocs uml
 readme: .depends-dev docs/README-github.html docs/README-pypi.html
 docs/README-github.html: README.md
 	pandoc -f markdown_github -t html -o docs/README-github.html README.md
+	cp -f docs/README-github.html docs/README.html  # default format is GitHub
 docs/README-pypi.html: README.rst
 	$(RST2HTML) README.rst docs/README-pypi.html
 README.rst: README.md
@@ -157,13 +161,13 @@ clean-all: clean .clean-env
 
 .PHONY: .clean-build
 .clean-build:
-	find $(PACKAGE) -name '*.pyc' -delete
-	find $(PACKAGE) -name '__pycache__' -delete
+	find . -name '*.pyc' -delete
+	find . -name '__pycache__' -delete
 	rm -rf *.egg-info
 
 .PHONY: .clean-doc
 .clean-doc:
-	rm -rf apidocs docs/README*.html README.rst docs/*.png
+	rm -rf README.rst apidocs docs/*.html docs/*.png
 
 .PHONY: .clean-test
 .clean-test:
