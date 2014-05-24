@@ -1,32 +1,32 @@
-# Project settings (detected automatically from files/directories)
+# Python settings
+PYTHON_MAJOR := 3
+PYTHON_MINOR := 4
+
+# Project settings (automatically detected from files/directories)
 PROJECT := $(patsubst ./%.sublime-project,%, $(shell find . -type f -name '*.sublime-p*'))
 PACKAGE := $(patsubst ./%/__init__.py,%, $(shell find . -maxdepth 2 -name '__init__.py'))
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
-# virtualenv settings
-MAJOR := 3
-MINOR := 4
-ENV := env
-
-# Flags for PHONY targets
-DEPENDS_CI := $(ENV)/.depends-ci
-DEPENDS_DEV := $(ENV)/.depends-dev
-ALL := $(ENV)/.all
-
-# OS-specific paths (detected automatically from the system Python)
+# System paths (automatically detected from the system Python)
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
-	SYS_DIR := C:\\Python$(MAJOR)$(MINOR)
-	SYS_PYTHON := $(SYS_DIR)\\python.exe
-	SYS_VIRTUALENV := $(SYS_DIR)\\Scripts\\virtualenv.exe
-	BIN := $(ENV)/Scripts
-	OPEN := cmd /c start
+	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
+	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
+	SYS_VIRTUALENV := $(SYS_PYTHON_DIR)\\Scripts\\virtualenv.exe
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=$(SYS_DIR)\\tcl\\tcl8.5
 else
-	SYS_PYTHON := python$(MAJOR)
+	SYS_PYTHON := python$(PYTHON_MAJOR)
 	SYS_VIRTUALENV := virtualenv
+endif
+
+# virtualenv paths (automatically detected from the system Python)
+ENV := env
+ifneq ($(findstring win32, $(PLATFORM)), )
+	BIN := $(ENV)/Scripts
+	OPEN := cmd /c start
+else
 	BIN := $(ENV)/bin
 	ifneq ($(findstring cygwin, $(PLATFORM)), )
 		OPEN := cygstart
@@ -46,6 +46,11 @@ PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
 PYREVERSE := $(BIN)/pyreverse
 NOSE := $(BIN)/nosetests
+
+# Flags for PHONY targets
+DEPENDS_CI := $(ENV)/.depends-ci
+DEPENDS_DEV := $(ENV)/.depends-dev
+ALL := $(ENV)/.all
 
 # Main Targets ###############################################################
 
