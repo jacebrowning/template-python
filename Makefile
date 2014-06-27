@@ -1,29 +1,32 @@
-# Project settings (detected automatically from files/directories)
+# Python settings
+PYTHON_MAJOR := 3
+PYTHON_MINOR := 4
+
+# Project settings (automatically detected from files/directories)
 PROJECT := $(patsubst ./%.sublime-project,%, $(shell find . -type f -name '*.sublime-p*'))
 PACKAGE := $(patsubst ./%/__init__.py,%, $(shell find . -maxdepth 2 -name '__init__.py'))
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
-# virtualenv settings
-ENV := env
-
-# Flags for PHONY targets
-DEPENDS_CI := $(ENV)/.depends-ci
-DEPENDS_DEV := $(ENV)/.depends-dev
-ALL := $(ENV)/.all
-
-# OS-specific paths (detected automatically from the system Python)
+# System paths (automatically detected from the system Python)
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
-	SYS_PYTHON := C:\\Python34\\python.exe
-	SYS_VIRTUALENV := C:\\Python34\\Scripts\\virtualenv.exe
+	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
+	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
+	SYS_VIRTUALENV := $(SYS_PYTHON_DIR)\\Scripts\\virtualenv.exe
+	# https://bugs.launchpad.net/virtualenv/+bug/449537
+	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
+else
+	SYS_PYTHON := python$(PYTHON_MAJOR)
+	SYS_VIRTUALENV := virtualenv
+endif
+
+# virtualenv paths (automatically detected from the system Python)
+ENV := env
+ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	OPEN := cmd /c start
-	# https://bugs.launchpad.net/virtualenv/+bug/449537
-	export TCL_LIBRARY=C:\\Python34\\tcl\\tcl8.5
 else
-	SYS_PYTHON := python3
-	SYS_VIRTUALENV := virtualenv
 	BIN := $(ENV)/bin
 	ifneq ($(findstring cygwin, $(PLATFORM)), )
 		OPEN := cygstart
@@ -43,6 +46,11 @@ PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
 PYREVERSE := $(BIN)/pyreverse
 NOSE := $(BIN)/nosetests
+
+# Flags for PHONY targets
+DEPENDS_CI := $(ENV)/.depends-ci
+DEPENDS_DEV := $(ENV)/.depends-dev
+ALL := $(ENV)/.all
 
 # Main Targets ###############################################################
 
@@ -92,6 +100,7 @@ doc: readme apidocs uml
 readme: .depends-dev docs/README-github.html docs/README-pypi.html
 docs/README-github.html: README.md
 	pandoc -f markdown_github -t html -o docs/README-github.html README.md
+	cp -f docs/README-github.html docs/README.html  # default format is GitHub
 docs/README-pypi.html: README.rst
 	$(RST2HTML) README.rst docs/README-pypi.html
 README.rst: README.md
@@ -157,13 +166,13 @@ clean-all: clean .clean-env
 
 .PHONY: .clean-build
 .clean-build:
-	find $(PACKAGE) -name '*.pyc' -delete
-	find $(PACKAGE) -name '__pycache__' -delete
+	find . -name '*.pyc' -delete
+	find . -name '__pycache__' -delete
 	rm -rf *.egg-info
 
 .PHONY: .clean-doc
 .clean-doc:
-	rm -rf apidocs docs/README*.html README.rst docs/*.png
+	rm -rf README.rst apidocs docs/*.html docs/*.png
 
 .PHONY: .clean-test
 .clean-test:
