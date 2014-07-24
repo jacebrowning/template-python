@@ -11,7 +11,7 @@ Icon*
 env
 
 # Generated documentation
-*.gen.*
+docs/gen
 apidocs
 docs/*.html
 *.rst
@@ -32,3 +32,6 @@ dist
 
 # Sublime Text
 *.sublime-workspace
+
+# Eclipse
+.settings

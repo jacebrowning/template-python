@@ -145,11 +145,11 @@ pylint: .depends-dev
 
 .PHONY: test
 test: .depends-ci
-	$(NOSE)
+	$(NOSE) --config=.noserc
 
 .PHONY: tests
 tests: .depends-ci
-	TEST_INTEGRATION=1 $(NOSE) --verbose --stop --cover-package=$(PACKAGE)
+	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
 
 # Cleanup ####################################################################
 

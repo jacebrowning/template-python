@@ -3,6 +3,7 @@ Foobar
 
 [![Build Status](http://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/template-python/master.svg)](https://coveralls.io/r/jacebrowning/template-python)
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/jacebrowning/template-python.svg)](https://scrutinizer-ci.com/g/jacebrowning/template-python/?branch=master)
 [![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
 [![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
 
@@ -31,13 +32,13 @@ Installation
 
 Foobar can be installed with 'pip':
 
-    pip install Foobar
+    $ pip install Foobar
 
 Or directly from the source code:
 
-    git clone https://github.com/jacebrowning/template-python.git
-    cd template-python
-    python setup.py install
+    $ git clone https://github.com/jacebrowning/template-python.git
+    $ cd template-python
+    $ python setup.py install
 
 
 
@@ -46,7 +47,7 @@ Basic Usage
 
 After installation, abstract base classes can be imported from the package:
 
-    python
+    $ python
     >>> import foobar
     foobar.__version__
 
@@ -74,25 +75,25 @@ Installation
 
 Create a virtualenv:
 
-    make env
+    $ make env
 
 Run the tests:
 
-    make test
-    make tests  # includes integration tests
+    $ make test
+    $ make tests  # includes integration tests
 
 Build the documentation:
 
-    make doc
+    $ make doc
 
 Run static analysis:
 
-    make pep8
-    make pep257
-    make pylint
-    make check  # includes all checks
+    $ make pep8
+    $ make pep257
+    $ make pylint
+    $ make check  # includes all checks
 
 Prepare a release:
 
-    make dist  # dry run
-    make upload
+    $ make dist  # dry run
+    $ make upload
