@@ -210,11 +210,11 @@ upload: .git-no-changes doc
 
 .PHONY: develop
 develop:
-	python setup.py develop
+	$(SYS_PYTHON) setup.py develop
 
 .PHONY: install
 install:
-	python setup.py install
+	$(SYS_PYTHON) setup.py install
 
 .PHONY: download
 download:
