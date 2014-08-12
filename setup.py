@@ -21,7 +21,7 @@ setuptools.setup(
     version=__version__,
 
     description="Foobar is a Python 3 package template.",
-    url='http://pypi.python.org/pypi/Foobar',
+    url='https://github.com/jacebrowning/template-python',
     author='Jace Browning',
     author_email='jacebrowning@gmail.com',
 
