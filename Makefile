@@ -13,15 +13,13 @@ PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
 	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
 	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
-	SYS_VIRTUALENV := $(SYS_PYTHON_DIR)\\Scripts\\virtualenv.exe
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
 else
 	SYS_PYTHON := python$(PYTHON_MAJOR)
-	SYS_VIRTUALENV := virtualenv
 endif
 
-# virtualenv paths (automatically detected from the system Python)
+# Virtual environment paths (automatically detected from the system Python)
 ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
@@ -35,7 +33,7 @@ else
 	endif
 endif
 
-# virtualenv executables
+# Virtual environment executables
 PYTHON := $(BIN)/python
 PIP := $(BIN)/pip
 EASY_INSTALL := $(BIN)/easy_install
@@ -66,15 +64,15 @@ ci: pep8 pep257 test tests
 # Development Installation ###################################################
 
 .PHONY: env
-env: .virtualenv $(EGG_INFO)
+env: .venv $(EGG_INFO)
 $(EGG_INFO): Makefile setup.py
 	$(PYTHON) setup.py develop
 	touch $(EGG_INFO)  # flag to indicate package is installed
 
-.PHONY: .virtualenv
-.virtualenv: $(PIP)
-$(PIP):
-	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
+.PHONY: .venv
+.venv: $(PYTHON)
+$(PYTHON):
+	$(SYS_PYTHON) -m venv $(ENV)
 
 .PHONY: depends
 depends: .depends-ci .depends-dev
