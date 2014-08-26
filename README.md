@@ -24,7 +24,7 @@ Getting Started
 Requirements
 ------------
 
-* Python 3.3+
+* Python 3.4+
 
 
 Installation
@@ -65,7 +65,6 @@ Requirements
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
     * Linux: http://www.gnu.org/software/make (likely already installed)
-* virtualenv: https://pypi.python.org/pypi/virtualenv#installation
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
@@ -73,7 +72,7 @@ Requirements
 Installation
 ------------
 
-Create a virtualenv:
+Create a virtual environment:
 
     $ make env
 
