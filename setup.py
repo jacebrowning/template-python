@@ -38,5 +38,5 @@ setuptools.setup(
         'Programming Language :: Python :: 3.3',
     ],
 
-    install_requires=['testpackage'],
+    install_requires=open('requirements.txt').readlines(),
 )

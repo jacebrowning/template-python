@@ -73,7 +73,7 @@ ci: pep8 pep257 test tests
 
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
-$(EGG_INFO): Makefile setup.py
+$(EGG_INFO): Makefile setup.py requirements.txt
 	$(PYTHON) setup.py develop
 	touch $(EGG_INFO)  # flag to indicate package is installed
 
