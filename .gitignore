@@ -25,6 +25,7 @@ docs/*.png
 
 # Testing and coverage results
 .coverage
+pyunit.xml
 
 # Build and release directories
 build
