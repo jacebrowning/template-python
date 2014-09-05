@@ -2,6 +2,12 @@
 PYTHON_MAJOR := 3
 PYTHON_MINOR := 4
 
+# Test runner settings
+ifndef TEST_RUNNER
+	# options are: nose, pytest
+	TEST_RUNNER := nose
+endif
+
 # Project settings (automatically detected from files/directories)
 PROJECT := $(patsubst ./%.sublime-project,%, $(shell find . -type f -name '*.sublime-p*'))
 PACKAGE := $(patsubst ./%/__init__.py,%, $(shell find . -maxdepth 2 -name '__init__.py'))
@@ -46,6 +52,8 @@ PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
 PYREVERSE := $(BIN)/pyreverse
 NOSE := $(BIN)/nosetests
+PYTEST := $(BIN)/py.test
+COVERAGE := $(BIN)/coverage
 
 # Flags for PHONY targets
 DEPENDS_CI := $(ENV)/.depends-ci
@@ -67,7 +75,7 @@ ci: pep8 pep257 test tests
 
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
-$(EGG_INFO): Makefile setup.py
+$(EGG_INFO): Makefile setup.py requirements.txt
 	$(PYTHON) setup.py develop
 	touch $(EGG_INFO)  # flag to indicate package is installed
 
@@ -82,7 +90,7 @@ depends: .depends-ci .depends-dev
 .PHONY: .depends-ci
 .depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 nose coverage
+	$(PIP) install --upgrade pep8 pep257 $(TEST_RUNNER) coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
@@ -144,12 +152,30 @@ pylint: .depends-dev
 # Testing ####################################################################
 
 .PHONY: test
-test: .depends-ci
-	$(NOSE) --config=.noserc
+test: test-$(TEST_RUNNER)
 
 .PHONY: tests
-tests: .depends-ci
+tests: tests-$(TEST_RUNNER)
+
+# Nosetest commands
+.PHONY: test-nose
+test-nose: .depends-ci
+	$(NOSE) --config=.noserc
+
+.PHONY: tests-nose
+tests-nose: .depends-ci
 	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
+
+# Pytest commands
+.PHONY: test-py.test
+test-pytest: .depends-ci
+	$(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --junitxml=pyunit.xml
+	$(COVERAGE) report -m
+
+.PHONY: tests-py.test
+tests-pytest: .depends-ci
+	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --junitxml=pyunit.xml
+	$(COVERAGE) report -m
 
 # Cleanup ####################################################################
 
