@@ -13,7 +13,8 @@ To adopt for a new project:
 
 * replace `foobar` and `template-python` with your package name
 * replace `Foobar` with your project name (might be the same as the package)
-* set `TEST_RUNNER` in the `Makefile` to your prefered test runner (`nose` or `pytest`)
+* set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
+* remove the `TEST_RUNNER` environment lines in `.travis.yml`
 * update the links to point to your code repository and badges
 * change the license
 

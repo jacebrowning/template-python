@@ -3,9 +3,8 @@ PYTHON_MAJOR := 3
 PYTHON_MINOR := 4
 
 # Test runner settings
-# Options are: nose, pytest
 ifndef TEST_RUNNER
-	# Default is 'nose' unless set by environment variable TEST_RUNNER
+	# options are: nose, pytest
 	TEST_RUNNER := nose
 endif
 
