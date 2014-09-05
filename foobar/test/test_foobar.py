@@ -1,12 +1,18 @@
 #!/usr/bin/env python
 
+"""Sample test module."""
+
 import unittest
 
 
 class TestFooBar(unittest.TestCase):
+
+    """Sample test class."""
+
     def test_dependency_import(self):
+        """Sample test method."""
         try:
-            import testpackage
+            import testpackage  # pylint: disable=W0612
             assert True
         except ImportError:
-            assert False
+            self.fail()
