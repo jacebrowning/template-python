@@ -4,7 +4,10 @@ PYTHON_MINOR := 4
 
 # Test runner settings
 # Options are: nose, pytest
-TEST_RUNNER := nose
+ifndef TEST_RUNNER
+	# Default is 'nose' unless set by environment variable TEST_RUNNER
+	TEST_RUNNER := nose
+endif
 
 # Project settings (automatically detected from files/directories)
 PROJECT := $(patsubst ./%.sublime-project,%, $(shell find . -type f -name '*.sublime-p*'))
@@ -88,7 +91,7 @@ depends: .depends-ci .depends-dev
 .PHONY: .depends-ci
 .depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 $(TEST_RUNNER) coverage
+	$(PIP) install --upgrade pep8 pep257 nose pytest coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
