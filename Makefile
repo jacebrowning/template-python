@@ -59,7 +59,6 @@ COVERAGE := $(BIN)/coverage
 # Flags for PHONY targets
 DEPENDS_CI := $(ENV)/.depends-ci
 DEPENDS_DEV := $(ENV)/.depends-dev
-DEPENDS_TEST := $(ENV)/.depends-test-$(TEST_RUNNER)
 ALL := $(ENV)/.all
 
 # Main Targets ###############################################################
@@ -87,18 +86,12 @@ $(PIP):
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 
 .PHONY: depends
-depends: .depends-ci .depends-dev .depends-test
-
-.PHONY: .depends-test
-.depends-test: $(DEPENDS_TEST)
-$(DEPENDS_TEST): Makefile
-	$(PIP) install $(TEST_RUNNER)
-	touch $(DEPENDS_TEST) # flag to indicate dependencies are installed
+depends: .depends-ci .depends-dev
 
 .PHONY: .depends-ci
-.depends-ci: env Makefile $(DEPENDS_CI) $(DEPENDS_TEST)
+.depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 coverage
+	$(PIP) install --upgrade pep8 pep257 $(TEST_RUNNER) coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
