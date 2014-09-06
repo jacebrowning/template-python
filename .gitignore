@@ -42,4 +42,5 @@ dist
 .noserc
 .project
 .pydevproject
+.pylintrc
 Foobar.sublime-project

@@ -63,10 +63,11 @@ DEPENDS_DEV := $(ENV)/.depends-dev
 ALL := $(ENV)/.all
 
 CONFIG_FILES = .coveragerc \
-				.noserc \
-				.project \
-				.pydevproject \
-				Foobar.sublime-project
+               .noserc \
+               .project \
+               .pydevproject \
+               .pylintrc \
+               Foobar.sublime-project
 CONFIG_DIR = .config
 
 # Main Targets ###############################################################
