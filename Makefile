@@ -32,8 +32,10 @@ ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	OPEN := cmd /c start
+	LINK := mklink
 else
 	BIN := $(ENV)/bin
+	LINK := ln -s
 	ifneq ($(findstring cygwin, $(PLATFORM)), )
 		OPEN := cygstart
 	else
@@ -60,6 +62,13 @@ DEPENDS_CI := $(ENV)/.depends-ci
 DEPENDS_DEV := $(ENV)/.depends-dev
 ALL := $(ENV)/.all
 
+CONFIG_FILES = .coveragerc \
+				.noserc \
+				.project \
+				.pydevproject \
+				Foobar.sublime-project
+CONFIG_DIR = .config
+
 # Main Targets ###############################################################
 
 .PHONY: all
@@ -72,6 +81,15 @@ $(ALL): $(SOURCES)
 ci: pep8 pep257 test tests
 
 # Development Installation ###################################################
+
+.PHONY: setup
+setup: $(CONFIG_FILES)
+$(CONFIG_FILES):
+	@for f in $(CONFIG_FILES);              \
+	do                                      \
+		echo $(LINK) $(CONFIG_DIR)/$$f $$f; \
+		$(LINK) $(CONFIG_DIR)/$$f $$f;      \
+	done
 
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
@@ -88,13 +106,13 @@ $(PIP):
 depends: .depends-ci .depends-dev
 
 .PHONY: .depends-ci
-.depends-ci: env Makefile $(DEPENDS_CI)
+.depends-ci: setup env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
 	$(PIP) install --upgrade pep8 pep257 $(TEST_RUNNER) coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
-.depends-dev: env Makefile $(DEPENDS_DEV)
+.depends-dev: setup env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
 	$(PIP) install --upgrade docutils pdoc pylint wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
@@ -182,6 +200,7 @@ tests-pytest: .depends-ci
 .PHONY: clean
 clean: .clean-dist .clean-test .clean-doc .clean-build
 	rm -rf $(ALL)
+	rm -f $(CONFIG_FILES)
 
 .PHONY: clean-all
 clean-all: clean .clean-env

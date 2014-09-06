@@ -36,3 +36,10 @@ dist
 
 # Eclipse
 .settings
+
+# Symlinks placed in the project root
+.coveragerc
+.noserc
+.project
+.pydevproject
+Foobar.sublime-project
