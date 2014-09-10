@@ -2,7 +2,7 @@
     "full_name": "Jace Browning",
     "email": "jacebrowning@gmail.com",
     "github_username": "jacebrowning",
-    "project_name": "template-python",
+    "project_name": "FooBar",
     "package_name": "foobar",
     "project_short_description": "A Python Template",
     "test_runner": "nose"
