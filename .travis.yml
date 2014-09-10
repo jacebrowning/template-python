@@ -3,7 +3,7 @@ python:
   - 3.3
   - 3.4
 install:
-  - cookiecutter
+  - pip install cookiecutter
 script:
   - cookiecutter . --no-input
   - cd FooBar; make test
