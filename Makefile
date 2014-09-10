@@ -157,7 +157,8 @@ test: test-$(TEST_RUNNER)
 .PHONY: tests
 tests: tests-$(TEST_RUNNER)
 
-# Nosetest commands
+# nosetest commands
+
 .PHONY: test-nose
 test-nose: .depends-ci
 	$(NOSE) --config=.noserc
@@ -166,16 +167,17 @@ test-nose: .depends-ci
 tests-nose: .depends-ci
 	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
 
-# Pytest commands
+# pytest commands
+
 .PHONY: test-py.test
 test-pytest: .depends-ci
 	$(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --junitxml=pyunit.xml
-	$(COVERAGE) report -m
+	$(COVERAGE) report --show-missing --fail-under=100
 
 .PHONY: tests-py.test
 tests-pytest: .depends-ci
 	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --junitxml=pyunit.xml
-	$(COVERAGE) report -m
+	$(COVERAGE) report --show-missing --fail-under=100
 
 # Cleanup ####################################################################
 
