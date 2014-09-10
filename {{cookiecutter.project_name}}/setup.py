@@ -6,7 +6,7 @@ Setup script for {{cookiecutter.project_name}}.
 
 import setuptools
 
-from {{ cookiecutter.package_name }} import __project__, __version__
+from {{cookiecutter.package_name}} import __project__, __version__
 
 import os
 if os.path.exists('README.rst'):
@@ -20,10 +20,10 @@ setuptools.setup(
     name=__project__,
     version=__version__,
 
-    description="{{ cookiecutter.project_name }} is a Python 3 package template.",
-    url='https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.package_name }}',
-    author='{{ cookiecutter.full_name }}',
-    author_email='{{ cookiecutter.email }}',
+    description="{{cookiecutter.project_name}} is a Python 3 package template.",
+    url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}',
+    author='{{cookiecutter.full_name}}',
+    author_email='{{cookiecutter.email}}',
 
     packages=setuptools.find_packages(),
 

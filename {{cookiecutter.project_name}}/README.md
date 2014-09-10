@@ -1,23 +1,19 @@
-Foobar
+{{cookiecutter.project_name}}
 ======
 
-[![Build Status](http://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
-[![Coverage Status](http://img.shields.io/coveralls/jacebrowning/template-python/master.svg)](https://coveralls.io/r/jacebrowning/template-python)
-[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/jacebrowning/template-python.svg)](https://scrutinizer-ci.com/g/jacebrowning/template-python/?branch=master)
-[![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
-[![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
+[![Build Status](http://img.shields.io/travis/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/master.svg)](https://travis-ci.org/{{cookiecutter.github_username}}/{{cookiecutter.project_name}})
+[![Coverage Status](http://img.shields.io/coveralls/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/master.svg)](https://coveralls.io/r/{{cookiecutter.github_username}}/{{cookiecutter.project_name}})
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}.svg)](https://scrutinizer-ci.com/g/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/?branch=master)
+[![PyPI Version](http://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
+[![PyPI Downloads](http://img.shields.io/pypi/dm/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 
-Foobar is a template for a typical Python 3 library package.
+{{cookiecutter.project_name}} is a template for a typical Python 3 library package.
 
 To adopt for a new project:
 
-* replace `foobar` and `template-python` with your package name
-* replace `Foobar` with your project name (might be the same as the package)
 * set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
 * remove the `TEST_RUNNER` environment lines in `.travis.yml`
-* update the links to point to your code repository and badges
 * change the license
-
 
 
 Getting Started
@@ -32,14 +28,14 @@ Requirements
 Installation
 ------------
 
-Foobar can be installed with 'pip':
+{{cookiecutter.project_name}} can be installed with 'pip':
 
-    $ pip install Foobar
+    $ pip install {{cookiecutter.project_name}}
 
 Or directly from the source code:
 
-    $ git clone https://github.com/jacebrowning/template-python.git
-    $ cd template-python
+    $ git clone https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}.git
+    $ cd {{cookiecutter.project_name}}
     $ python setup.py install
 
 
@@ -50,8 +46,8 @@ Basic Usage
 After installation, abstract base classes can be imported from the package:
 
     $ python
-    >>> import foobar
-    foobar.__version__
+    >>> import {{cookiecutter.package_name}}
+    {{cookiecutter.package_name}}.__version__
 
 Foobar doesn't do anything, it's a template.
 
