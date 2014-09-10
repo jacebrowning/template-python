@@ -1,14 +1,9 @@
 language: python
 python:
-- 3.3
-- 3.4
-env:
-- TEST_RUNNER=nose
-- TEST_RUNNER=pytest
+  - 3.3
+  - 3.4
 install:
-- pip install coveralls scrutinizer-ocular
-script: make ci
-after_success:
-- coveralls
-- ocular
-
+  - cookiecutter
+script:
+  - cookiecutter . --no-input
+  - cd FooBar; make test

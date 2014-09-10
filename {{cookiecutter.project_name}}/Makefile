@@ -5,7 +5,7 @@ PYTHON_MINOR := 4
 # Test runner settings
 ifndef TEST_RUNNER
 	# options are: nose, pytest
-	TEST_RUNNER := nose
+	TEST_RUNNER := {{cookiecutter.test_runner}}
 endif
 
 # Project settings (automatically detected from files/directories)
