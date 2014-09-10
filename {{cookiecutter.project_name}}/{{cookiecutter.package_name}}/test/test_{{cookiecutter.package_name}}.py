@@ -5,7 +5,7 @@
 import unittest
 
 
-class Test{{cookiecutter.package_name}}(unittest.TestCase):
+class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
 
     """Sample test class."""
 
