@@ -3,7 +3,14 @@ COOKIE := Foobar
 
 all: test
 
-$(COOKIE):
+.PHONY:
+cutter:
+	@if ! hash cookiecutter &> /dev/null; \
+	then                                  \
+		pip install cookiecutter;         \
+	fi;
+
+$(COOKIE): cutter
 	cookiecutter . --no-input
 
 .PHONY: test

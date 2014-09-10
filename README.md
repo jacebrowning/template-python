@@ -22,7 +22,7 @@ Cookiecutter will ask you some basic info (your name, project name, python packa
     - Running tests
     - Running style checkers (`pep8`/`pep257`) and linters (`pylint`)
     - Building documentation
-    - Creating and releasing distributions to PyPi
+    - Creating and releasing distributions to PyPI
 
 [cookiecutter]: https://github.com/audreyr/cookiecutter
 [travis]: https://travis-ci.org/
