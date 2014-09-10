@@ -1,5 +1,6 @@
 {{cookiecutter.project_name}}
 ======
+{{cookiecutter.project_short_description}}
 
 [![Build Status](http://img.shields.io/travis/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/master.svg)](https://travis-ci.org/{{cookiecutter.github_username}}/{{cookiecutter.project_name}})
 [![Coverage Status](http://img.shields.io/coveralls/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}/master.svg)](https://coveralls.io/r/{{cookiecutter.github_username}}/{{cookiecutter.project_name}})
@@ -7,9 +8,7 @@
 [![PyPI Version](http://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 [![PyPI Downloads](http://img.shields.io/pypi/dm/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 
-{{cookiecutter.project_name}} is a template for a typical Python 3 library package.
-
-To adopt for a new project:
+Initial project setup instructions:
 
 * set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
 * remove the `TEST_RUNNER` environment lines in `.travis.yml`
