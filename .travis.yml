@@ -11,4 +11,7 @@ script: make ci
 after_success:
 - coveralls
 - ocular
-
+notifications:
+  email:
+    on_success: never
+    on_failure: always
