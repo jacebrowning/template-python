@@ -42,6 +42,7 @@ else
 endif
 
 # virtualenv executables
+ACTIVATE := $(BIN)/activate
 PYTHON := $(BIN)/python
 PIP := $(BIN)/pip
 EASY_INSTALL := $(BIN)/easy_install
@@ -90,13 +91,13 @@ depends: .depends-ci .depends-dev
 .PHONY: .depends-ci
 .depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 $(TEST_RUNNER) coverage
+	. $(ACTIVATE); pip --upgrade pep8 pep257 $(TEST_RUNNER) coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
 .depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install --upgrade docutils pdoc pylint wheel
+	. $(ACTIVATE); pip --upgrade docutils pdoc pylint wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
