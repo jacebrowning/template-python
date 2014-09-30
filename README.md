@@ -18,8 +18,6 @@ To adopt for a new project:
 * update the links to point to your code repository and badges
 * change the license
 
-
-
 Getting Started
 ===============
 
@@ -28,34 +26,35 @@ Requirements
 
 * Python 3.3+
 
-
 Installation
 ------------
 
-Foobar can be installed with 'pip':
+Foobar can be installed with pip:
 
-    $ pip install Foobar
+```shell
+$ pip install Foobar
+```
 
-Or directly from the source code:
+or directly from the source code:
 
-    $ git clone https://github.com/jacebrowning/template-python.git
-    $ cd template-python
-    $ python setup.py install
-
-
+```shell
+$ git clone https://github.com/jacebrowning/template-python.git
+$ cd template-python
+$ python setup.py install
+```
 
 Basic Usage
 ===========
 
 After installation, abstract base classes can be imported from the package:
 
-    $ python
-    >>> import foobar
-    foobar.__version__
+```shell
+$ python
+>>> import foobar
+foobar.__version__
+```
 
 Foobar doesn't do anything, it's a template.
-
-
 
 For Contributors
 ================
@@ -71,31 +70,40 @@ Requirements
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
-
 Installation
 ------------
 
 Create a virtualenv:
 
-    $ make env
+```shell
+$ make env
+```
 
 Run the tests:
 
-    $ make test
-    $ make tests  # includes integration tests
+```shell
+$ make test
+$ make tests  # includes integration tests
+```
 
 Build the documentation:
 
-    $ make doc
+```shell
+$ make doc
+```
 
 Run static analysis:
 
-    $ make pep8
-    $ make pep257
-    $ make pylint
-    $ make check  # includes all checks
+```shell
+$ make pep8
+$ make pep257
+$ make pylint
+$ make check  # includes all checks
+```
 
 Prepare a release:
 
-    $ make dist  # dry run
-    $ make upload
+```shell
+$ make dist  # dry run
+$ make upload
+```
