@@ -189,16 +189,12 @@ tests-pytest: .depends-ci
 clean: .clean-dist .clean-test .clean-doc .clean-build
 	rm -rf $(ALL)
 
-.PHONY: clean-all
-clean-all: clean clean-env .clean-cache
-
 .PHONY: clean-env
-clean-env:
+clean-env: clean
 	rm -rf $(ENV)
 
-.PHONY: .clean-cache
-.clean-cache:
-	rm -rf .cache
+.PHONY: clean-all
+clean-all: clean clean-env .clean-workspace .clean-cache
 
 .PHONY: .clean-build
 .clean-build:
@@ -217,6 +213,14 @@ clean-env:
 .PHONY: .clean-dist
 .clean-dist:
 	rm -rf dist build
+
+.PHONY: .clean-cache
+.clean-cache:
+	rm -rf .cache
+
+.PHONY: .clean-workspace
+.clean-workspace:
+	rm -rf *.sublime-workspace
 
 # Release ####################################################################
 
