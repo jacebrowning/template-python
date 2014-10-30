@@ -28,7 +28,7 @@ Getting Started
 Requirements
 ------------
 
-* Python 3.3+
+* Python 2.7+ or Python 3.3+
 
 Installation
 ------------
