@@ -4,11 +4,8 @@ python:
 - 3.4
 - 2.7
 env:
-  global:
-    - TRAVIS=true
-  matrix:
-    - TEST_RUNNER=nose
-    - TEST_RUNNER=pytest
+  - TEST_RUNNER=nose
+  - TEST_RUNNER=pytest
 install:
 - pip install coveralls scrutinizer-ocular
 script: make ci
