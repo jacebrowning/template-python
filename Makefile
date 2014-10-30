@@ -1,5 +1,9 @@
 # Python settings
 ifndef TRAVIS
+	# In the Travis build environment .travis.yml handles what the current
+	# version of the `python` executable is. When building locally, the python
+	# version can be selected using the PYTHON_MAJOR and PYTHON_MINOR
+	# environment variables, or by just setting the version explicity here:
 	PYTHON_MAJOR := 3
 	PYTHON_MINOR := 4
 endif
