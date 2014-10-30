@@ -19,7 +19,7 @@ This is a template for a typical Python library following modern packaging conve
 
 Here are few sample projects based on this template:
 
-* [jacebrowning/yorm](https://github.com/jacebrowning/yorm)
+* [jacebrowning/doorstop](https://github.com/jacebrowning/doorstop)
 * [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
 * [theovoss/BoggleSolver](https://github.com/theovoss/BoggleSolver)
 
