@@ -16,7 +16,7 @@ This is a template for a typical Python library following modern packaging conve
 * update the links to point to your code repository and badges
 * change the license
 
-A few sample libraries based on this template:
+Here are few sample projects based on this template:
 
 * [jacebrowning/yorm](https://github.com/jacebrowning/yorm)
 * [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
