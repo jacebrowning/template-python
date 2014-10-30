@@ -7,9 +7,7 @@ Foobar
 [![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
 [![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
 
-Foobar is a template for a typical Python library package.
-
-To adopt for a new project:
+This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Graphviz, and Pandoc to fully automate all development and deployment tasks. To adopt for a new project:
 
 * replace `foobar` and `template-python` with your package name
 * replace `Foobar` with your project name (might be the same as the package)
@@ -17,6 +15,12 @@ To adopt for a new project:
 * remove the `TEST_RUNNER` environment lines in `.travis.yml`
 * update the links to point to your code repository and badges
 * change the license
+
+A few sample libraries based on this template:
+
+* [jacebrowning/yorm](https://github.com/jacebrowning/yorm)
+* [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
+* [theovoss/BoggleSolver](https://github.com/theovoss/BoggleSolver)
 
 Getting Started
 ===============
