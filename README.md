@@ -9,10 +9,11 @@ Foobar
 
 This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Graphviz, and Pandoc to fully automate all development and deployment tasks. To adopt for a new project:
 
-* replace `foobar` and `template-python` with your package name
-* replace `Foobar` with your project name (might be the same as the package)
+* set `PYTHON_MAJOR` and `PYTHON_MINOR` in the `Makefile` to your default Python version
 * set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
 * remove the `TEST_RUNNER` environment lines in `.travis.yml`
+* replace `foobar` and `template-python` with your package name
+* replace `Foobar` with your project name (might be the same as the package)
 * update the links to point to your code repository and badges
 * change the license
 
