@@ -216,7 +216,7 @@ clean-all: clean clean-env .clean-workspace .clean-cache
 
 .PHONY: .clean-cache
 .clean-cache:
-	rm -rf .cache
+	rm -rf $(PIP_CACHE_DIR)
 
 .PHONY: .clean-workspace
 .clean-workspace:
