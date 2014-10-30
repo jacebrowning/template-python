@@ -7,21 +7,25 @@ Foobar
 [![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
 [![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
 
-This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Graphviz, and Pandoc to fully automate all development and deployment tasks. To adopt for a new project:
+This is a template for a typical Python library following modern packaging conventions. It utilizes popular Python libraries, external tools, and web services to fully automate all development and deployment tasks. 
 
-* set `PYTHON_MAJOR` and `PYTHON_MINOR` in the `Makefile` to your default Python version
-* set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
-* remove the `TEST_RUNNER` environment lines in `.travis.yml`
-* replace `foobar` and `template-python` with your package name
-* replace `Foobar` with your project name (might be the same as the package)
-* update the links to point to your code repository and badges
-* change the license
-
-Here are few sample projects based on this template:
+Here are few sample projects to see this template in action:
 
 * [jacebrowning/doorstop](https://github.com/jacebrowning/doorstop)
 * [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
 * [theovoss/BoggleSolver](https://github.com/theovoss/BoggleSolver)
+
+To adopt for your next project:
+
+* download this repository's [source code](https://github.com/jacebrowning/template-python/archive/master.zip) to a new directory
+* set `PYTHON_MAJOR` and `PYTHON_MINOR` in the `Makefile` to your default Python version
+* set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
+* remove the `TEST_RUNNER` [environment lines](https://github.com/jacebrowning/template-python/blob/850cdcbcfec99d9d844482761ed5492274720687/.travis.yml#L6-8) in `.travis.yml`
+* replace all instances of `foobar` and `template-python` with your package name
+* replace all instances of `Foobar` with your project name (might be the same as the package)
+* update all links to point to your code repository and badges
+* change the license
+* replace all the above text with your project's description
 
 Getting Started
 ===============
