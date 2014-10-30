@@ -7,9 +7,7 @@ Foobar
 [![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
 [![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
 
-Foobar is a template for a typical Python 3 library package.
-
-To adopt for a new project:
+Foobar is a template for a typical Python library package. It utilizes popular libraries alongside Make, Graphviz, and Pandoc to fully automate all development and deployment tasks. To adopt for a new project:
 
 * replace `foobar` and `template-python` with your package name
 * replace `Foobar` with your project name (might be the same as the package)
