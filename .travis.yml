@@ -1,11 +1,11 @@
 language: python
 python:
+- 2.7
 - 3.3
 - 3.4
-- 2.7
 env:
-  - TEST_RUNNER=nose
-  - TEST_RUNNER=pytest
+- TEST_RUNNER=nose
+- TEST_RUNNER=pytest
 install:
 - pip install coveralls scrutinizer-ocular
 script: make ci
