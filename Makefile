@@ -1,6 +1,8 @@
 # Python settings
-PYTHON_MAJOR := 3
-PYTHON_MINOR := 4
+ifndef TRAVIS
+	PYTHON_MAJOR := 3
+	PYTHON_MINOR := 4
+endif
 
 # Test runner settings
 ifndef TEST_RUNNER

@@ -7,7 +7,7 @@ Foobar
 [![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
 [![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
 
-Foobar is a template for a typical Python 3 library package.
+Foobar is a template for a typical Python library package.
 
 To adopt for a new project:
 
@@ -24,7 +24,7 @@ Getting Started
 Requirements
 ------------
 
-* Python 3.3+
+* Python 2.7+ or Python 3.3+
 
 Installation
 ------------
