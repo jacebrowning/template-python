@@ -40,13 +40,13 @@ Installation
 
 Foobar can be installed with pip:
 
-```shell
+```
 $ pip install Foobar
 ```
 
 or directly from the source code:
 
-```shell
+```
 $ git clone https://github.com/jacebrowning/template-python.git
 $ cd template-python
 $ python setup.py install
@@ -57,7 +57,7 @@ Basic Usage
 
 After installation, abstract base classes can be imported from the package:
 
-```shell
+```
 $ python
 >>> import foobar
 foobar.__version__
@@ -84,26 +84,26 @@ Installation
 
 Create a virtualenv:
 
-```shell
+```
 $ make env
 ```
 
 Run the tests:
 
-```shell
+```
 $ make test
 $ make tests  # includes integration tests
 ```
 
 Build the documentation:
 
-```shell
+```
 $ make doc
 ```
 
 Run static analysis:
 
-```shell
+```
 $ make pep8
 $ make pep257
 $ make pylint
@@ -112,7 +112,7 @@ $ make check  # includes all checks
 
 Prepare a release:
 
-```shell
+```
 $ make dist  # dry run
 $ make upload
 ```
