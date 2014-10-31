@@ -4,9 +4,9 @@ python:
 - 3.3
 - 3.4
 env:
-  - TEST_RUNNER=nose
-  - TEST_RUNNER=pytest
+- TEST_RUNNER=nose
+- TEST_RUNNER=pytest
 install:
-  - pip install cookiecutter
+- pip install cookiecutter
 script:
-  - make
+- make
