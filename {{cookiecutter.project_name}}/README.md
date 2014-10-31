@@ -8,12 +8,6 @@
 [![PyPI Version](http://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 [![PyPI Downloads](http://img.shields.io/pypi/dm/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 
-Initial project setup instructions:
-
-* set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
-* remove the `TEST_RUNNER` environment lines in `.travis.yml`
-* change the license
-
 
 Getting Started
 ===============
@@ -21,36 +15,37 @@ Getting Started
 Requirements
 ------------
 
-* Python 3.3+
-
+* Python 2.7+ or Python 3.3+
 
 Installation
 ------------
 
-{{cookiecutter.project_name}} can be installed with 'pip':
+{{cookiecutter.project_name}} can be installed with pip:
 
-    $ pip install {{cookiecutter.project_name}}
+```shell
+$ pip install {{cookiecutter.project_name}}
+```
 
-Or directly from the source code:
+or directly from the source code:
 
-    $ git clone https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}.git
-    $ cd {{cookiecutter.project_name}}
-    $ python setup.py install
-
-
+```shell
+$ git clone https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.project_name}}.git
+$ cd {{cookiecutter.project_name}}
+$ python setup.py install
+```
 
 Basic Usage
 ===========
 
 After installation, abstract base classes can be imported from the package:
 
-    $ python
-    >>> import {{cookiecutter.package_name}}
-    {{cookiecutter.package_name}}.__version__
+```shell
+$ python
+>>> import {{cookiecutter.project_name}}
+{{cookiecutter.package_name}}.__version__
+```
 
-Foobar doesn't do anything, it's a template.
-
-
+{{cookiecutter.project_name}} doesn't do anything, it's a template.
 
 For Contributors
 ================
@@ -66,31 +61,40 @@ Requirements
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
-
 Installation
 ------------
 
 Create a virtualenv:
 
-    $ make env
+```shell
+$ make env
+```
 
 Run the tests:
 
-    $ make test
-    $ make tests  # includes integration tests
+```shell
+$ make test
+$ make tests  # includes integration tests
+```
 
 Build the documentation:
 
-    $ make doc
+```shell
+$ make doc
+```
 
 Run static analysis:
 
-    $ make pep8
-    $ make pep257
-    $ make pylint
-    $ make check  # includes all checks
+```shell
+$ make pep8
+$ make pep257
+$ make pylint
+$ make check  # includes all checks
+```
 
 Prepare a release:
 
-    $ make dist  # dry run
-    $ make upload
+```shell
+$ make dist  # dry run
+$ make upload
+```

@@ -1,6 +1,8 @@
 # Python settings
-PYTHON_MAJOR := 3
-PYTHON_MINOR := 4
+ifndef TRAVIS
+	PYTHON_MAJOR := 3
+	PYTHON_MINOR := 4
+endif
 
 # Test runner settings
 ifndef TEST_RUNNER
@@ -55,6 +57,10 @@ NOSE := $(BIN)/nosetests
 PYTEST := $(BIN)/py.test
 COVERAGE := $(BIN)/coverage
 
+# Remove if you don't want pip to cache downloads
+PIP_CACHE_DIR := .cache
+PIP_CACHE := --download-cache $(PIP_CACHE_DIR)
+
 # Flags for PHONY targets
 DEPENDS_CI := $(ENV)/.depends-ci
 DEPENDS_DEV := $(ENV)/.depends-dev
@@ -90,13 +96,13 @@ depends: .depends-ci .depends-dev
 .PHONY: .depends-ci
 .depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 $(TEST_RUNNER) coverage
+	$(PIP) install $(PIP_CACHE) --upgrade pep8 pep257 $(TEST_RUNNER) coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
 .depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install --upgrade pygments docutils pdoc pylint wheel
+	$(PIP) install $(PIP_CACHE) --upgrade pygments docutils pdoc pylint wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
@@ -185,12 +191,12 @@ tests-pytest: .depends-ci
 clean: .clean-dist .clean-test .clean-doc .clean-build
 	rm -rf $(ALL)
 
-.PHONY: clean-all
-clean-all: clean .clean-env
-
-.PHONY: .clean-env
-.clean-env:
+.PHONY: clean-env
+clean-env: clean
 	rm -rf $(ENV)
+
+.PHONY: clean-all
+clean-all: clean clean-env .clean-workspace .clean-cache
 
 .PHONY: .clean-build
 .clean-build:
@@ -209,6 +215,14 @@ clean-all: clean .clean-env
 .PHONY: .clean-dist
 .clean-dist:
 	rm -rf dist build
+
+.PHONY: .clean-cache
+.clean-cache:
+	rm -rf $(PIP_CACHE_DIR)
+
+.PHONY: .clean-workspace
+.clean-workspace:
+	rm -rf *.sublime-workspace
 
 # Release ####################################################################
 

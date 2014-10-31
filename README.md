@@ -1,17 +1,25 @@
 # template-python
 
-A Python 3 project template for [cookiecutter][cookiecutter]
+A Python project template for [cookiecutter][cookiecutter]
 
 [![Build Status](http://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/template-python/master.svg)](https://coveralls.io/r/jacebrowning/template-python)
 [![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/jacebrowning/template-python.svg)](https://scrutinizer-ci.com/g/jacebrowning/template-python/?branch=master)
+
+This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Graphviz, and Pandoc to fully automate all development and deployment tasks.
+
+Here are few sample projects based on this template:
+
+* [jacebrowning/doorstop](https://github.com/jacebrowning/doorstop)
+* [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
+* [theovoss/BoggleSolver](https://github.com/theovoss/BoggleSolver)
 
 # Get Started!
 
     $ pip install cookiecutter
     $ cookiecutter https://github.com/jacebrowning/template-python.git
 
-Cookiecutter will ask you some basic info (your name, project name, python package name, etc.) and generate a base Python 3 project for you.
+Cookiecutter will ask you for some basic info (your name, project name, python package name, etc.) and generate a base Python project for you.
 
 # Features
 
