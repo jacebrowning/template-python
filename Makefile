@@ -1,5 +1,5 @@
 # match default value of project_name from cookiecutter.json
-COOKIE := template-python
+COOKIE := Foobar
 
 all: ci
 
