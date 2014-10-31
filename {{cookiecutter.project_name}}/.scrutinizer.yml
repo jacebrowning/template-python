@@ -5,5 +5,5 @@ checks:
 tools:
     external_code_coverage: true
     pylint:
-        python_version: 3
+        python_version: {{cookiecutter.python_major_version}}
         config_file: '.pylintrc'

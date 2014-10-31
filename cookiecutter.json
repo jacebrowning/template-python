@@ -5,5 +5,7 @@
     "project_name": "template-python",
     "package_name": "foobar",
     "project_short_description": "A Python Template",
-    "test_runner": "nose"
+    "test_runner": "nose",
+    "python_major_version": 3,
+    "python_minor_version": 4
 }

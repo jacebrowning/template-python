@@ -1,7 +1,7 @@
 # Python settings
 ifndef TRAVIS
-	PYTHON_MAJOR := 3
-	PYTHON_MINOR := 4
+	PYTHON_MAJOR := {{cookiecutter.python_major_version}}
+	PYTHON_MINOR := {{cookiecutter.python_minor_version}}
 endif
 
 # Test runner settings
@@ -11,8 +11,8 @@ ifndef TEST_RUNNER
 endif
 
 # Project settings (automatically detected from files/directories)
-PROJECT := $(patsubst ./%.sublime-project,%, $(shell find . -type f -name '*.sublime-p*'))
-PACKAGE := $(patsubst ./%/__init__.py,%, $(shell find . -maxdepth 2 -name '__init__.py'))
+PROJECT := {{cookiecutter.project_name}}
+PACKAGE := {{cookiecutter.package_name}}
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
@@ -25,7 +25,7 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
 else
-	SYS_PYTHON := python$(PYTHON_MAJOR)
+	SYS_PYTHON := python$(PYTHON_MAJOR).$(PYTHON_MINOR)
 	SYS_VIRTUALENV := virtualenv
 endif
 
