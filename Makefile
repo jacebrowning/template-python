@@ -76,7 +76,7 @@ ci: pep8 pep257 test tests
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
 $(EGG_INFO): Makefile setup.py requirements.txt
-	$(PYTHON) setup.py develop
+	VIRTUAL_ENV=$(ENV) $(PYTHON) setup.py develop
 	touch $(EGG_INFO)  # flag to indicate package is installed
 
 .PHONY: .virtualenv
@@ -90,13 +90,13 @@ depends: .depends-ci .depends-dev
 .PHONY: .depends-ci
 .depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	VIRTUAL_ENV=$(ENV) $(PIP) install --upgrade pep8 pep257 $(TEST_RUNNER) coverage
+	$(PIP) install --upgrade pep8 pep257 $(TEST_RUNNER) coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: .depends-dev
 .depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	VIRTUAL_ENV=$(ENV) $(PIP) install --upgrade docutils pdoc pylint wheel
+	$(PIP) install --upgrade docutils pdoc pylint wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
