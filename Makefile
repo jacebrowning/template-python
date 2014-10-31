@@ -1,18 +1,14 @@
 # match default value of project_name from cookiecutter.json
 COOKIE := template-python
 
-all: test
+all: ci
 
 $(COOKIE):
 	cookiecutter . --no-input
 
-.PHONY: test
-test: $(COOKIE)
-	cd $(COOKIE); make test
-
-.PHONY: check
-check: $(COOKIE)
-	cd $(COOKIE); make check
+.PHONY: ci
+ci: $(COOKIE)
+	cd $(COOKIE); make ci
 
 .PHONY: clean
 clean:
