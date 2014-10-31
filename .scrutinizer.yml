@@ -4,3 +4,6 @@ checks:
         duplicate_code: true
 tools:
     external_code_coverage: true
+    pylint:
+        python_version: 3
+        config_file: '.pylintrc'

@@ -7,18 +7,25 @@ Foobar
 [![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
 [![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
 
-Foobar is a template for a typical Python 3 library package.
+This is a template for a typical Python library following modern packaging conventions. It utilizes popular Python libraries, external tools, and web services to fully automate all development and deployment tasks. 
 
-To adopt for a new project:
+Here are few sample projects to see this template in action:
 
-* replace `foobar` and `template-python` with your package name
-* replace `Foobar` with your project name (might be the same as the package)
+* [jacebrowning/doorstop](https://github.com/jacebrowning/doorstop)
+* [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
+* [theovoss/BoggleSolver](https://github.com/theovoss/BoggleSolver)
+
+To adopt for your next project:
+
+* download this repository's [source code](https://github.com/jacebrowning/template-python/archive/master.zip) to a new directory
+* set `PYTHON_MAJOR` and `PYTHON_MINOR` in the `Makefile` to your default Python version
 * set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
-* remove the `TEST_RUNNER` environment lines in `.travis.yml`
-* update the links to point to your code repository and badges
+* remove the `TEST_RUNNER` [environment lines](https://github.com/jacebrowning/template-python/blob/850cdcbcfec99d9d844482761ed5492274720687/.travis.yml#L6-8) in `.travis.yml`
+* replace all instances of `foobar` and `template-python` with your package name
+* replace all instances of `Foobar` with your project name (might be the same as the package)
+* update all links to point to your code repository and badges
 * change the license
-
-
+* replace all the above text with your project's description
 
 Getting Started
 ===============
@@ -26,36 +33,37 @@ Getting Started
 Requirements
 ------------
 
-* Python 3.3+
-
+* Python 2.7+ or Python 3.3+
 
 Installation
 ------------
 
-Foobar can be installed with 'pip':
+Foobar can be installed with pip:
 
-    $ pip install Foobar
+```shell
+$ pip install Foobar
+```
 
-Or directly from the source code:
+or directly from the source code:
 
-    $ git clone https://github.com/jacebrowning/template-python.git
-    $ cd template-python
-    $ python setup.py install
-
-
+```shell
+$ git clone https://github.com/jacebrowning/template-python.git
+$ cd template-python
+$ python setup.py install
+```
 
 Basic Usage
 ===========
 
 After installation, abstract base classes can be imported from the package:
 
-    $ python
-    >>> import foobar
-    foobar.__version__
+```shell
+$ python
+>>> import foobar
+foobar.__version__
+```
 
 Foobar doesn't do anything, it's a template.
-
-
 
 For Contributors
 ================
@@ -71,31 +79,40 @@ Requirements
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
-
 Installation
 ------------
 
 Create a virtualenv:
 
-    $ make env
+```shell
+$ make env
+```
 
 Run the tests:
 
-    $ make test
-    $ make tests  # includes integration tests
+```shell
+$ make test
+$ make tests  # includes integration tests
+```
 
 Build the documentation:
 
-    $ make doc
+```shell
+$ make doc
+```
 
 Run static analysis:
 
-    $ make pep8
-    $ make pep257
-    $ make pylint
-    $ make check  # includes all checks
+```shell
+$ make pep8
+$ make pep257
+$ make pylint
+$ make check  # includes all checks
+```
 
 Prepare a release:
 
-    $ make dist  # dry run
-    $ make upload
+```shell
+$ make dist  # dry run
+$ make upload
+```
