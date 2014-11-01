@@ -50,6 +50,7 @@ EASY_INSTALL := $(BIN)/easy_install
 RST2HTML := $(PYTHON) $(BIN)/rst2html.py
 PDOC := $(PYTHON) $(BIN)/pdoc
 PEP8 := $(BIN)/pep8
+PEP8RADIUS := $(BIN)/pep8radius
 PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
 PYREVERSE := $(BIN)/pyreverse
@@ -102,7 +103,7 @@ $(DEPENDS_CI): Makefile
 .PHONY: .depends-dev
 .depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install $(PIP_CACHE) --upgrade pygments docutils pdoc pylint wheel
+	$(PIP) install $(PIP_CACHE) --upgrade pep8radius pygments docutils pdoc pylint wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
@@ -154,6 +155,10 @@ pep257: .depends-ci
 .PHONY: pylint
 pylint: .depends-dev
 	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc
+
+.PHONY: fix
+fix: .depends-dev
+	$(PEP8RADIUS) --docformatter --in-place
 
 # Testing ####################################################################
 
