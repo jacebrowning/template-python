@@ -5,7 +5,7 @@
 import unittest
 
 
-class TestFooBar(unittest.TestCase):
+class TestFoobar(unittest.TestCase):
 
     """Sample test class."""
 

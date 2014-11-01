@@ -4,8 +4,8 @@ Foobar
 [![Build Status](http://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/template-python/master.svg)](https://coveralls.io/r/jacebrowning/template-python)
 [![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/jacebrowning/template-python.svg)](https://scrutinizer-ci.com/g/jacebrowning/template-python/?branch=master)
-[![PyPI Version](http://img.shields.io/pypi/v/foobar.svg)](https://pypi.python.org/pypi/foobar)
-[![PyPI Downloads](http://img.shields.io/pypi/dm/foobar.svg)](https://pypi.python.org/pypi/foobar)
+[![PyPI Version](http://img.shields.io/pypi/v/Foobar.svg)](https://pypi.python.org/pypi/Foobar)
+[![PyPI Downloads](http://img.shields.io/pypi/dm/Foobar.svg)](https://pypi.python.org/pypi/Foobar)
 
 This is a template for a typical Python library following modern packaging conventions. It utilizes popular Python libraries, external tools, and web services to fully automate all development and deployment tasks. 
 
