@@ -9,4 +9,4 @@ env:
 install:
 - pip install cookiecutter
 script:
-- make
+- make ci
