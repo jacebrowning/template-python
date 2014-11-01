@@ -21,7 +21,7 @@ setuptools.setup(
     version=__version__,
 
     description="{{cookiecutter.project_name}} is a Python 3 package template.",
-    url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.package_name}}',
+    url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}',
     author='{{cookiecutter.full_name}}',
     author_email='{{cookiecutter.email}}',
 
