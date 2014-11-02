@@ -25,7 +25,7 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
 else
-	SYS_PYTHON := python$(PYTHON_MAJOR)
+	SYS_PYTHON := python$(PYTHON_MAJOR).$(PYTHON_MINOR)
 	SYS_VIRTUALENV := virtualenv
 endif
 
