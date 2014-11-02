@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 """
-Setup script for Foobar.
+Setup script for {{cookiecutter.project_name}}.
 """
 
 import setuptools
 
-from foobar import __project__, __version__
+from {{cookiecutter.package_name}} import __project__, __version__
 
 import os
 if os.path.exists('README.rst'):
@@ -20,10 +20,10 @@ setuptools.setup(
     name=__project__,
     version=__version__,
 
-    description="Foobar is a Python 3 package template.",
-    url='https://github.com/jacebrowning/template-python',
-    author='Jace Browning',
-    author_email='jacebrowning@gmail.com',
+    description="{{cookiecutter.project_name}} is a Python 3 package template.",
+    url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}',
+    author='{{cookiecutter.full_name}}',
+    author_email='{{cookiecutter.email}}',
 
     packages=setuptools.find_packages(),
 

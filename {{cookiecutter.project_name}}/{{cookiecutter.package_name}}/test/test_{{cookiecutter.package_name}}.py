@@ -5,7 +5,7 @@
 import unittest
 
 
-class TestFoobar(unittest.TestCase):
+class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
 
     """Sample test class."""
 
