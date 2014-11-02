@@ -1,0 +1,38 @@
+# Temporary Python files
+*.pyc
+*.egg-info
+__pycache__
+
+# Temporary OS files
+Icon*
+
+# Temporary virtualenv files
+.cache
+env
+
+# Generated documentation
+docs/gen
+apidocs
+docs/*.html
+*.rst
+docs/*.png
+
+# Google Drive
+*.gdoc
+*.gsheet
+*.gslides
+*.gdraw
+
+# Testing and coverage results
+.coverage
+pyunit.xml
+
+# Build and release directories
+build
+dist
+
+# Sublime Text
+*.sublime-workspace
+
+# Eclipse
+.settings

@@ -3,7 +3,7 @@ checks:
         code_rating: true
         duplicate_code: true
 tools:
-    external_code_coverage: false
+    external_code_coverage: true
     pylint:
-        python_version: 3
+        python_version: {{cookiecutter.python_major_version}}
         config_file: '.pylintrc'

@@ -1,0 +1,12 @@
+{
+    "full_name": "Jace Browning",
+    "email": "jacebrowning@gmail.com",
+    "github_username": "jacebrowning",
+    "github_repo": "template-python",
+    "project_name": "Foobar",
+    "package_name": "foobar",
+    "project_short_description": "A Python Template",
+    "test_runner": "nose",
+    "python_major_version": 3,
+    "python_minor_version": 4
+}
