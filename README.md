@@ -19,11 +19,6 @@ Here are few sample projects based on this template:
 
 Cookiecutter will ask you for some basic info (your name, project name, python package name, etc.) and generate a base Python project for you.
 
-After Cookiecutter creates your new project from the template:
-
-* set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
-* change the license
-
 ## Features
 
 * Preconfigured setup for [Travis-CI][travis], [Coveralls][coveralls], and [Scrutinizer][scrutinizer]
