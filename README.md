@@ -1,6 +1,6 @@
 # template-python
 
-A Python project template for [cookiecutter][cookiecutter]
+A Python project template for [cookiecutter][cookiecutter].
 
 [![Build Status](http://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 [![Coverage Status](http://img.shields.io/coveralls/jacebrowning/template-python/master.svg)](https://coveralls.io/r/jacebrowning/template-python)
@@ -14,7 +14,7 @@ Here are few sample projects based on this template:
 * [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
 * [theovoss/BoggleSolver](https://github.com/theovoss/BoggleSolver)
 
-# Get Started!
+## Get Started
 
     $ pip install cookiecutter
     $ cookiecutter https://github.com/jacebrowning/template-python.git
@@ -26,7 +26,7 @@ After Cookiecutter creates your new project from the template:
 * set `TEST_RUNNER` in the `Makefile` to your preferred test runner (`nose` or `pytest`)
 * change the license
 
-# Features
+## Features
 
 * Preconfigured setup for [Travis-CI][travis], [Coveralls][coveralls], and [Scrutinizer][scrutinizer]
 * `Makefile` for automating common development tasks:
