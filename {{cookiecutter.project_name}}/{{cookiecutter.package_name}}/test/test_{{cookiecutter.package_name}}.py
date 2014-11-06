@@ -4,6 +4,8 @@
 
 import unittest
 
+from {{cookiecutter.package_name}} import foobar
+
 
 class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
 
@@ -24,3 +26,8 @@ class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
             assert True
         except ImportError:
             self.fail("depenency not installed")
+
+    def test_foobar(self):
+        self.assertEquals(foobar(True), 'True')
+        self.assertEquals(foobar(False), 'False')
+        self.assertEquals(foobar(None), 'None')
