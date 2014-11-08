@@ -10,13 +10,13 @@ ifndef TEST_RUNNER
 	TEST_RUNNER := {{cookiecutter.test_runner}}
 endif
 
-# Project settings (automatically detected from files/directories)
+# Project settings
 PROJECT := {{cookiecutter.project_name}}
 PACKAGE := {{cookiecutter.package_name}}
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
-# System paths (automatically detected from the system Python)
+# System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
 	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
@@ -32,7 +32,7 @@ else
 	SYS_VIRTUALENV := virtualenv
 endif
 
-# virtualenv paths (automatically detected from the system Python)
+# virtualenv paths
 ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
