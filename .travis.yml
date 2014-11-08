@@ -26,11 +26,12 @@ after_script: >
     rm -rf .git ;
 
     # Clone the destination repository
-    git clone https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo tmp ;
+    git clone https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo temp ;
+    mv temp/.git PythonTemplateDemo/.git ;
+    rm -rf temp ;
 
     # Rebuild the repository from the generated files and push to GitHub
     cd PythonTemplateDemo ;
-    mv ../tmp/.git . ;
     git add -A ;
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub" ;
     git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo master ;
