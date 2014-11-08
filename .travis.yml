@@ -27,7 +27,6 @@ after_script: >
 
     # Rebuild the repository from the generated files and push to GitHub
     cd PythonTemplateDemo ;
-    touch .nojekyll ;
     git init ;
     git add . ;
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub" ;
