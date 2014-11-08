@@ -1,7 +1,7 @@
 """A sample module."""
 
 
-def foobar(value):
+def function(value):
     """A function with branches to demonstrate branch coverage reporting."""
     if value is True:
         return 'True'

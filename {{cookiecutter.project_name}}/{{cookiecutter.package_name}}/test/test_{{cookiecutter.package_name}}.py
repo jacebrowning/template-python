@@ -27,8 +27,8 @@ class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
         except ImportError:
             self.fail("depenency not installed")
 
-    def test_foobar(self):
+    def test_branch_coverage(self):
         """Sample test method for branch coverage."""
-        self.assertEquals(sample.foobar(True), 'True')
-        self.assertEquals(sample.foobar(False), 'False')
-        self.assertEquals(sample.foobar(None), 'None')
+        self.assertEquals(sample.function(True), 'True')
+        self.assertEquals(sample.function(False), 'False')
+        self.assertEquals(sample.function(None), 'None')
