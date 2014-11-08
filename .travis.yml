@@ -6,10 +6,32 @@ python:
 env:
 - TEST_RUNNER=nose
 - TEST_RUNNER=pytest
+  global:
+    # Encrypted GH_TOKEN token: http://benlimmer.com/2013/12/26/automatically-publish-javadoc-to-gh-pages-with-travis-ci
+    secure: "MDXLN07Xqf5uKpPC6xqTwvtTAHT5kFzHKjcS+ufLyORTG6NPgpg3e3gukTn8Z00llLeI9Hjj1JNmII/EIIOmiVH5fmpUo6FGyks6gu0zOvK7/w/xMn9irsL1llDo6aaKHJcuI3lmFdCQ45LaxoIWjaKjuRlTT4l98+heC4lejL0="
 install:
 - pip install cookiecutter
 script:
 - make ci
+after_script: >
+  echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST; echo $TRAVIS_PYTHON_VERSION;
+  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_PYTHON_VERSION == '3.4' ]]; then
+
+    # Configure Git with Travis CI information
+    git config --global user.email "travis@travis-ci.org" ;
+    git config --global user.name "travis-ci" ;
+
+    # Delete the current repository
+    rm -rf .git ;
+
+    # Rebuild the repository from the generated files and push to GitHub
+    cd PythonTemplateDemo ;
+    touch .nojekyll ;
+    git init ;
+    git add . ;
+    git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub" ;
+    git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo master ;
+  fi
 notifications:
   email:
     on_success: never
