@@ -18,6 +18,9 @@ after_script: >
   echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST; echo $TRAVIS_PYTHON_VERSION;
   if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_PYTHON_VERSION == '3.4' ]]; then
 
+    # Install dependencies
+    pip install coveralls scrutinizer-ocular
+
     # Configure Git with Travis CI information
     git config --global user.email "travis@travis-ci.org" ;
     git config --global user.name "travis-ci" ;
@@ -32,6 +35,10 @@ after_script: >
     git add . ;
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub" ;
     git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo master ;
+
+    # Upload results
+    coveralls ;
+    ocular ;
   fi
 notifications:
   email:
