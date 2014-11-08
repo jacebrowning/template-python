@@ -183,12 +183,12 @@ tests-nose: .depends-ci
 
 # pytest commands
 
-.PHONY: test-py.test
+.PHONY: test-pytest
 test-pytest: .depends-ci
 	$(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --doctest-modules --junitxml=pyunit.xml
 	$(COVERAGE) report --show-missing --fail-under=100
 
-.PHONY: tests-py.test
+.PHONY: tests-pytest
 tests-pytest: .depends-ci
 	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --doctest-modules --junitxml=pyunit.xml
 	$(COVERAGE) report --show-missing --fail-under=100
