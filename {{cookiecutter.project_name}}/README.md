@@ -53,7 +53,7 @@ For Contributors
 Requirements
 ------------
 
-* GNU Make:
+* Make:
     * Windows: http://cygwin.com/install.html
     * Mac: https://developer.apple.com/xcode
     * Linux: http://www.gnu.org/software/make (likely already installed)

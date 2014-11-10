@@ -4,7 +4,7 @@ A Python project template for [cookiecutter][cookiecutter].
 
 [![Build Status](http://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 
-This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Graphviz, and Pandoc to fully automate all development and deployment tasks.
+This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Pandoc, and Graphviz to fully automate all development and deployment tasks.
 
 A live demo of this template: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
 
