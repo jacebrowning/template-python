@@ -79,7 +79,7 @@ $(ALL): $(SOURCES)
 	touch $(ALL)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ci: pep8 pep257 test tests
+ci: check test tests
 
 # Development Installation ###################################################
 
