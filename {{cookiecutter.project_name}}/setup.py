@@ -30,7 +30,7 @@ setuptools.setup(
     entry_points={'console_scripts': []},
 
     long_description=(README + '\n' + CHANGES),
-    license='WTFPL',
+    license='MIT',
     classifiers=[
         'Development Status :: 1 - Planning',
         'Natural Language :: English',
