@@ -234,16 +234,9 @@ clean-all: clean clean-env .clean-workspace .clean-cache
 
 # Release ####################################################################
 
-.PHONY: .git-no-changes
-.git-no-changes:
-	@if git diff --name-only --exit-code;         \
-	then                                          \
-		echo Git working copy is clean...;        \
-	else                                          \
-		echo ERROR: Git working copy is dirty!;   \
-		echo Commit your changes and try again.;  \
-		exit -1;                                  \
-	fi;
+.PHONY: register
+register: doc
+	$(PYTHON) setup.py register
 
 .PHONY: dist
 dist: check doc test tests
@@ -255,6 +248,17 @@ dist: check doc test tests
 upload: .git-no-changes doc
 	$(PYTHON) setup.py register sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
+
+.PHONY: .git-no-changes
+.git-no-changes:
+	@if git diff --name-only --exit-code;         \
+	then                                          \
+		echo Git working copy is clean...;        \
+	else                                          \
+		echo ERROR: Git working copy is dirty!;   \
+		echo Commit your changes and try again.;  \
+		exit -1;                                  \
+	fi;
 
 # System Installation ########################################################
 
