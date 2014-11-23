@@ -2,6 +2,10 @@
 ifndef TRAVIS
 	PYTHON_MAJOR := {{cookiecutter.python_major_version}}
 	PYTHON_MINOR := {{cookiecutter.python_minor_version}}
+	ENV := env
+else
+	# Use the virtualenv provided by Travis
+	ENV := $(VIRTUAL_ENV)
 endif
 
 # Test runner settings
@@ -33,7 +37,6 @@ else
 endif
 
 # virtualenv paths
-ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	OPEN := cmd /c start
