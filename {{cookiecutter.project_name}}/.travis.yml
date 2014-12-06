@@ -6,6 +6,7 @@ python:
 install:
 - pip install coveralls scrutinizer-ocular
 before_script:
+- make env
 - make .depends-ci
 script:
 - make ci
