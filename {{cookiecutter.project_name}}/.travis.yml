@@ -5,7 +5,10 @@ python:
 - 3.4
 install:
 - pip install coveralls scrutinizer-ocular
-script: make ci
+before_script:
+- make .depends-ci
+script:
+- make ci
 after_success:
 - coveralls
 - ocular
