@@ -95,18 +95,18 @@ $(PIP):
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 
 .PHONY: depends
-depends: .depends-ci .depends-dev
+depends: depends-ci depends-dev
 
-.PHONY: .depends-ci
-.depends-ci: env Makefile $(DEPENDS_CI)
+.PHONY: depends-ci
+depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install $(PIP_CACHE) --upgrade pep8 pep257 $(TEST_RUNNER) coverage
+	$(PIP) install $(PIP_CACHE) --upgrade pep8 pep257 pylint $(TEST_RUNNER) coverage
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
-.PHONY: .depends-dev
-.depends-dev: env Makefile $(DEPENDS_DEV)
+.PHONY: depends-dev
+depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install $(PIP_CACHE) --upgrade pep8radius pygments docutils pdoc pylint wheel
+	$(PIP) install $(PIP_CACHE) --upgrade pep8radius pygments docutils pdoc wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ##############################################################
@@ -115,7 +115,7 @@ $(DEPENDS_DEV): Makefile
 doc: readme apidocs uml
 
 .PHONY: readme
-readme: .depends-dev docs/README-github.html docs/README-pypi.html
+readme: depends-dev docs/README-github.html docs/README-pypi.html
 docs/README-github.html: README.md
 	pandoc -f markdown_github -t html -o docs/README-github.html README.md
 	cp -f docs/README-github.html docs/README.html  # default format is GitHub
@@ -125,12 +125,12 @@ README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
 
 .PHONY: apidocs
-apidocs: .depends-dev apidocs/$(PACKAGE)/index.html
+apidocs: depends-dev apidocs/$(PACKAGE)/index.html
 apidocs/$(PACKAGE)/index.html: $(SOURCES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
 
 .PHONY: uml
-uml: .depends-dev docs/*.png
+uml: depends-dev docs/*.png
 docs/*.png: $(SOURCES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -f ALL -o png --ignore test
 	- mv -f classes_$(PACKAGE).png docs/classes.png
@@ -148,19 +148,19 @@ read: doc
 check: pep8 pep257 pylint
 
 .PHONY: pep8
-pep8: .depends-ci
+pep8: depends-ci
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pep257
-pep257: .depends-ci
+pep257: depends-ci
 	$(PEP257) $(PACKAGE)
 
 .PHONY: pylint
-pylint: .depends-dev
+pylint: depends-ci
 	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc
 
 .PHONY: fix
-fix: .depends-dev
+fix: depends-dev
 	$(PEP8RADIUS) --docformatter --in-place
 
 # Testing ####################################################################
@@ -174,22 +174,22 @@ tests: tests-$(TEST_RUNNER)
 # nosetest commands
 
 .PHONY: test-nose
-test-nose: .depends-ci
+test-nose: depends-ci
 	$(NOSE) --config=.noserc
 
 .PHONY: tests-nose
-tests-nose: .depends-ci
+tests-nose: depends-ci
 	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
 
 # pytest commands
 
 .PHONY: test-pytest
-test-pytest: .depends-ci
+test-pytest: depends-ci
 	$(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --doctest-modules
 	$(COVERAGE) report --show-missing --fail-under=100
 
 .PHONY: tests-pytest
-tests-pytest: .depends-ci
+tests-pytest: depends-ci
 	TEST_INTEGRATION=1 $(MAKE) test
 	$(COVERAGE) report --show-missing --fail-under=100
 
