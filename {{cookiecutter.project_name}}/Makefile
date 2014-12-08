@@ -7,8 +7,7 @@ ifndef TRAVIS
 else
 	# Use the virtualenv provided by Travis
 	ENV := $(VIRTUAL_ENV)
-	mkdir -p $(VIRTUAL_ENV)/env
-	ENV2 := $(VIRTUAL_ENV)/env
+	ENV2 := $(ENV)/env
 endif
 
 # Test runner settings
@@ -92,6 +91,7 @@ ci: check test tests
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
 $(EGG_INFO): Makefile setup.py requirements.txt
+	mkdir -p $(ENV2)
 	VIRTUAL_ENV=$(ENV2) $(PYTHON) setup.py develop
 	touch $(EGG_INFO)  # flag to indicate package is installed
 
