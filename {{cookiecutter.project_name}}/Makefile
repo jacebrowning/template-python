@@ -9,6 +9,8 @@ ifndef TEST_RUNNER
 	# options are: nose, pytest
 	TEST_RUNNER := {{cookiecutter.test_runner}}
 endif
+UNIT_TEST_COVERAGE := 100
+INTEGRATION_TEST_COVERAGE := 100
 
 # Project settings
 PROJECT := {{cookiecutter.project_name}}
@@ -182,12 +184,12 @@ tests-nose: depends-ci
 .PHONY: test-pytest
 test-pytest: depends-ci
 	$(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --doctest-modules
-	$(COVERAGE) report --show-missing --fail-under=100
+	$(COVERAGE) report --show-missing --fail-under=$(UNIT_TEST_COVERAGE)
 
 .PHONY: tests-pytest
 tests-pytest: depends-ci
 	TEST_INTEGRATION=1 $(MAKE) test
-	$(COVERAGE) report --show-missing --fail-under=100
+	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
 
 # Cleanup ####################################################################
 
