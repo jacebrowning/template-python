@@ -200,7 +200,7 @@ clean-env: clean
 	rm -rf $(ENV)
 
 .PHONY: clean-all
-clean-all: clean clean-env .clean-workspace .clean-cache
+clean-all: clean clean-env .clean-workspace
 
 .PHONY: .clean-build
 .clean-build:
@@ -219,10 +219,6 @@ clean-all: clean clean-env .clean-workspace .clean-cache
 .PHONY: .clean-dist
 .clean-dist:
 	rm -rf dist build
-
-.PHONY: .clean-cache
-.clean-cache:
-	rm -rf $(PIP_CACHE_DIR)
 
 .PHONY: .clean-workspace
 .clean-workspace:
