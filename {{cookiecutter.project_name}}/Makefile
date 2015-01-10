@@ -98,7 +98,7 @@ depends: depends-ci depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint $(TEST_RUNNER) coverage
+	$(PIP) install --upgrade pep8 pep257 pylint $(TEST_RUNNER) coverage coveralls scrutinizer-ocular
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
