@@ -17,7 +17,7 @@ And a few sample projects based on this template:
 
 ## Get Started
 
-    $ pip install cookiecutter
+    $ pip install cookiecutter==0.8.0
     $ cookiecutter gh:jacebrowning/template-python
 
 Cookiecutter will ask you for some basic info (your name, project name, python package name, etc.) and generate a base Python project for you.
