@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-"""
-Setup script for {{cookiecutter.project_name}}.
-"""
+"""Setup script for {{cookiecutter.project_name}}."""
 
 import setuptools
 
