@@ -147,11 +147,14 @@ check: pep8 pep257 pylint
 
 .PHONY: pep8
 pep8: depends-ci
+	# E501: line too long (checked by PyLint)
 	$(PEP8) $(PACKAGE) --ignore=E501
 
 .PHONY: pep257
 pep257: depends-ci
-	$(PEP257) $(PACKAGE)
+	# D102: docstring missing (checked by PyLint)
+	# D202: No blank lines allowed *after* function docstring
+	$(PEP257) $(PACKAGE) --ignore=D102,D202
 
 .PHONY: pylint
 pylint: depends-ci
