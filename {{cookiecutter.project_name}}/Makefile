@@ -113,12 +113,11 @@ $(DEPENDS_DEV): Makefile
 doc: readme apidocs uml
 
 .PHONY: readme
-readme: depends-dev docs/README-github.html docs/README-pypi.html
-docs/README-github.html: README.md
-	pandoc -f markdown_github -t html -o docs/README-github.html README.md
-	cp -f docs/README-github.html docs/README.html  # default format is GitHub
-docs/README-pypi.html: README.rst
-	$(RST2HTML) README.rst docs/README-pypi.html
+readme: depends-dev README-github.html README-pypi.html
+README-github.html: README.md
+	pandoc -f markdown_github -t html -o README-github.html README.md
+README-pypi.html: README.rst
+	$(RST2HTML) README.rst README-pypi.html
 README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
 
@@ -137,8 +136,8 @@ docs/*.png: $(SOURCES)
 .PHONY: read
 read: doc
 	$(OPEN) apidocs/$(PACKAGE)/index.html
-	$(OPEN) docs/README-pypi.html
-	$(OPEN) docs/README-github.html
+	$(OPEN) README-pypi.html
+	$(OPEN) README-github.html
 
 # Static Analysis ############################################################
 
@@ -215,7 +214,7 @@ clean-all: clean clean-env .clean-workspace
 
 .PHONY: .clean-doc
 .clean-doc:
-	rm -rf README.rst apidocs docs/*.html docs/*.png
+	rm -rf README.rst apidocs *.html docs/*.png
 
 .PHONY: .clean-test
 .clean-test:
