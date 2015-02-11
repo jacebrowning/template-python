@@ -37,7 +37,7 @@ $ python setup.py install
 Basic Usage
 ===========
 
-After installation, abstract base classes can be imported from the package:
+After installation, the package can imported:
 
 ```
 $ python
