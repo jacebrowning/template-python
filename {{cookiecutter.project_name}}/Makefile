@@ -171,25 +171,23 @@ test: test-$(TEST_RUNNER)
 .PHONY: tests
 tests: tests-$(TEST_RUNNER)
 
-COVERAGE_HTML_DIR := .coverage-html
-
 .PHONY: read-coverage
 read-coverage:
-	$(OPEN) $(COVERAGE_HTML_DIR)/index.html
+	$(OPEN) .coverage-html/index.html
 
 # nosetest commands
 
 .PHONY: test-nose
 test-nose: depends-ci
-	$(COVERAGE) erase; rm -rf $(COVERAGE_HTML_DIR)
+	$(COVERAGE) erase; rm -rf .coverage-html
 	$(NOSE) --config=.noserc
-	$(COVERAGE) html --directory $(COVERAGE_HTML_DIR)
+	$(COVERAGE) html --directory .coverage-html
 
 .PHONY: tests-nose
 tests-nose: depends-ci
-	$(COVERAGE) erase; rm -rf $(COVERAGE_HTML_DIR)
+	$(COVERAGE) erase; rm -rf .coverage-html
 	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
-	$(COVERAGE) html --directory $(COVERAGE_HTML_DIR)
+	$(COVERAGE) html --directory .coverage-html
 
 # pytest commands
 
@@ -233,7 +231,7 @@ clean-all: clean clean-env .clean-workspace
 .PHONY: .clean-test
 .clean-test:
 	rm -rf .coverage
-	rm -rf $(COVERAGE_HTML_DIR)
+	rm -rf .coverage-html
 
 .PHONY: .clean-dist
 .clean-dist:
