@@ -171,26 +171,40 @@ test: test-$(TEST_RUNNER)
 .PHONY: tests
 tests: tests-$(TEST_RUNNER)
 
+COVERAGE_HTML_DIR := .coverage-html
+
+.PHONY: read-coverage
+read-coverage:
+	$(OPEN) $(COVERAGE_HTML_DIR)/index.html
+
 # nosetest commands
 
 .PHONY: test-nose
 test-nose: depends-ci
+	$(COVERAGE) erase; rm -rf $(COVERAGE_HTML_DIR)
 	$(NOSE) --config=.noserc
+	$(COVERAGE) html --directory $(COVERAGE_HTML_DIR)
 
 .PHONY: tests-nose
 tests-nose: depends-ci
+	$(COVERAGE) erase; rm -rf $(COVERAGE_HTML_DIR)
 	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
+	$(COVERAGE) html --directory $(COVERAGE_HTML_DIR)
 
 # pytest commands
 
 .PHONY: test-pytest
 test-pytest: depends-ci
-	$(COVERAGE) run --source $(PACKAGE) -m py.test $(PACKAGE) --doctest-modules
+	$(COVERAGE) erase; rm -rf .coverage-html
+	$(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
+	$(COVERAGE) html --directory .coverage-html
 	$(COVERAGE) report --show-missing --fail-under=$(UNIT_TEST_COVERAGE)
 
 .PHONY: tests-pytest
 tests-pytest: depends-ci
-	TEST_INTEGRATION=1 $(MAKE) test
+	$(COVERAGE) erase; rm -rf .coverage-html
+	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
+	$(COVERAGE) html --directory .coverage-html
 	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
 
 # Cleanup ####################################################################
@@ -219,6 +233,7 @@ clean-all: clean clean-env .clean-workspace
 .PHONY: .clean-test
 .clean-test:
 	rm -rf .coverage
+	rm -rf $(COVERAGE_HTML_DIR)
 
 .PHONY: .clean-dist
 .clean-dist:
