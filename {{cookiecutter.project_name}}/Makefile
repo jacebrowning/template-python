@@ -1,22 +1,22 @@
+# Project settings
+PROJECT := {{cookiecutter.project_name}}
+PACKAGE := {{cookiecutter.package_name}}
+SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
+EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
+
 # Python settings
 ifndef TRAVIS
 	PYTHON_MAJOR := {{cookiecutter.python_major_version}}
 	PYTHON_MINOR := {{cookiecutter.python_minor_version}}
 endif
 
-# Test runner settings
+# Test settings
 ifndef TEST_RUNNER
 	# options are: nose, pytest
 	TEST_RUNNER := {{cookiecutter.test_runner}}
 endif
 UNIT_TEST_COVERAGE := 100
 INTEGRATION_TEST_COVERAGE := 100
-
-# Project settings
-PROJECT := {{cookiecutter.project_name}}
-PACKAGE := {{cookiecutter.package_name}}
-SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
-EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
@@ -68,7 +68,7 @@ DEPENDS_CI := $(ENV)/.depends-ci
 DEPENDS_DEV := $(ENV)/.depends-dev
 ALL := $(ENV)/.all
 
-# Main Targets ###############################################################
+# Main Targets #################################################################
 
 .PHONY: all
 all: depends doc $(ALL)
@@ -79,7 +79,7 @@ $(ALL): $(SOURCES)
 .PHONY: ci
 ci: check test tests
 
-# Development Installation ###################################################
+# Development Installation #####################################################
 
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
@@ -108,7 +108,7 @@ $(DEPENDS_DEV): Makefile
 	$(PIP) install --upgrade pep8radius pygments docutils pdoc wheel
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
-# Documentation ##############################################################
+# Documentation ################################################################
 
 .PHONY: doc
 doc: readme apidocs uml
@@ -140,7 +140,7 @@ read: doc
 	$(OPEN) README-pypi.html
 	$(OPEN) README-github.html
 
-# Static Analysis ############################################################
+# Static Analysis ##############################################################
 
 .PHONY: check
 check: pep8 pep257 pylint
@@ -164,7 +164,7 @@ pylint: depends-ci
 fix: depends-dev
 	$(PEP8RADIUS) --docformatter --in-place
 
-# Testing ####################################################################
+# Testing ######################################################################
 
 .PHONY: test
 test: test-$(TEST_RUNNER)
@@ -202,7 +202,7 @@ tests-pytest: depends-ci .clean-test
 	$(COVERAGE) html --directory .coverage-html
 	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
 
-# Cleanup ####################################################################
+# Cleanup ######################################################################
 
 .PHONY: clean
 clean: .clean-dist .clean-test .clean-doc .clean-build
@@ -237,7 +237,7 @@ clean-all: clean clean-env .clean-workspace
 .clean-workspace:
 	rm -rf *.sublime-workspace
 
-# Release ####################################################################
+# Release ######################################################################
 
 .PHONY: register
 register: doc
@@ -265,7 +265,7 @@ upload: .git-no-changes doc
 		exit -1;                                  \
 	fi;
 
-# System Installation ########################################################
+# System Installation ##########################################################
 
 .PHONY: develop
 develop:
