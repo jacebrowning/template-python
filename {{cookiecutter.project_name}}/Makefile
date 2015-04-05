@@ -11,10 +11,6 @@ ifndef TRAVIS
 endif
 
 # Test settings
-ifndef TEST_RUNNER
-	# options are: nose, pytest
-	TEST_RUNNER := {{cookiecutter.test_runner}}
-endif
 UNIT_TEST_COVERAGE := 100
 INTEGRATION_TEST_COVERAGE := 100
 
@@ -99,8 +95,10 @@ depends: depends-ci depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint $(TEST_RUNNER) coverage
-	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
+	$(PIP) install --upgrade pep8 pep257 pylint coverage
+{% if cookiecutter.test_runner == "nose" %}	$(PIP) install --upgrade nose
+{% elif cookiecutter.test_runner == "pytest" %}	$(PIP) install --upgrade pytest
+{% endif %}	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV)
@@ -165,42 +163,32 @@ fix: depends-dev
 	$(PEP8RADIUS) --docformatter --in-place
 
 # Testing ######################################################################
-
+{% if cookiecutter.test_runner == "nose" %}
 .PHONY: test
-test: test-$(TEST_RUNNER)
-
-.PHONY: tests
-tests: tests-$(TEST_RUNNER)
-
-.PHONY: read-coverage
-read-coverage:
-	$(OPEN) .coverage-html/index.html
-
-# nosetest commands
-
-.PHONY: test-nose
-test-nose: depends-ci .clean-test
+test: depends-ci .clean-test
 	$(NOSE) --config=.noserc
 	$(COVERAGE) html --directory .coverage-html
 
-.PHONY: tests-nose
-tests-nose: depends-ci .clean-test
+.PHONY: tests
+tests: depends-ci .clean-test
 	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
 	$(COVERAGE) html --directory .coverage-html
-
-# pytest commands
-
-.PHONY: test-pytest
-test-pytest: depends-ci .clean-test
+{% elif cookiecutter.test_runner == "pytest" %}
+.PHONY: test
+test: depends-ci .clean-test
 	$(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
 	$(COVERAGE) html --directory .coverage-html
 	$(COVERAGE) report --show-missing --fail-under=$(UNIT_TEST_COVERAGE)
 
-.PHONY: tests-pytest
-tests-pytest: depends-ci .clean-test
+.PHONY: tests
+tests: depends-ci .clean-test
 	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
 	$(COVERAGE) html --directory .coverage-html
 	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
+{% endif %}
+.PHONY: read-coverage
+read-coverage:
+	$(OPEN) .coverage-html/index.html
 
 # Cleanup ######################################################################
 
