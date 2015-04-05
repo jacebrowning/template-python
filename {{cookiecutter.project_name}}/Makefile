@@ -167,24 +167,32 @@ fix: depends-dev
 .PHONY: test
 test: depends-ci .clean-test
 	$(NOSE) --config=.noserc
-	$(COVERAGE) html --directory .coverage-html
+ifndef TRAVIS
+	$(COVERAGE) html --directory .coverage-html --fail-under=$(UNIT_TEST_COVERAGE)
+endif
 
 .PHONY: tests
 tests: depends-ci .clean-test
 	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
-	$(COVERAGE) html --directory .coverage-html
+ifndef TRAVIS
+	$(COVERAGE) html --directory .coverage-html --fail-under=$(INTEGRATION_TEST_COVERAGE)
+endif
 {% elif cookiecutter.test_runner == "pytest" %}
 .PHONY: test
 test: depends-ci .clean-test
 	$(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
+ifndef TRAVIS
 	$(COVERAGE) html --directory .coverage-html
 	$(COVERAGE) report --show-missing --fail-under=$(UNIT_TEST_COVERAGE)
+endif
 
 .PHONY: tests
 tests: depends-ci .clean-test
 	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
+ifndef TRAVIS
 	$(COVERAGE) html --directory .coverage-html
 	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
+endif
 {% endif %}
 .PHONY: read-coverage
 read-coverage:
