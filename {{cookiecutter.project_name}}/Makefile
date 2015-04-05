@@ -95,10 +95,9 @@ depends: depends-ci depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint coverage
-{% if cookiecutter.test_runner == "nose" %}	$(PIP) install --upgrade nose
-{% elif cookiecutter.test_runner == "pytest" %}	$(PIP) install --upgrade pytest
-{% endif %}	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
+	{% set dev_packages = ['pep8', 'pep257', 'pylint', 'coverage', cookiecutter.test_runner] -%}
+	$(PIP) install --upgrade {{ ' '.join(dev_packages) }}
+	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV)
