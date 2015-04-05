@@ -14,9 +14,9 @@ ci: $(COOKIE)
 
 $(COOKIE): Makefile cookiecutter.json $(CC_FILES)
 ifeq ($(TEST_RUNNER),nose)
-	sed -i '' "s/pytest/nose/g" cookiecutter.json
+	sed "s/pytest/nose/g" cookiecutter.json > tmp && mv tmp cookiecutter.json
 else ifeq ($(TEST_RUNNER),pytest)
-	sed -i '' "s/nose/pytest/g" cookiecutter.json
+	sed "s/nose/pytest/g" cookiecutter.json > tmp && mv tmp cookiecutter.json
 endif
 	cookiecutter . --no-input
 
