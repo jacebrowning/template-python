@@ -92,9 +92,12 @@ $ make pylint
 $ make check  # includes all checks
 ```
 
-Prepare a release:
+Release to PyPI:
 
 ```
-$ make dist  # dry run
+# Upload your package to the testpypi server to make sure everything is OK
+$ make upload-test
+
+# Upload your package to the real PyPI server
 $ make upload
 ```

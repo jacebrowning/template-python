@@ -121,6 +121,7 @@ README-pypi.html: README.rst
 	$(RST2HTML) README.rst README-pypi.html
 README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
+	$(PYTHON) setup.py check -rsm
 
 .PHONY: apidocs
 apidocs: depends-dev apidocs/$(PACKAGE)/index.html
@@ -239,18 +240,8 @@ clean-all: clean clean-env .clean-workspace
 
 # Release ######################################################################
 
-.PHONY: dist
-dist: check doc test tests
-	$(PYTHON) setup.py sdist
-	$(PYTHON) setup.py bdist_wheel
-	$(MAKE) read
-
-.PHONY: check-readme
-check-readme: doc
-	$(PYTHON) setup.py check -rsm
-
 .PHONY: register-test
-register-test: check-readme
+register-test: doc
 	$(PYTHON) setup.py register --strict --repository https://testpypi.python.org/pypi
 
 .PHONY: upload-test
@@ -260,7 +251,7 @@ upload-test: .git-no-changes register-test
 	$(OPEN) https://testpypi.python.org/pypi/$(PROJECT)
 
 .PHONY: register
-register: check-readme
+register: doc
 	$(PYTHON) setup.py register --strict
 
 .PHONY: upload
