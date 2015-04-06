@@ -8,6 +8,12 @@ EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 ifndef TRAVIS
 	PYTHON_MAJOR := {{cookiecutter.python_major_version}}
 	PYTHON_MINOR := {{cookiecutter.python_minor_version}}
+	ENV := env
+	ENV2 := $(ENV)
+else
+	# Use the virtualenv provided by Travis
+	ENV := $(VIRTUAL_ENV)
+	ENV2 := $(ENV)/env
 endif
 
 # Test settings
@@ -31,7 +37,6 @@ else
 endif
 
 # virtualenv paths
-ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	OPEN := cmd /c start
@@ -80,7 +85,8 @@ ci: check test tests
 .PHONY: env
 env: .virtualenv $(EGG_INFO)
 $(EGG_INFO): Makefile setup.py requirements.txt
-	VIRTUAL_ENV=$(ENV) $(PYTHON) setup.py develop
+	mkdir -p $(ENV2)
+	VIRTUAL_ENV=$(ENV2) $(PYTHON) setup.py develop
 	touch $(EGG_INFO)  # flag to indicate package is installed
 
 .PHONY: .virtualenv
