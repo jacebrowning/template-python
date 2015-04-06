@@ -11,10 +11,6 @@ ifndef TRAVIS
 endif
 
 # Test settings
-ifndef TEST_RUNNER
-	# options are: nose, pytest
-	TEST_RUNNER := {{cookiecutter.test_runner}}
-endif
 UNIT_TEST_COVERAGE := 100
 INTEGRATION_TEST_COVERAGE := 100
 
@@ -99,7 +95,8 @@ depends: depends-ci depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint $(TEST_RUNNER) coverage
+	{% set dev_packages = ['pep8', 'pep257', 'pylint', 'coverage', cookiecutter.test_runner] -%}
+	$(PIP) install --upgrade {{ ' '.join(dev_packages) }}
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
@@ -165,42 +162,40 @@ fix: depends-dev
 	$(PEP8RADIUS) --docformatter --in-place
 
 # Testing ######################################################################
-
+{% if cookiecutter.test_runner == "nose" %}
 .PHONY: test
-test: test-$(TEST_RUNNER)
+test: depends-ci .clean-test
+	$(NOSE) --config=.noserc
+ifndef TRAVIS
+	$(COVERAGE) html --directory .coverage-html --fail-under=$(UNIT_TEST_COVERAGE)
+endif
 
 .PHONY: tests
-tests: tests-$(TEST_RUNNER)
+tests: depends-ci .clean-test
+	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
+ifndef TRAVIS
+	$(COVERAGE) html --directory .coverage-html --fail-under=$(INTEGRATION_TEST_COVERAGE)
+endif
+{% elif cookiecutter.test_runner == "pytest" %}
+.PHONY: test
+test: depends-ci .clean-test
+	$(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
+ifndef TRAVIS
+	$(COVERAGE) html --directory .coverage-html
+	$(COVERAGE) report --show-missing --fail-under=$(UNIT_TEST_COVERAGE)
+endif
 
+.PHONY: tests
+tests: depends-ci .clean-test
+	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
+ifndef TRAVIS
+	$(COVERAGE) html --directory .coverage-html
+	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
+endif
+{% endif %}
 .PHONY: read-coverage
 read-coverage:
 	$(OPEN) .coverage-html/index.html
-
-# nosetest commands
-
-.PHONY: test-nose
-test-nose: depends-ci .clean-test
-	$(NOSE) --config=.noserc
-	$(COVERAGE) html --directory .coverage-html
-
-.PHONY: tests-nose
-tests-nose: depends-ci .clean-test
-	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
-	$(COVERAGE) html --directory .coverage-html
-
-# pytest commands
-
-.PHONY: test-pytest
-test-pytest: depends-ci .clean-test
-	$(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
-	$(COVERAGE) html --directory .coverage-html
-	$(COVERAGE) report --show-missing --fail-under=$(UNIT_TEST_COVERAGE)
-
-.PHONY: tests-pytest
-tests-pytest: depends-ci .clean-test
-	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
-	$(COVERAGE) html --directory .coverage-html
-	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
 
 # Cleanup ######################################################################
 
