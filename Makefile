@@ -13,8 +13,13 @@ ci: $(COOKIE)
 	cd $(COOKIE); make ci
 
 $(COOKIE): Makefile cookiecutter.json $(CC_FILES)
+ifeq ($(TEST_RUNNER),nose)
+	sed "s/pytest/nose/g" cookiecutter.json > tmp && mv tmp cookiecutter.json
+else ifeq ($(TEST_RUNNER),pytest)
+	sed "s/nose/pytest/g" cookiecutter.json > tmp && mv tmp cookiecutter.json
+endif
 	cookiecutter . --no-input
 
 .PHONY: clean
 clean:
-	rm -r $(COOKIE)
+	rm -rf $(COOKIE)
