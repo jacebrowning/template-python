@@ -102,7 +102,7 @@ $(DEPENDS_CI): Makefile
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install --upgrade pep8radius pygments docutils pdoc wheel readme
+	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ################################################################
