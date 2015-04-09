@@ -121,7 +121,7 @@ README.rst: README.md
 
 .PHONY: verify-readme
 verify-readme: README.rst
-	$(PYTHON) setup.py check -rsm
+	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 
 .PHONY: apidocs
 apidocs: depends-dev apidocs/$(PACKAGE)/index.html
