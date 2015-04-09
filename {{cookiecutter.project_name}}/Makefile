@@ -108,7 +108,7 @@ $(DEPENDS_DEV): Makefile
 # Documentation ################################################################
 
 .PHONY: doc
-doc: readme apidocs uml
+doc: readme verify-readme apidocs uml
 
 .PHONY: readme
 readme: depends-dev README-github.html README-pypi.html
@@ -118,6 +118,9 @@ README-pypi.html: README.rst
 	$(RST2HTML) README.rst README-pypi.html
 README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
+
+.PHONY: verify-readme
+verify-readme: README.rst
 	$(PYTHON) setup.py check -rsm
 
 .PHONY: apidocs
