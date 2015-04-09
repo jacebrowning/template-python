@@ -43,9 +43,9 @@ $ make pylint
 $ make check  # includes all checks
 ```
 
-Prepare a release:
+Release to PyPI:
 
 ```
-$ make dist  # dry run
+$ make upload-test  # dry run upload to a test server
 $ make upload
 ```
