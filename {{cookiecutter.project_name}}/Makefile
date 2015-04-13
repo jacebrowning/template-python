@@ -95,8 +95,8 @@ depends: depends-ci depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint
-		{%- if cookiecutter.test_runner == "nose" %} nose coverage
+	$(PIP) install --upgrade pep8 pep257 pylint coverage
+		{%- if cookiecutter.test_runner == "nose" %} nose
 		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-cov
 		{%- endif %}
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
