@@ -96,5 +96,14 @@
 				<arguments>1.0-name-matches-false-false-dist</arguments>
 			</matcher>
 		</filter>
+		<filter>
+			<id>1429034866152</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-htmlcov</arguments>
+			</matcher>
+		</filter>
 	</filteredResources>
 </projectDescription>
