@@ -95,8 +95,10 @@ depends: depends-ci depends-dev
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI)
 $(DEPENDS_CI): Makefile
-	{% set dev_packages = ['pep8', 'pep257', 'pylint', 'coverage', cookiecutter.test_runner] -%}
-	$(PIP) install --upgrade {{ ' '.join(dev_packages) }}
+	$(PIP) install --upgrade pep8 pep257 pylint coverage
+		{%- if cookiecutter.test_runner == "nose" %} nose
+		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-cov
+		{%- endif %}
 	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
@@ -171,35 +173,31 @@ fix: depends-dev
 test: depends-ci .clean-test
 	$(NOSE) --config=.noserc
 ifndef TRAVIS
-	$(COVERAGE) html --directory .coverage-html --fail-under=$(UNIT_TEST_COVERAGE)
+	$(COVERAGE) html --directory htmlcov --fail-under=$(UNIT_TEST_COVERAGE)
 endif
 
 .PHONY: tests
 tests: depends-ci .clean-test
 	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
 ifndef TRAVIS
-	$(COVERAGE) html --directory .coverage-html --fail-under=$(INTEGRATION_TEST_COVERAGE)
+	$(COVERAGE) html --directory htmlcov --fail-under=$(INTEGRATION_TEST_COVERAGE)
 endif
 {% elif cookiecutter.test_runner == "pytest" %}
+PYTEST_OPTS := --doctest-modules --cov=$(PACKAGE) --cov-report=term-missing --cov-report=html
+
 .PHONY: test
 test: depends-ci .clean-test
-	$(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
-ifndef TRAVIS
-	$(COVERAGE) html --directory .coverage-html
-	$(COVERAGE) report --show-missing --fail-under=$(UNIT_TEST_COVERAGE)
-endif
+	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
+	$(COVERAGE) report --fail-under=$(UNIT_TEST_COVERAGE) > /dev/null
 
 .PHONY: tests
 tests: depends-ci .clean-test
-	TEST_INTEGRATION=1 $(COVERAGE) run --source $(PACKAGE) --module py.test $(PACKAGE) --doctest-modules
-ifndef TRAVIS
-	$(COVERAGE) html --directory .coverage-html
-	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
-endif
+	TEST_INTEGRATION=1 $(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
+	$(COVERAGE) report --fail-under=$(INTEGRATION_TEST_COVERAGE) > /dev/null
 {% endif %}
 .PHONY: read-coverage
 read-coverage:
-	$(OPEN) .coverage-html/index.html
+	$(OPEN) htmlcov/index.html
 
 # Cleanup ######################################################################
 
@@ -226,7 +224,7 @@ clean-all: clean clean-env .clean-workspace
 
 .PHONY: .clean-test
 .clean-test:
-	rm -rf .coverage .coverage-html
+	rm -rf .coverage htmlcov
 
 .PHONY: .clean-dist
 .clean-dist:
