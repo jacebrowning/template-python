@@ -207,7 +207,7 @@ endif
 test-all: tests
 .PHONY: test-all
 tests: depends-ci .clean-test
-	$(NOSE) $(NOSE_OPTS) -xv
+	$(NOSE) $(PACKAGE) tests $(NOSE_OPTS) -xv
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
