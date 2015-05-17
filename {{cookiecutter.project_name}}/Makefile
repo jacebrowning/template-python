@@ -228,7 +228,7 @@ test-int: depends-ci .clean-test
 test-all: tests
 .PHONY: tests
 tests: depends-ci .clean-test
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests --exitfirst
+	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
 	$(COVERAGE) report --fail-under=$(COMBINED_TEST_COVERAGE) > /dev/null
 {% endif %}
 .PHONY: read-coverage
