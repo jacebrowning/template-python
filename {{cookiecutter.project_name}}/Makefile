@@ -112,11 +112,11 @@ $(DEPENDS_CI): Makefile
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme sniffer pync
+	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme sniffer
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
 else ifdef MAC
-	$(PIP) install --upgrade MacFSEvents
+	$(PIP) install --upgrade pync MacFSEvents
 else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif
@@ -237,7 +237,7 @@ read-coverage:
 
 .PHONY: watch
 watch: depends-dev
-	touch htmlcov/index.html && $(MAKE) read-coverage
+	mkdir -p htmlcov && touch htmlcov/index.html && $(MAKE) read-coverage
 	$(SNIFFER)
 
 # Cleanup ######################################################################
