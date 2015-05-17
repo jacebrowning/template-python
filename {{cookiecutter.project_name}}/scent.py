@@ -2,6 +2,7 @@
 
 {% endif -%}
 import os
+import time
 import subprocess
 
 from sniffer.api import select_runnable, file_validator, runnable
@@ -21,6 +22,8 @@ def py_files(filename):
 @runnable
 def python_tests(*args):
 
+    group = int(time.time())  # unique per run
+
     for count, (command, title) in enumerate((
         (('make', 'test-unit'), "Unit Tests"),
         (('make', 'test-int'), "Integration Tests"),
@@ -31,10 +34,10 @@ def python_tests(*args):
 
         if failure:
             mark = "❌" * count
-            Notifier.notify(mark + " [FAIL] " + mark, title=title)
+            Notifier.notify(mark + " [FAIL] " + mark, title=title, group=group)
             return False
         else:
             mark = "✅" * count
-            Notifier.notify(mark + " [PASS] " + mark, title=title)
+            Notifier.notify(mark + " [PASS] " + mark, title=title, group=group)
 
     return True
