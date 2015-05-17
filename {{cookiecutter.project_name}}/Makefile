@@ -115,11 +115,9 @@ $(DEPENDS_DEV): Makefile
 	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme sniffer pync
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
-endif
-ifdef MAC
+else ifdef MAC
 	$(PIP) install --upgrade MacFSEvents
-endif
-ifdef LINUX
+else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
