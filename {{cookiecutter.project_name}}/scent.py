@@ -1,5 +1,6 @@
-# -*- coding: utf-8 -*-
+{%- if cookiecutter.python_major_version == "2" -%}# -*- coding: utf-8 -*-
 
+{% endif -%}
 import os
 import subprocess
 
