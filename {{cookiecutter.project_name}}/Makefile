@@ -11,18 +11,25 @@ ifndef TRAVIS
 endif
 
 # Test settings
-UNIT_TEST_COVERAGE := 100
-INTEGRATION_TEST_COVERAGE := 100
+UNIT_TEST_COVERAGE := 94
+INTEGRATION_TEST_COVERAGE := 47
+COMBINED_TEST_COVERAGE := 100
 
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
+	WINDOWS := 1
 	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
 	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
 	SYS_VIRTUALENV := $(SYS_PYTHON_DIR)\\Scripts\\virtualenv.exe
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
 else
+	ifneq ($(findstring darwin, $(PLATFORM)), )
+		MAC := 1
+	else
+		LINUX := 1
+	endif
 	SYS_PYTHON := python$(PYTHON_MAJOR)
 	ifdef PYTHON_MINOR
 		SYS_PYTHON := $(SYS_PYTHON).$(PYTHON_MINOR)
@@ -58,6 +65,7 @@ PYREVERSE := $(BIN)/pyreverse
 NOSE := $(BIN)/nosetests
 PYTEST := $(BIN)/py.test
 COVERAGE := $(BIN)/coverage
+SNIFFER := $(BIN)/sniffer
 
 # Flags for PHONY targets
 DEPENDS_CI := $(ENV)/.depends-ci
@@ -104,7 +112,16 @@ $(DEPENDS_CI): Makefile
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV)
 $(DEPENDS_DEV): Makefile
-	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme
+	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme sniffer pync
+ifdef WINDOWS
+	$(PIP) install --upgrade pywin32
+endif
+ifdef MAC
+	$(PIP) install --upgrade MacFSEvents
+endif
+ifdef LINUX
+	$(PIP) install --upgrade pyinotify
+endif
 	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
 
 # Documentation ################################################################
@@ -168,35 +185,62 @@ fix: depends-dev
 
 # Testing ######################################################################
 {% if cookiecutter.test_runner == "nose" %}
+NOSE_OPTS := --with-doctest --with-coverage --cover-package=$(PACKAGE)
+
+.PHONY: test-unit
+test-unit: test
 .PHONY: test
 test: depends-ci .clean-test
-	$(NOSE) --config=.noserc
+	$(NOSE) $(PACKAGE) $(NOSE_OPTS)
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(UNIT_TEST_COVERAGE)
 endif
 
-.PHONY: tests
-tests: depends-ci .clean-test
-	TEST_INTEGRATION=1 $(NOSE) --config=.noserc --cover-package=$(PACKAGE) -xv
+.PHONY: test-int
+test-int: depends-ci .clean-test
+	$(NOSE) tests $(NOSE_OPTS)
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(INTEGRATION_TEST_COVERAGE)
+endif
+
+.PHONY: test-all
+test-all: tests
+.PHONY: test-all
+tests: depends-ci .clean-test
+	$(NOSE) $(NOSE_OPTS) -xv
+ifndef TRAVIS
+	$(COVERAGE) html --directory htmlcov --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
 {% elif cookiecutter.test_runner == "pytest" %}
 PYTEST_OPTS := --doctest-modules --cov=$(PACKAGE) --cov-report=term-missing --cov-report=html
 
+.PHONY: test-unit
+test-unit: test
 .PHONY: test
 test: depends-ci .clean-test
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	$(COVERAGE) report --fail-under=$(UNIT_TEST_COVERAGE) > /dev/null
 
+.PHONY: test-int
+test-int: depends-ci .clean-test
+	$(PYTEST) $(PYTEST_OPTS) tests
+	$(COVERAGE) report --fail-under=$(INTEGRATION_TEST_COVERAGE) > /dev/null
+
+.PHONY: test-all
+test-all: tests
 .PHONY: tests
 tests: depends-ci .clean-test
-	TEST_INTEGRATION=1 $(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
-	$(COVERAGE) report --fail-under=$(INTEGRATION_TEST_COVERAGE) > /dev/null
+	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests --exitfirst
+	$(COVERAGE) report --fail-under=$(COMBINED_TEST_COVERAGE) > /dev/null
 {% endif %}
 .PHONY: read-coverage
 read-coverage:
 	$(OPEN) htmlcov/index.html
+
+.PHONY: watch
+watch: depends-dev
+	touch htmlcov/index.html && $(MAKE) read-coverage
+	$(SNIFFER)
 
 # Cleanup ######################################################################
 
