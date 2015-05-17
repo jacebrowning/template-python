@@ -1,8 +1,8 @@
-For Contributors
-================
+# For Contributors
 
-Requirements
-------------
+## Setup
+
+### Requirements
 
 * Make:
     * Windows: http://cygwin.com/install.html
@@ -12,8 +12,7 @@ Requirements
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
-Installation
-------------
+### Installation
 
 Create a virtualenv:
 
@@ -21,12 +20,26 @@ Create a virtualenv:
 $ make env
 ```
 
-Run the tests:
+## Development
+
+### Testing
+
+Manually run the tests:
 
 ```
 $ make test
 $ make tests  # includes integration tests
 ```
+
+or keep them running on change:
+
+```
+$ make watch
+```
+
+> In order to have OS X notifications, `brew install terminal-notifier`.
+
+### Documentation
 
 Build the documentation:
 
@@ -34,7 +47,9 @@ Build the documentation:
 $ make doc
 ```
 
-Run static analysis:
+### Static Analysis
+
+Run linters and static analyzers:
 
 ```
 $ make pep8
@@ -42,6 +57,8 @@ $ make pep257
 $ make pylint
 $ make check  # includes all checks
 ```
+
+## Release
 
 Release to PyPI:
 

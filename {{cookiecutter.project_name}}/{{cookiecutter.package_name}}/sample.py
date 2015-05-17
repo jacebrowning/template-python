@@ -9,3 +9,8 @@ def function(value):
         return 'False'
     else:
         return 'None'
+
+
+def function_that_does_io():
+    """A sample function that might take a long time to test."""
+    return True
