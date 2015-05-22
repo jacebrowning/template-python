@@ -44,5 +44,3 @@ $ python
 >>> import {{cookiecutter.package_name}}
 >>> {{cookiecutter.package_name}}.__version__
 ```
-
-{{cookiecutter.project_name}} doesn't do anything, it's a template.
