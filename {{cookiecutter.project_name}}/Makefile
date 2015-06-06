@@ -68,17 +68,18 @@ COVERAGE := $(BIN)/coverage
 SNIFFER := $(BIN)/sniffer
 
 # Flags for PHONY targets
-DEPENDS_CI := $(ENV)/.depends-ci
-DEPENDS_DEV := $(ENV)/.depends-dev
-ALL := $(ENV)/.all
+DEPENDS_CI_FLAG := $(ENV)/.depends-ci
+DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
+DOCS_FLAG := $(ENV)/.docs
+ALL_FLAG := $(ENV)/.all
 
 # Main Targets #################################################################
 
 .PHONY: all
-all: depends doc $(ALL)
-$(ALL): $(SOURCES)
+all: depends doc $(ALL_FLAG)
+$(ALL_FLAG): $(SOURCES)
 	$(MAKE) check
-	touch $(ALL)  # flag to indicate all setup steps were successful
+	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
 ci: check test tests
@@ -89,7 +90,7 @@ ci: check test tests
 env: .virtualenv $(EGG_INFO)
 $(EGG_INFO): Makefile setup.py requirements.txt
 	VIRTUAL_ENV=$(ENV) $(PYTHON) setup.py develop
-	touch $(EGG_INFO)  # flag to indicate package is installed
+	@ touch $(EGG_INFO)  # flag to indicate package is installed
 
 .PHONY: .virtualenv
 .virtualenv: $(PIP)
@@ -101,17 +102,17 @@ $(PIP):
 depends: depends-ci depends-dev
 
 .PHONY: depends-ci
-depends-ci: env Makefile $(DEPENDS_CI)
-$(DEPENDS_CI): Makefile
+depends-ci: env Makefile $(DEPENDS_CI_FLAG)
+$(DEPENDS_CI_FLAG): Makefile
 	$(PIP) install --upgrade pep8 pep257 pylint coverage
 		{%- if cookiecutter.test_runner == "nose" %} nose
 		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-cov
 		{%- endif %}
-	touch $(DEPENDS_CI)  # flag to indicate dependencies are installed
+	@ touch $(DEPENDS_CI_FLAG)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
-depends-dev: env Makefile $(DEPENDS_DEV)
-$(DEPENDS_DEV): Makefile
+depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
+$(DEPENDS_DEV_FLAG): Makefile
 	$(PIP) install --upgrade pip pep8radius pygments docutils pdoc wheel readme sniffer
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
@@ -120,7 +121,7 @@ else ifdef MAC
 else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif
-	touch $(DEPENDS_DEV)  # flag to indicate dependencies are installed
+	@ touch $(DEPENDS_DEV_FLAG)  # flag to indicate dependencies are installed
 
 # Documentation ################################################################
 
@@ -137,8 +138,10 @@ README.rst: README.md
 	pandoc -f markdown_github -t rst -o README.rst README.md
 
 .PHONY: verify-readme
-verify-readme: README.rst
+verify-readme: $(DOCS_FLAG)
+$(DOCS_FLAG): README.rst
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
+	@ touch $(DOCS_FLAG)  # flag to indicate README has been checked
 
 .PHONY: apidocs
 apidocs: depends-dev apidocs/$(PACKAGE)/index.html
