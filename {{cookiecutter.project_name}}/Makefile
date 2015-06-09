@@ -215,10 +215,9 @@ endif
 {% elif cookiecutter.test_runner == "pytest" %}
 PYTEST_OPTS := --doctest-modules --cov=$(PACKAGE) --cov-report=term-missing --cov-report=html
 
-.PHONY: test-unit
-test-unit: test
-.PHONY: test
-test: depends-ci .clean-test
+.PHONY: test test-unit
+test: test-unit
+test-unit: depends-ci .clean-test
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	$(COVERAGE) report --fail-under=$(UNIT_TEST_COVERAGE) > /dev/null
 
@@ -227,10 +226,9 @@ test-int: depends-ci .clean-test
 	$(PYTEST) $(PYTEST_OPTS) tests
 	$(COVERAGE) report --fail-under=$(INTEGRATION_TEST_COVERAGE) > /dev/null
 
-.PHONY: test-all
-test-all: tests
-.PHONY: tests
-tests: depends-ci .clean-test
+.PHONY: tests test-all
+tests: test-all
+test-all: depends-ci .clean-test
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
 	$(COVERAGE) report --fail-under=$(COMBINED_TEST_COVERAGE) > /dev/null
 {% endif %}
