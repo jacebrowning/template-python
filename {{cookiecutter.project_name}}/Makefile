@@ -238,7 +238,6 @@ read-coverage:
 
 .PHONY: watch
 watch: depends-dev
-	mkdir -p htmlcov && touch htmlcov/index.html && $(MAKE) read-coverage
 	$(SNIFFER)
 
 # Cleanup ######################################################################

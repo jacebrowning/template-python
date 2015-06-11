@@ -15,6 +15,7 @@ else:
 
 
 watch_paths = ['{{cookiecutter.package_name}}/', 'tests/']
+show_coverage = True
 
 
 @select_runnable('python_tests')
@@ -48,5 +49,10 @@ def python_tests(*args):
             if notify and title:
                 mark = "✅" * count
                 notify(mark + " [PASS] " + mark, title=title, group=group)
+
+    global show_coverage
+    if show_coverage:
+        subprocess.call(['make', 'read-coverage'])
+    show_coverage = False
 
     return True
