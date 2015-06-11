@@ -33,17 +33,19 @@ def python_tests(*args):
         (('make', 'test-unit'), "Unit Tests"),
         (('make', 'test-int'), "Integration Tests"),
         (('make', 'test-all'), "Combined Tests"),
+        (('make', 'check'), "Static Analysis"),
+        (('make', 'doc'), None),
     ), start=1):
 
         failure = subprocess.call(command)
 
         if failure:
-            if notify:
+            if notify and title:
                 mark = "❌" * count
                 notify(mark + " [FAIL] " + mark, title=title, group=group)
             return False
         else:
-            if notify:
+            if notify and title:
                 mark = "✅" * count
                 notify(mark + " [PASS] " + mark, title=title, group=group)
 
