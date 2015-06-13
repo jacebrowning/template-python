@@ -15,7 +15,7 @@ Getting Started
 Requirements
 ------------
 
-* Python 2.7+ or Python 3.3+
+* Python {{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}+
 
 Installation
 ------------
