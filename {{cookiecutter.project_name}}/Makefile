@@ -5,10 +5,8 @@ SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 # Python settings
-ifndef TRAVIS
-	PYTHON_MAJOR := {{cookiecutter.python_major_version}}
-	PYTHON_MINOR := {{cookiecutter.python_minor_version}}
-endif
+PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
+PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
 
 # Test settings
 UNIT_TEST_COVERAGE := 94
