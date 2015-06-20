@@ -9,5 +9,8 @@ class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
 
     """Sample integration test class."""
 
-    def test_io_stuff(self):
-        assert sample.function_that_does_io() is True
+    def test_network_stuff(self):
+        assert sample.function_with_network_stuff() is True
+
+    def test_disk_stuff(self):
+        assert sample.function_with_disk_stuff() is False

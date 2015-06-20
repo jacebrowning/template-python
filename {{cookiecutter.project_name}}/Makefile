@@ -9,7 +9,7 @@ PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
 PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
 
 # Test settings
-UNIT_TEST_COVERAGE := 94
+UNIT_TEST_COVERAGE := 88
 INTEGRATION_TEST_COVERAGE := 47
 COMBINED_TEST_COVERAGE := 100
 
@@ -104,7 +104,7 @@ depends-ci: env Makefile $(DEPENDS_CI_FLAG)
 $(DEPENDS_CI_FLAG): Makefile
 	$(PIP) install --upgrade pep8 pep257 pylint coverage
 		{%- if cookiecutter.test_runner == "nose" %} nose nose-cov
-		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-cov
+		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-cov pytest-random pytest-runfailed
 		{%- endif %}
 	@ touch $(DEPENDS_CI_FLAG)  # flag to indicate dependencies are installed
 
@@ -183,6 +183,8 @@ fix: depends-dev
 	$(PEP8RADIUS) --docformatter --in-place
 
 # Testing ######################################################################
+
+TIMESTAMP := $(shell date +%s)
 {% if cookiecutter.test_runner == "nose" %}
 NOSE_OPTS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html
 
@@ -211,28 +213,43 @@ ifndef TRAVIS
 	$(COVERAGE) report --show-missing --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
 {% elif cookiecutter.test_runner == "pytest" %}
-PYTEST_OPTS := --doctest-modules --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
+PYTEST_CORE_OPTS := --doctest-modules --quiet -r X --maxfail=3
+PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
+PYTEST_RANDOM_OPTS := --random --random-seed=$(TIMESTAMP)
+
+PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
+PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --failed --exitfirst
+
+FAILED := .pytest/failed
 
 .PHONY: test test-unit
 test: test-unit
-test-unit: depends-ci .clean-test
+test-unit: depends-ci
+	@ if test -e $(FAILED); then $(MAKE) test-all; fi
+	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(UNIT_TEST_COVERAGE)
 endif
 
 .PHONY: test-int
-test-int: depends-ci .clean-test
-	$(PYTEST) $(PYTEST_OPTS) tests
+test-int: depends-ci
+	@ if test -e $(FAILED); then $(MAKE) test-all; fi
+	@ $(COVERAGE) erase
+	$(PYTEST) $(PYTEST_OPTS_FAILFAST) tests
 ifndef TRAVIS
+	@ rm -rf $(FAILED)  # next time, don't run the previously failing test
 	$(COVERAGE) html --directory htmlcov --fail-under=$(INTEGRATION_TEST_COVERAGE)
 endif
 
 .PHONY: tests test-all
 tests: test-all
-test-all: depends-ci .clean-test
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
+test-all: depends-ci
+	@ if test -e $(FAILED); then $(PYTEST) --failed tests; fi
+	@ $(COVERAGE) erase
+	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests
 ifndef TRAVIS
+	@ rm -rf $(FAILED)  # next time, don't run the previously failing test
 	$(COVERAGE) html --directory htmlcov --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
 {% endif %}
@@ -241,7 +258,8 @@ read-coverage:
 	$(OPEN) htmlcov/index.html
 
 .PHONY: watch
-watch: depends-dev
+watch: depends-dev .clean-test
+	@ rm -rf $(FAILED)
 	$(SNIFFER)
 
 # Cleanup ######################################################################

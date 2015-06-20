@@ -11,6 +11,11 @@ def function(value):
         return 'None'
 
 
-def function_that_does_io():
+def function_with_network_stuff():
     """A sample function that might take a long time to test."""
     return True
+
+
+def function_with_disk_stuff():
+    """A sample function that might take a long time to test."""
+    return False
