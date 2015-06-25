@@ -287,7 +287,7 @@ clean-all: clean clean-env .clean-workspace
 
 .PHONY: .clean-test
 .clean-test:
-	rm -rf .coverage htmlcov
+	rm -rf .pytest .coverage htmlcov
 
 .PHONY: .clean-dist
 .clean-dist:
