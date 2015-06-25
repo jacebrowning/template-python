@@ -245,7 +245,7 @@ endif
 .PHONY: tests test-all
 tests: test-all
 test-all: depends-ci
-	@ if test -e $(FAILED); then $(PYTEST) --failed tests; fi
+	@ if test -e $(FAILED); then $(PYTEST) --failed $(PACKAGE) tests; fi
 	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests
 ifndef TRAVIS
