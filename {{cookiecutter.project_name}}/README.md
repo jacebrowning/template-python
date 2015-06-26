@@ -1,5 +1,5 @@
-{{cookiecutter.project_name}}
-======
+# {{cookiecutter.project_name}}
+
 {{cookiecutter.project_short_description}}
 
 [![Build Status](http://img.shields.io/travis/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}/master.svg)](https://travis-ci.org/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})
@@ -8,17 +8,13 @@
 [![PyPI Version](http://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 [![PyPI Downloads](http://img.shields.io/pypi/dm/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 
+# Getting Started
 
-Getting Started
-===============
-
-Requirements
-------------
+## Requirements
 
 * Python {{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}+
 
-Installation
-------------
+## Installation
 
 {{cookiecutter.project_name}} can be installed with pip:
 
@@ -34,8 +30,7 @@ $ cd {{cookiecutter.github_repo}}
 $ python setup.py install
 ```
 
-Basic Usage
-===========
+# Basic Usage
 
 After installation, the package can imported:
 
