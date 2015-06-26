@@ -1,2 +1,2 @@
-testpackage==2.26
-newrelic-plugin-agent==1.3.0
+testpackage == 2.26
+newrelic-plugin-agent == 1.3.0
