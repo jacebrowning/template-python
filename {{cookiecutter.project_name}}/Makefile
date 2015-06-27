@@ -171,8 +171,9 @@ pep8: depends-ci
 .PHONY: pep257
 pep257: depends-ci
 # D102: docstring missing (checked by PyLint)
-# D202: No blank lines allowed *after* function docstring
-	$(PEP257) $(PACKAGE) --ignore=D102,D202
+# D202: No blank lines allowed *after* function docstring (personal preference)
+# D203: 1 blank line required before class (deprecated warning)
+	$(PEP257) $(PACKAGE) --ignore=D102,D202,D203
 
 .PHONY: pylint
 pylint: depends-ci
@@ -213,7 +214,7 @@ ifndef TRAVIS
 	$(COVERAGE) report --show-missing --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
 {% elif cookiecutter.test_runner == "pytest" %}
-PYTEST_CORE_OPTS := --doctest-modules --quiet -r X --maxfail=3
+PYTEST_CORE_OPTS := --doctest-modules --verbose -r X --maxfail=3
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
 PYTEST_RANDOM_OPTS := --random --random-seed=$(TIMESTAMP)
 
