@@ -17,6 +17,8 @@ And a few sample projects based on this template:
 
 ## Get Started
 
+Install `cookiecutter` and generate a project:
+
     $ pip install cookiecutter>=0.9.1
     $ cookiecutter gh:jacebrowning/template-python
 
@@ -37,3 +39,13 @@ Cookiecutter will ask you for some basic info (your name, project name, python p
 [travis]: https://travis-ci.org/
 [coveralls]: https://coveralls.io/
 [scrutinizer]: https://scrutinizer-ci.com/
+
+## Apply Updates
+
+To apply updates to an existing project, use the `update` branch and provide the same project details:
+    
+    $ cd <parent directory of existing project>
+    $ cookiecutter gh:jacebrowning/template-python -c update
+    
+Then, discard all undesired changes before committing.
+
