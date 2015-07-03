@@ -1,4 +1,5 @@
 {%- if cookiecutter.python_major_version == "2" -%}# -*- coding: utf-8 -*-
+# pylint: disable=W0613,R,C
 
 {% endif -%}
 import os
