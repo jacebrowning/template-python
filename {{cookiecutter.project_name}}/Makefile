@@ -267,7 +267,7 @@ watch: depends-dev .clean-test
 
 .PHONY: clean
 clean: .clean-dist .clean-test .clean-doc .clean-build
-	rm -rf $(ALL)
+	rm -rf $(ALL_FLAG)
 
 .PHONY: clean-env
 clean-env: clean
