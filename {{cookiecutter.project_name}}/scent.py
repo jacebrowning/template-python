@@ -27,7 +27,7 @@ def py_files(filename):
 
 
 @runnable
-def python_tests(*args):
+def python_tests(*_):
 
     group = int(time.time())  # unique per run
 
