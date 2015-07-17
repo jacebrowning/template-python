@@ -177,7 +177,11 @@ pep257: depends-ci
 
 .PHONY: pylint
 pylint: depends-ci
-	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc
+# These warnings shouldn't fail builds, but warn in editors:
+# C0111: Line too long
+# R0913: Too many arguments
+# R0914: Too many local variables
+	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc --disable=C0111,R0913,R0914
 
 .PHONY: fix
 fix: depends-dev
@@ -221,12 +225,12 @@ PYTEST_RANDOM_OPTS := --random --random-seed=$(TIMESTAMP)
 PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
 PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --failed --exitfirst
 
-FAILED := .pytest/failed
+FAILED_FLAG := .pytest/failed
 
 .PHONY: test test-unit
 test: test-unit
 test-unit: depends-ci
-	@ if test -e $(FAILED); then $(MAKE) test-all; fi
+	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
 	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
@@ -235,22 +239,22 @@ endif
 
 .PHONY: test-int
 test-int: depends-ci
-	@ if test -e $(FAILED); then $(MAKE) test-all; fi
+	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
 	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) tests
 ifndef TRAVIS
-	@ rm -rf $(FAILED)  # next time, don't run the previously failing test
+	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
 	$(COVERAGE) html --directory htmlcov --fail-under=$(INTEGRATION_TEST_COVERAGE)
 endif
 
 .PHONY: tests test-all
 tests: test-all
 test-all: depends-ci
-	@ if test -e $(FAILED); then $(PYTEST) --failed $(PACKAGE) tests; fi
+	@ if test -e $(FAILED_FLAG); then $(PYTEST) --failed $(PACKAGE) tests; fi
 	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests
 ifndef TRAVIS
-	@ rm -rf $(FAILED)  # next time, don't run the previously failing test
+	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
 	$(COVERAGE) html --directory htmlcov --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
 {% endif %}
@@ -260,14 +264,14 @@ read-coverage:
 
 .PHONY: watch
 watch: depends-dev .clean-test
-	@ rm -rf $(FAILED)
+	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
 # Cleanup ######################################################################
 
 .PHONY: clean
 clean: .clean-dist .clean-test .clean-doc .clean-build
-	rm -rf $(ALL)
+	rm -rf $(ALL_FLAG)
 
 .PHONY: clean-env
 clean-env: clean

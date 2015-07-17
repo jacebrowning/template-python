@@ -1,4 +1,5 @@
 {%- if cookiecutter.python_major_version == "2" -%}# -*- coding: utf-8 -*-
+# pylint: disable=W0613,R,C
 
 {% endif -%}
 import os
@@ -26,7 +27,7 @@ def py_files(filename):
 
 
 @runnable
-def python_tests(*args):
+def python_tests(*_):
 
     group = int(time.time())  # unique per run
 
