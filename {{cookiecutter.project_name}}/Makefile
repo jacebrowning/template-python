@@ -189,7 +189,7 @@ fix: depends-dev
 
 # Testing ######################################################################
 
-TIMESTAMP := $(shell date +%s)
+RANDOM_SEED ?= $(shell date +%s)
 {% if cookiecutter.test_runner == "nose" %}
 NOSE_OPTS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html
 
@@ -220,7 +220,7 @@ endif
 {% elif cookiecutter.test_runner == "pytest" %}
 PYTEST_CORE_OPTS := --doctest-modules --verbose -r X --maxfail=3
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
-PYTEST_RANDOM_OPTS := --random --random-seed=$(TIMESTAMP)
+PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
 PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
 PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --failed --exitfirst
