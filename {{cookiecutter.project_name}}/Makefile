@@ -82,6 +82,11 @@ $(ALL_FLAG): $(SOURCES)
 .PHONY: ci
 ci: check test tests
 
+.PHONY: watch
+watch: depends-dev .clean-test
+	@ rm -rf $(FAILED_FLAG)
+	$(SNIFFER)
+
 # Development Installation #####################################################
 
 .PHONY: env
@@ -261,11 +266,6 @@ endif
 .PHONY: read-coverage
 read-coverage:
 	$(OPEN) htmlcov/index.html
-
-.PHONY: watch
-watch: depends-dev .clean-test
-	@ rm -rf $(FAILED_FLAG)
-	$(SNIFFER)
 
 # Cleanup ######################################################################
 
