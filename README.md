@@ -45,7 +45,7 @@ Cookiecutter will ask you for some basic info (your name, project name, python p
 To apply updates to an existing project, use the `update` branch and provide the same project details:
     
     $ cd <parent directory of existing project>
-    $ cookiecutter gh:jacebrowning/template-python -c update
+    $ cookiecutter gh:jacebrowning/template-python --checkout update
     
 Then, discard all undesired changes before committing.
 
