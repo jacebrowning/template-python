@@ -309,7 +309,7 @@ register-test: doc
 	$(PYTHON) setup.py register --strict --repository https://testpypi.python.org/pypi
 
 .PHONY: upload-test
-upload-test: .git-no-changes register-test
+upload-test: register-test
 	$(PYTHON) setup.py sdist upload --repository https://testpypi.python.org/pypi
 	$(PYTHON) setup.py bdist_wheel upload --repository https://testpypi.python.org/pypi
 	$(OPEN) https://testpypi.python.org/pypi/$(PROJECT)
@@ -326,7 +326,7 @@ upload: .git-no-changes register
 
 .PHONY: .git-no-changes
 .git-no-changes:
-	@if git diff --name-only --exit-code;         \
+	@ if git diff --name-only --exit-code;        \
 	then                                          \
 		echo Git working copy is clean...;        \
 	else                                          \
