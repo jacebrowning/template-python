@@ -16,7 +16,6 @@ else:
 
 
 watch_paths = ['{{cookiecutter.package_name}}/', 'tests/']
-show_coverage = True
 
 
 @select_runnable('python_tests')
@@ -43,6 +42,8 @@ def python_tests(*_):
         print("$ %s" % ' '.join(command))
         failure = subprocess.call(command)
 
+        show_coverage()
+
         if failure:
             if notify and title:
                 mark = "❌" * count
@@ -53,9 +54,14 @@ def python_tests(*_):
                 mark = "✅" * count
                 notify(mark + " [PASS] " + mark, title=title, group=group)
 
-    global show_coverage
-    if show_coverage:
-        subprocess.call(['make', 'read-coverage'])
-    show_coverage = False
-
     return True
+
+
+_show_coverage = True
+
+
+def show_coverage():
+    global _show_coverage
+    if _show_coverage:
+        subprocess.call(['make', 'read-coverage'])
+    _show_coverage = False
