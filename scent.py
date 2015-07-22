@@ -1,7 +1,3 @@
-{%- if cookiecutter.python_major_version == "2" -%}# -*- coding: utf-8 -*-
-# pylint: disable=R,C,unused-argument
-
-{% endif -%}
 import os
 import time
 import subprocess
@@ -15,14 +11,13 @@ else:
     notify = Notifier.notify
 
 
-watch_paths = ['{{cookiecutter.package_name}}/', 'tests/']
+watch_paths = ['.']
 
 
 @select_runnable('python')
 @file_validator
 def py_files(filename):
-    return all((filename.endswith('.py'),
-               not os.path.basename(filename).startswith('.')))
+    return "PythonTemplateDemo" not in filename
 
 
 @runnable
@@ -31,18 +26,13 @@ def python(*_):
     group = int(time.time())  # unique per run
 
     for count, (command, title) in enumerate((
-        (('make', 'test-unit'), "Unit Tests"),
-        (('make', 'test-int'), "Integration Tests"),
-        (('make', 'test-all'), "Combined Tests"),
-        (('make', 'check'), "Static Analysis"),
-        (('make', 'doc'), None),
+        (('make', 'all'), "Generate Sample"),
+        (('make', 'ci'), "Test Sample"),
     ), start=1):
 
         print("")
         print("$ %s" % ' '.join(command))
         failure = subprocess.call(command)
-
-        show_coverage()
 
         if failure:
             if notify and title:
@@ -55,13 +45,3 @@ def python(*_):
                 notify(mark + " [PASS] " + mark, title=title, group=group)
 
     return True
-
-
-_show_coverage = True
-
-
-def show_coverage():
-    global _show_coverage
-    if _show_coverage:
-        subprocess.call(['make', 'read-coverage'])
-    _show_coverage = False

@@ -1,4 +1,5 @@
 """Sample integration test module."""
+# pylint: disable=no-self-use
 
 import unittest
 

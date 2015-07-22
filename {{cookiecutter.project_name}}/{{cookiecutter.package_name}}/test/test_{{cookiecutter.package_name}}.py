@@ -12,7 +12,7 @@ class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
     def test_dependency_import(self):
         """Sample test method for dependencies."""
         try:
-            import testpackage  # pylint: disable=W0612
+            import testpackage  # pylint: disable=unused-variable
             assert True
         except ImportError:
             self.fail("dependency not installed")
@@ -20,7 +20,7 @@ class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
     def test_dependency_import_special(self):
         """Sample test method for special dependencies."""
         try:
-            import newrelic_plugin_agent  # pylint: disable=W0612
+            import newrelic_plugin_agent  # pylint: disable=unused-variable
             assert True
         except ImportError:
             self.fail("dependency not installed")
