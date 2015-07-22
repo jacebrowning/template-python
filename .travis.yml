@@ -24,7 +24,7 @@ after_script: >
   echo $TRAVIS_PYTHON_VERSION;
   echo $TEST_RUNNER;
   echo;
-  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_PYTHON_VERSION == '3.4' && $TEST_RUNNER == 'pytest' ]]; then
+  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_PYTHON_VERSION == '2.7' && $TEST_RUNNER == 'pytest' ]]; then
 
     # Configure Git with Travis CI information
     git config --global user.email "travis@travis-ci.org" ;
