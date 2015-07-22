@@ -171,14 +171,14 @@ check: pep8 pep257 pylint
 
 .PHONY: pep8
 pep8: depends-ci
-	$(PEP8) $(PACKAGE) --config=.pep8rc
+	$(PEP8) $(PACKAGE) tests --config=.pep8rc
 
 .PHONY: pep257
 pep257: depends-ci
 # D102: docstring missing (checked by PyLint)
 # D202: No blank lines allowed *after* function docstring (personal preference)
 # D203: 1 blank line required before class (deprecated warning)
-	$(PEP257) $(PACKAGE) --ignore=D102,D202,D203
+	$(PEP257) $(PACKAGE) tests --ignore=D102,D202,D203
 
 .PHONY: pylint
 pylint: depends-ci
@@ -186,7 +186,7 @@ pylint: depends-ci
 # C0111: Line too long
 # R0913: Too many arguments
 # R0914: Too many local variables
-	$(PYLINT) $(PACKAGE) --rcfile=.pylintrc --disable=C0111,R0913,R0914
+	$(PYLINT) $(PACKAGE) tests --rcfile=.pylintrc --disable=C0111,R0913,R0914
 
 .PHONY: fix
 fix: depends-dev

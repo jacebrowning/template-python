@@ -20,6 +20,11 @@ else ifeq ($(TEST_RUNNER),pytest)
 endif
 	cookiecutter . --no-input
 
+.PHONY: watch
+watch:
+	pip3 install sniffer MacFSEvents
+	sniffer
+
 .PHONY: clean
 clean:
 	rm -rf $(COOKIE)

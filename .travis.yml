@@ -4,6 +4,7 @@ python:
 - 2.7
 - 3.3
 - 3.4
+- 3.5-dev
 cache: pip
 env:
   matrix:
@@ -18,8 +19,12 @@ install:
 script:
 - make ci
 after_script: >
-  echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST; echo $TRAVIS_PYTHON_VERSION;
-  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_PYTHON_VERSION == '2.7' && $TEST_RUNNER == 'nose' ]]; then
+  echo $TRAVIS_BRANCH;
+  echo $TRAVIS_PULL_REQUEST;
+  echo $TRAVIS_PYTHON_VERSION;
+  echo $TEST_RUNNER;
+  echo;
+  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_PYTHON_VERSION == '2.7' && $TEST_RUNNER == 'pytest' ]]; then
 
     # Configure Git with Travis CI information
     git config --global user.email "travis@travis-ci.org" ;
