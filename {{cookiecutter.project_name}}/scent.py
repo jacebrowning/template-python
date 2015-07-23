@@ -29,9 +29,8 @@ def py_files(filename):
 def python(*_):
 
     for count, (command, title) in enumerate((
-        (('make', 'test-unit'), "Unit Tests"),
-        (('make', 'test-int'), "Integration Tests"),
-        (('make', 'test-all'), "Combined Tests"),
+        (('make', 'test'), "Unit Tests"),
+        (('make', 'tests'), "Integration Tests"),
         (('make', 'check'), "Static Analysis"),
         (('make', 'doc'), None),
     ), start=1):
