@@ -15,14 +15,13 @@ else:
     notify = Notifier.notify
 
 
-watch_paths = ['{{cookiecutter.package_name}}/', 'tests/']
+watch_paths = ["{{cookiecutter.package_name}}", "tests"]
 
 
 @select_runnable('python')
 @file_validator
-def py_files(filename):
-    return all((filename.endswith('.py'),
-               not os.path.basename(filename).startswith('.')))
+def python_files(filename):
+    return filename.endswith('.py')
 
 
 @runnable
