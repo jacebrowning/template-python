@@ -1,8 +1,7 @@
 {%- if cookiecutter.python_major_version == "2" -%}# -*- coding: utf-8 -*-
-# pylint: disable=R,C,unused-argument
-
 {% endif -%}
-import os
+"""Configuration file for sniffer."""
+
 import time
 import subprocess
 
@@ -21,18 +20,21 @@ watch_paths = ["{{cookiecutter.package_name}}", "tests"]
 @select_runnable('python')
 @file_validator
 def python_files(filename):
+    """Match Python source files."""
     return filename.endswith('.py')
 
 
 @runnable
 def python(*_):
+    """Run targets for Python."""
 
-    for count, (command, title) in enumerate((
-        (('make', 'test'), "Unit Tests"),
-        (('make', 'tests'), "Integration Tests"),
-        (('make', 'check'), "Static Analysis"),
-        (('make', 'doc'), None),
-    ), start=1):
+    for count, (command, title) in enumerate(
+            (
+                (('make', 'test'), "Unit Tests"),
+                (('make', 'tests'), "Integration Tests"),
+                (('make', 'check'), "Static Analysis"),
+                (('make', 'doc'), None),
+            ), start=1):
 
         if not run(command, title, count):
             return False
@@ -47,6 +49,7 @@ _rerun_args = None
 
 
 def run(command, title, count):
+    """Run a command-line program and display the result."""
     global _rerun_args
 
     if _rerun_args:
@@ -76,11 +79,13 @@ def run(command, title, count):
 
 
 def show_notification(message, title):
+    """Show a user notification."""
     if notify and title:
         notify(message, title=title, group=GROUP)
 
 
 def show_coverage():
+    """Launch the coverage report."""
     global _show_coverage
 
     if _show_coverage:
