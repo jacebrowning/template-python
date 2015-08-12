@@ -2,7 +2,6 @@
 PROJECT := {{cookiecutter.project_name}}
 PACKAGE := {{cookiecutter.package_name}}
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
-EGG_INFO := $(subst -,_,$(PROJECT)).egg-info
 
 # Python settings
 PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
@@ -66,6 +65,7 @@ COVERAGE := $(BIN)/coverage
 SNIFFER := $(BIN)/sniffer
 
 # Flags for PHONY targets
+INSTALLED_FLAG := $(ENV)/.installed
 DEPENDS_CI_FLAG := $(ENV)/.depends-ci
 DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
 DOCS_FLAG := $(ENV)/.docs
@@ -90,10 +90,10 @@ watch: depends-dev .clean-test
 # Development Installation #####################################################
 
 .PHONY: env
-env: .virtualenv $(EGG_INFO)
-$(EGG_INFO): Makefile setup.py requirements.txt
+env: .virtualenv $(INSTALLED_FLAG)
+$(INSTALLED_FLAG): Makefile setup.py requirements.txt
 	VIRTUAL_ENV=$(ENV) $(PYTHON) setup.py develop
-	@ touch $(EGG_INFO)  # flag to indicate package is installed
+	@ touch $(INSTALLED_FLAG)  # flag to indicate package is installed
 
 .PHONY: .virtualenv
 .virtualenv: $(PIP)
@@ -284,7 +284,7 @@ clean-all: clean clean-env .clean-workspace
 .clean-build:
 	find $(PACKAGE) -name '*.pyc' -delete
 	find $(PACKAGE) -name '__pycache__' -delete
-	rm -rf $(EGG_INFO)
+	rm -rf $(INSTALLED_FLAG)
 
 .PHONY: .clean-doc
 .clean-doc:
