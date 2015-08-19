@@ -223,7 +223,7 @@ ifndef TRAVIS
 	$(COVERAGE) report --show-missing --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
 {% elif cookiecutter.test_runner == "pytest" %}
-PYTEST_CORE_OPTS := --doctest-modules --verbose -r X --maxfail=3
+PYTEST_CORE_OPTS := --doctest-modules --verbose -r X -vv
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
