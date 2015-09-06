@@ -273,12 +273,8 @@ read-coverage:
 clean: .clean-dist .clean-test .clean-doc .clean-build
 	rm -rf $(ALL_FLAG)
 
-.PHONY: clean-env
-clean-env: clean
-	rm -rf $(ENV)
-
 .PHONY: clean-all
-clean-all: clean clean-env .clean-workspace
+clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-build
 .clean-build:
@@ -297,6 +293,10 @@ clean-all: clean clean-env .clean-workspace
 .PHONY: .clean-dist
 .clean-dist:
 	rm -rf dist build
+
+.PHONY: .clean-env
+.clean-env: clean
+	rm -rf $(ENV)
 
 .PHONY: .clean-workspace
 .clean-workspace:
