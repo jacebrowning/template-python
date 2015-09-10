@@ -5,7 +5,7 @@ import sys
 __project__ = '{{cookiecutter.project_name}}'
 __version__ = '0.0.0'
 
-VERSION = __project__ + '-' + __version__
+VERSION = "{0} v{1}".format(__project__, __version__)
 
 PYTHON_VERSION = {{cookiecutter.python_major_version}}, {{cookiecutter.python_minor_version}}
 
