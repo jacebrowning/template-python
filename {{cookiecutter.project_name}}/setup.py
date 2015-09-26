@@ -10,7 +10,7 @@ import os
 if os.path.exists('README.rst'):
     README = open('README.rst').read()
 else:
-    README = ""  # a placeholder, readme is generated on release
+    README = ""  # a placeholder until README is generated on release
 CHANGES = open('CHANGES.md').read()
 
 
