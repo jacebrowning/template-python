@@ -1,6 +1,10 @@
 """A sample module."""
 
 
+class Class(object):
+    """A sample class."""
+
+
 def function(value):
     """A function with branches to demonstrate branch coverage reporting."""
     if value is True:
