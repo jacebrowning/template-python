@@ -1,6 +1,6 @@
 # template-python
 
-A Python project template for [cookiecutter][cookiecutter].
+A Python 3.4+ project template for [cookiecutter][cookiecutter].
 
 [![Build Status](http://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 
