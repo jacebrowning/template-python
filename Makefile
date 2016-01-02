@@ -22,7 +22,7 @@ endif
 
 .PHONY: watch
 watch:
-	pip3 install sniffer MacFSEvents
+	pip install sniffer MacFSEvents
 	sniffer
 
 .PHONY: clean

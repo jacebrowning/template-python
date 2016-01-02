@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Configuration file for sniffer."""
+
 import os
 import time
 import subprocess
