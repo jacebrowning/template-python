@@ -232,7 +232,6 @@ FAILED_FLAG := .pytest/failed
 .PHONY: test test-unit
 test: test-unit
 test-unit: depends-ci
-	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
 	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
