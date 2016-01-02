@@ -20,7 +20,7 @@ Create a virtualenv:
 $ make env
 ```
 
-## Development
+## Development Tasks
 
 ### Testing
 
@@ -58,7 +58,15 @@ $ make pylint
 $ make check  # includes all checks
 ```
 
-## Release
+## Continuous Integration
+
+The CI server will report overall build status:
+
+```
+$ make ci
+```
+
+## Release Tasks
 
 Release to PyPI:
 
