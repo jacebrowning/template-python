@@ -27,6 +27,6 @@ class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
 
     def test_branch_coverage(self):
         """Sample test method for branch coverage."""
-        self.assertEquals(sample.function(True), 'True')
-        self.assertEquals(sample.function(False), 'False')
-        self.assertEquals(sample.function(None), 'None')
+        self.assertEqual(sample.function(True), 'True')
+        self.assertEqual(sample.function(False), 'False')
+        self.assertEqual(sample.function(None), 'None')
