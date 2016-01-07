@@ -10,7 +10,7 @@
     * Linux: http://www.gnu.org/software/make (likely already installed)
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}{% else %}
 * virtualenv: https://pypi.python.org/pypi/virtualenv#installation
-{% endif -%}
+{%- endif %}
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
