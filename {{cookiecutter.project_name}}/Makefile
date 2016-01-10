@@ -42,9 +42,11 @@ endif
 ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
+	ACTIVATE := $(BIN)/activate.bat
 	OPEN := cmd /c start
 else
 	BIN := $(ENV)/bin
+	ACTIVATE := . $(BIN)/activate
 	ifneq ($(findstring cygwin, $(PLATFORM)), )
 		OPEN := cygstart
 	else
@@ -53,20 +55,20 @@ else
 endif
 
 # Virtual environment executables
-PYTHON := $(BIN)/python
-PIP := $(BIN)/pip
-EASY_INSTALL := $(BIN)/easy_install
-RST2HTML := $(PYTHON) $(BIN)/rst2html.py
-PDOC := $(PYTHON) $(BIN)/pdoc
-PEP8 := $(BIN)/pep8
-PEP8RADIUS := $(BIN)/pep8radius
-PEP257 := $(BIN)/pep257
-PYLINT := $(BIN)/pylint
-PYREVERSE := $(BIN)/pyreverse
-NOSE := $(BIN)/nosetests
-PYTEST := $(BIN)/py.test
-COVERAGE := $(BIN)/coverage
-SNIFFER := $(BIN)/sniffer
+PYTHON := $(ACTIVATE) && python
+PIP := $(ACTIVATE) && pip
+EASY_INSTALL := $(ACTIVATE) && easy_install
+RST2HTML := $(ACTIVATE) python rst2html.py
+PDOC := $(ACTIVATE) python pdoc
+PEP8 := $(ACTIVATE) && pep8
+PEP8RADIUS := $(ACTIVATE) && pep8radius
+PEP257 := $(ACTIVATE) && pep257
+PYLINT := $(ACTIVATE) && pylint
+PYREVERSE := $(ACTIVATE) && pyreverse
+NOSE := $(ACTIVATE) && nosetests
+PYTEST := $(ACTIVATE) && py.test
+COVERAGE := $(ACTIVATE) && coverage
+SNIFFER := $(ACTIVATE) && sniffer
 
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed

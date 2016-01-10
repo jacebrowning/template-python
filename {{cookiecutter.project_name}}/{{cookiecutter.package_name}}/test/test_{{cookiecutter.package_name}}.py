@@ -17,14 +17,6 @@ class Test{{cookiecutter.package_name | capitalize}}(unittest.TestCase):
         except ImportError:
             self.fail("dependency not installed")
 
-    def test_dependency_import_special(self):
-        """Sample test method for special dependencies."""
-        try:
-            import newrelic_plugin_agent  # pylint: disable=unused-variable
-            assert True
-        except ImportError:
-            self.fail("dependency not installed")
-
     def test_branch_coverage(self):
         """Sample test method for branch coverage."""
         self.assertEqual(sample.function(True), 'True')
