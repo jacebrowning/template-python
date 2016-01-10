@@ -18,6 +18,10 @@ ifeq ($(TEST_RUNNER),nose)
 else ifeq ($(TEST_RUNNER),pytest)
 	sed "s/nose/pytest/g" cookiecutter.json > tmp && mv tmp cookiecutter.json
 endif
+ifeq ($(TRAVIS_PYTHON_VERSION),3.5)
+	sed "s/2,/3,/g" cookiecutter.json > tmp && mv tmp cookiecutter.json
+	sed "s/7/5/g" cookiecutter.json > tmp && mv tmp cookiecutter.json
+endif
 	cookiecutter . --no-input
 
 .PHONY: watch
