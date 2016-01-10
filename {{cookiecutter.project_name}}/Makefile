@@ -4,8 +4,10 @@ PACKAGE := {{cookiecutter.package_name}}
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 # Python settings
-PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
-PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
+ifndef TRAVIS
+	PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
+	PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
+endif
 
 # Test settings
 UNIT_TEST_COVERAGE := 88
