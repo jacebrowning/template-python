@@ -147,6 +147,12 @@ endif
 .PHONY: doc
 doc: readme verify-readme apidocs uml
 
+.PHONY: read
+read: doc
+	$(OPEN) apidocs/$(PACKAGE)/index.html
+	$(OPEN) README-pypi.html
+	$(OPEN) README-github.html
+
 .PHONY: readme
 readme: depends-dev README-github.html README-pypi.html
 README-github.html: README.md
@@ -173,12 +179,6 @@ docs/*.png: $(SOURCES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore test
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
-
-.PHONY: read
-read: doc
-	$(OPEN) apidocs/$(PACKAGE)/index.html
-	$(OPEN) README-pypi.html
-	$(OPEN) README-github.html
 
 # Static Analysis ##############################################################
 
