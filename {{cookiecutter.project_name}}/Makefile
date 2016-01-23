@@ -4,8 +4,10 @@ PACKAGE := {{cookiecutter.package_name}}
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 # Python settings
-PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
-PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
+ifndef TRAVIS
+	PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
+	PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
+endif
 
 # Test settings
 UNIT_TEST_COVERAGE := 88
@@ -42,9 +44,11 @@ endif
 ENV := env
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
+	ACTIVATE := $(BIN)/activate.bat
 	OPEN := cmd /c start
 else
 	BIN := $(ENV)/bin
+	ACTIVATE := . $(BIN)/activate
 	ifneq ($(findstring cygwin, $(PLATFORM)), )
 		OPEN := cygstart
 	else
@@ -53,20 +57,23 @@ else
 endif
 
 # Virtual environment executables
-PYTHON := $(BIN)/python
-PIP := $(BIN)/pip
-EASY_INSTALL := $(BIN)/easy_install
-RST2HTML := $(PYTHON) $(BIN)/rst2html.py
-PDOC := $(PYTHON) $(BIN)/pdoc
-PEP8 := $(BIN)/pep8
-PEP8RADIUS := $(BIN)/pep8radius
-PEP257 := $(BIN)/pep257
-PYLINT := $(BIN)/pylint
-PYREVERSE := $(BIN)/pyreverse
-NOSE := $(BIN)/nosetests
-PYTEST := $(BIN)/py.test
-COVERAGE := $(BIN)/coverage
-SNIFFER := $(BIN)/sniffer
+ifndef TRAVIS
+	BIN_ := $(BIN)/
+endif
+PYTHON := $(BIN_)python
+PIP := $(BIN_)pip
+EASY_INSTALL := $(BIN_)easy_install
+RST2HTML := $(PYTHON) $(BIN_)rst2html.py
+PDOC := $(PYTHON) $(BIN_)pdoc
+PEP8 := $(BIN_)pep8
+PEP8RADIUS := $(BIN_)pep8radius
+PEP257 := $(BIN_)pep257
+PYLINT := $(BIN_)pylint
+PYREVERSE := $(BIN_)pyreverse
+NOSE := $(BIN_)nosetests
+PYTEST := $(BIN_)py.test
+COVERAGE := $(BIN_)coverage
+SNIFFER := $(BIN_)sniffer
 
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed
@@ -84,7 +91,11 @@ $(ALL_FLAG): $(SOURCES)
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
+ifdef TRAVIS
 ci: check test tests
+else
+ci: doc check test tests
+endif
 
 .PHONY: watch
 watch: depends-dev .clean-test
@@ -94,20 +105,20 @@ watch: depends-dev .clean-test
 # Development Installation #####################################################
 
 .PHONY: env
-env: .venv $(INSTALLED_FLAG)
+env: $(PIP) $(INSTALLED_FLAG)
 $(INSTALLED_FLAG): Makefile setup.py requirements.txt
 	VIRTUAL_ENV=$(ENV) $(PYTHON) setup.py develop
 	@ touch $(INSTALLED_FLAG)  # flag to indicate package is installed
 
-.PHONY: .venv
-.venv: $(PIP)
 $(PIP):
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
-	$(SYS_PYTHON) -m venv $(ENV)
+	$(SYS_PYTHON) -m venv --clear $(ENV)
 {%- else %}
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 {%- endif %}
 	$(PIP) install --upgrade pip
+
+# Tools Installation ###########################################################
 
 .PHONY: depends
 depends: depends-ci depends-dev
@@ -116,8 +127,8 @@ depends: depends-ci depends-dev
 depends-ci: env Makefile $(DEPENDS_CI_FLAG)
 $(DEPENDS_CI_FLAG): Makefile
 	$(PIP) install --upgrade pep8 pep257 pylint coverage
-		{%- if cookiecutter.test_runner == "nose" %} nose nose-cov
-		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-cov pytest-random pytest-runfailed
+		{%- if cookiecutter.test_runner == "nose" %} nose nose-cov expecter
+		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-describe pytest-expecter pytest-cov pytest-random pytest-runfailed
 		{%- endif %}
 	@ touch $(DEPENDS_CI_FLAG)  # flag to indicate dependencies are installed
 
@@ -138,6 +149,12 @@ endif
 
 .PHONY: doc
 doc: readme verify-readme apidocs uml
+
+.PHONY: read
+read: doc
+	$(OPEN) apidocs/$(PACKAGE)/index.html
+	$(OPEN) README-pypi.html
+	$(OPEN) README-github.html
 
 .PHONY: readme
 readme: depends-dev README-github.html README-pypi.html
@@ -165,12 +182,6 @@ docs/*.png: $(SOURCES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore test
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
-
-.PHONY: read
-read: doc
-	$(OPEN) apidocs/$(PACKAGE)/index.html
-	$(OPEN) README-pypi.html
-	$(OPEN) README-github.html
 
 # Static Analysis ##############################################################
 
@@ -228,7 +239,7 @@ ifndef TRAVIS
 	$(COVERAGE) report --show-missing --fail-under=$(COMBINED_TEST_COVERAGE)
 endif
 {% elif cookiecutter.test_runner == "pytest" %}
-PYTEST_CORE_OPTS := --doctest-modules --verbose -r xXw -vv
+PYTEST_CORE_OPTS := --doctest-modules -r xXw -vv
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
@@ -351,4 +362,4 @@ install:
 
 .PHONY: download
 download:
-	pip install $(PROJECT)
+	$(SYS_PYTHON) -m pip install $(PROJECT)

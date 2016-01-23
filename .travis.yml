@@ -24,7 +24,7 @@ after_script: >
   echo $TRAVIS_PYTHON_VERSION;
   echo $TEST_RUNNER;
   echo;
-  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && $TRAVIS_PYTHON_VERSION == '2.7' && $TEST_RUNNER == 'pytest' ]]; then
+  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && ( $TRAVIS_PYTHON_VERSION == '2.7' || $TRAVIS_PYTHON_VERSION == '3.5' ) ]]; then
 
     # Configure Git with Travis CI information
     git config --global user.email "travis@travis-ci.org" ;
@@ -34,7 +34,8 @@ after_script: >
     rm -rf .git ;
 
     # Clone the destination repository
-    git clone https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo temp ;
+    BRANCH=python${TRAVIS_PYTHON_VERSION%.*}-$TEST_RUNNER ;
+    git clone https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo temp --branch $BRANCH ;
     mv temp/.git PythonTemplateDemo/.git ;
     rm -rf temp ;
 
@@ -42,7 +43,7 @@ after_script: >
     cd PythonTemplateDemo ;
     git add -A ;
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub" ;
-    git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo master ;
+    git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo $BRANCH ;
 
   fi
 notifications:
