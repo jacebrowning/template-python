@@ -198,11 +198,7 @@ pep257: depends-ci
 
 .PHONY: pylint
 pylint: depends-ci
-# These warnings shouldn't fail builds, but warn in editors:
-# C0111: Line too long
-# R0913: Too many arguments
-# R0914: Too many local variables
-	$(PYLINT) $(PACKAGE) tests --rcfile=.pylintrc --disable=C0111,R0913,R0914
+	$(PYLINT) $(PACKAGE) tests --rcfile=.pylintrc
 
 .PHONY: fix
 fix: depends-dev

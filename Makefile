@@ -29,7 +29,7 @@ else ifeq ($(TRAVIS_PYTHON_VERSION),3.5)
 	sed "s/7/5/g" cookiecutter.json > tmp && mv tmp cookiecutter.json
 endif
 	cat cookiecutter.json
-	cookiecutter . --no-input
+	cookiecutter . --no-input --overwrite-if-exists
 
 .PHONY: watch
 watch:

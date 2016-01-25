@@ -1,5 +1,5 @@
 """Sample integration test module."""
-# pylint: disable=no-self-use
+# pylint: disable=no-self-use,missing-docstring
 
 import unittest
 
