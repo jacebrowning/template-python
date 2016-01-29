@@ -18,7 +18,7 @@ setuptools.setup(
     name=__project__,
     version=__version__,
 
-    description="{{cookiecutter.project_name}} is a Python package template.",
+    description="{{cookiecutter.project_short_description}}",
     url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}',
     author='{{cookiecutter.full_name}}',
     author_email='{{cookiecutter.email}}',
