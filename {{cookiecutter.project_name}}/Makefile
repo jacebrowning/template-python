@@ -116,7 +116,7 @@ $(PIP):
 {%- else %}
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 {%- endif %}
-	$(PIP) install --upgrade pip
+	$(PIP) install --upgrade pip setuptools
 
 # Tools Installation ###########################################################
 
