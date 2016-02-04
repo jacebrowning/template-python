@@ -8,13 +8,13 @@
 [![PyPI Version](http://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 [![PyPI Downloads](http://img.shields.io/pypi/dm/{{cookiecutter.project_name}}.svg)](https://pypi.python.org/pypi/{{cookiecutter.project_name}})
 
-# Getting Started
+## Getting Started
 
-## Requirements
+### Requirements
 
 * Python {{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}+
 
-## Installation
+### Installation
 
 {{cookiecutter.project_name}} can be installed with pip:
 
@@ -30,7 +30,7 @@ $ cd {{cookiecutter.github_repo}}
 $ python setup.py install
 ```
 
-# Basic Usage
+## Basic Usage
 
 After installation, the package can imported:
 
@@ -39,3 +39,7 @@ $ python
 >>> import {{cookiecutter.package_name}}
 >>> {{cookiecutter.package_name}}.__version__
 ```
+
+## Documentation
+
+Read the full documentation [here](http://{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.github_repo }}).
