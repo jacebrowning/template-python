@@ -1,0 +1,14 @@
+site_name: {{ cookiecutter.package_name }}
+site_description: {{ cookiecutter.project_short_description }}
+site_author: {{ cookiecutter.full_name }}
+repo_url: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.github_repo }}
+# google_analytics: ['XX-XXXXXXXX-XX', '{{ cookiecutter.github_username }}.github.io/{{ cookiecutter.github_repo }}']
+
+theme: mkdocs
+
+pages:
+- Home: 'index.md'
+- About:
+  - 'Release Notes': 'about/changes.md'
+  - Contributing: 'about/contributing.md'
+  - License: 'about/license.md'
