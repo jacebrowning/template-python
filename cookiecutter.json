@@ -3,6 +3,7 @@
     "email": "jacebrowning@gmail.com",
     "github_username": "jacebrowning",
     "github_repo": "template-python-demo",
+    "default_branch": "master",
     "project_name": "PythonTemplateDemo",
     "package_name": "demo",
     "project_short_description": "A sample project templated from jacebrowning/template-python.",

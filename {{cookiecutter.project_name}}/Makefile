@@ -156,8 +156,6 @@ endif
 
 # Documentation ################################################################
 
-URL := {{ cookiecutter.github_username }}.github.io/{{ cookiecutter.github_repo }}
-
 .PHONY: doc
 doc: readme verify-readme uml apidocs mkdocs
 
@@ -204,7 +202,6 @@ apidocs/$(PACKAGE)/index.html: $(SOURCES)
 mkdocs: depends-doc site/index.html
 site/index.html: mkdocs.yml docs/*.md
 	$(MKDOCS) build --clean --strict
-	echo $(URL) > site/CNAME
 
 # Static Analysis ##############################################################
 
