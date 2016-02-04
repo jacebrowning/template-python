@@ -29,11 +29,11 @@ else ifeq ($(TRAVIS_PYTHON_VERSION),3.4)
 else ifeq ($(TRAVIS_PYTHON_VERSION),3.5)
 	sed "s/2,/3,/g" $(_COOKIECUTTER_INPLACE)
 	sed "s/7/5/g" $(_COOKIECUTTER_INPLACE)
-else
-	sed "s/master/python3-pytest/g" $(_COOKIECUTTER_INPLACE)
 endif
+	sed "s/master/python2-pytest/g" $(_COOKIECUTTER_INPLACE)
 	cat cookiecutter.json
 	cookiecutter . --no-input --overwrite-if-exists
+	sed "s/python2-pytest/master/g" $(_COOKIECUTTER_INPLACE)
 
 .PHONY: watch
 watch:
