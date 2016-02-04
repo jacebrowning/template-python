@@ -15,6 +15,8 @@ cache:
 env:
   global:
   - RANDOM_SEED=12345
+  # TODO: change this token: http://benlimmer.com/2013/12/26/automatically-publish-javadoc-to-gh-pages-with-travis-ci/
+  - secure: "C47GeEhpKhKZ/VUH6zXX+drGw9HdZt05thVikBUhXY8UbdbujVsjG5z8w7/GMpCmHIVKrijxQ5ZCF3HSSk/VBHMHPIR9AtYg3gOjuBmzNuhinYgC6JH7fZdDlDUKOU2U92h8gl0j/6CYIkLhPF211bpc6mSeOfSEIdz3YMcpvvc="
 
 install:
 - pip install coveralls scrutinizer-ocular
@@ -29,6 +31,24 @@ script:
 after_success:
 - coveralls
 - ocular
+
+after_script: >
+  echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST;
+  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
+    # Generate site
+    make mkdocs ;
+    # Configure Git with Travis CI information
+    git config --global user.email "travis@travis-ci.org" ;
+    git config --global user.name "travis-ci" ;
+    # Delete the current repository
+    rm -rf .git ;
+    # Rebuild the repository from the generated files and push to GitHub pages
+    cd site ;
+    git init ;
+    git add . ;
+    git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub pages" ;
+    git push -f https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} master:gh-pages ;
+  fi
 
 notifications:
   email:
