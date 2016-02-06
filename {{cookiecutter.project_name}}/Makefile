@@ -101,7 +101,7 @@ ci: doc check test tests
 endif
 
 .PHONY: watch
-watch: depends-dev .clean-test
+watch: depends .clean-test
 	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
