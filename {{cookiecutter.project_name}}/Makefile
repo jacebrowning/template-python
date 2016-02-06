@@ -256,7 +256,7 @@ ifndef TRAVIS
 endif
 {% elif cookiecutter.test_runner == "pytest" %}
 PYTEST_CORE_OPTS := --doctest-modules -r xXw -vv
-PYTEST_COV_OPTS := --cov=$(PACKAGE) --cov-report=term-missing --no-cov-on-fail
+PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
 PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
@@ -267,7 +267,6 @@ FAILED_FLAG := .pytest/failed
 .PHONY: test test-unit
 test: test-unit
 test-unit: depends-ci
-	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 ifndef TRAVIS
 	$(COVERAGE) html --directory htmlcov --fail-under=$(UNIT_TEST_COVERAGE)
@@ -276,7 +275,6 @@ endif
 .PHONY: test-int
 test-int: depends-ci
 	@ if test -e $(FAILED_FLAG); then $(MAKE) test-all; fi
-	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) tests
 ifndef TRAVIS
 	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
@@ -287,7 +285,6 @@ endif
 tests: test-all
 test-all: depends-ci
 	@ if test -e $(FAILED_FLAG); then $(PYTEST) --failed $(PACKAGE) tests; fi
-	@ $(COVERAGE) erase
 	$(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests
 ifndef TRAVIS
 	@ rm -rf $(FAILED_FLAG)  # next time, don't run the previously failing test
