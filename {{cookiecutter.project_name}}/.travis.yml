@@ -34,7 +34,7 @@ after_success:
 
 after_script: >
   echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST;
-  if [[ $TRAVIS_BRANCH == '{{ cookiecutter.default_branch }}' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
+  if [[ $TRAVIS_BRANCH == '{{cookiecutter.default_branch}}' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
     # Generate site
     make mkdocs ;
     # Configure Git with Travis CI information
