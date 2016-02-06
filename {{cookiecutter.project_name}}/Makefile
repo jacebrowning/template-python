@@ -177,12 +177,12 @@ README-github.html: README.md
 	pandoc -f markdown_github -t html -o README-github.html README.md
 README-pypi.html: README.rst
 	$(RST2HTML) README.rst README-pypi.html
-README.rst: README.md
-	pandoc -f markdown_github -t rst -o README.rst README.md
+%.rst: %.md
+	pandoc -f markdown_github -t rst -o $@ $<
 
 .PHONY: verify-readme
 verify-readme: $(DOCS_FLAG)
-$(DOCS_FLAG): README.rst
+$(DOCS_FLAG): README.rst CHANGES.rst
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	@ touch $(DOCS_FLAG)  # flag to indicate README has been checked
 
