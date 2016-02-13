@@ -308,7 +308,7 @@ clean-all: clean .clean-env .clean-workspace
 .clean-build:
 	find $(PACKAGE) -name '*.pyc' -delete
 	find $(PACKAGE) -name '__pycache__' -delete
-	rm -rf $(INSTALLED_FLAG)
+	rm -rf $(INSTALLED_FLAG) *.egg-info
 
 .PHONY: .clean-doc
 .clean-doc:
