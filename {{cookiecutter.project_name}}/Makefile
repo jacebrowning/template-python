@@ -138,7 +138,7 @@ $(DEPENDS_CI_FLAG): Makefile
 .PHONY: depends-doc
 depends-doc: env Makefile $(DEPENDS_DOC_FLAG)
 $(DEPENDS_DOC_FLAG): Makefile
-	$(PIP) install --upgrade docutils readme pdoc mkdocs pygments
+	$(PIP) install --upgrade pylint docutils readme pdoc mkdocs pygments
 	@ touch $(DEPENDS_DOC_FLAG)  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
