@@ -1,11 +1,14 @@
 sudo: false
+
 language: python
 python:
 - 2.7
 - 3.3
 - 3.4
 - 3.5
+
 cache: pip
+
 env:
   matrix:
   - TEST_RUNNER=nose
@@ -14,10 +17,13 @@ env:
   - RANDOM_SEED=0
   # Encrypted GH_TOKEN token: http://benlimmer.com/2013/12/26/automatically-publish-javadoc-to-gh-pages-with-travis-ci
   - secure: "MDXLN07Xqf5uKpPC6xqTwvtTAHT5kFzHKjcS+ufLyORTG6NPgpg3e3gukTn8Z00llLeI9Hjj1JNmII/EIIOmiVH5fmpUo6FGyks6gu0zOvK7/w/xMn9irsL1llDo6aaKHJcuI3lmFdCQ45LaxoIWjaKjuRlTT4l98+heC4lejL0="
+
 install:
 - pip install cookiecutter>=0.9.1
+
 script:
 - make ci
+
 after_script: >
   echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST; echo $TRAVIS_PYTHON_VERSION; echo $TEST_RUNNER;
   if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && ( $TRAVIS_PYTHON_VERSION == '2.7' || $TRAVIS_PYTHON_VERSION == '3.5' ) ]]; then
@@ -42,6 +48,7 @@ after_script: >
     git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo $BRANCH ;
 
   fi
+
 notifications:
   email:
     on_success: never
