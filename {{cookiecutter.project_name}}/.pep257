@@ -1,4 +1,7 @@
 [pep257]
 
-# D202: No blank lines allowed *after* function docstring (personal preference)
-add-ignore = D202
+# D211: No blank lines allowed before class docstring
+add_select = D211
+
+# D202: No blank lines allowed after function docstring
+add_ignore = D202
