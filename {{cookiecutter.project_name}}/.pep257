@@ -3,5 +3,6 @@
 # D211: No blank lines allowed before class docstring
 add_select = D211
 
+# D105: Missing docstring in magic method
 # D202: No blank lines allowed after function docstring
-add_ignore = D202
+add_ignore = D105,D202
