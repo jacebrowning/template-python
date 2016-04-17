@@ -71,7 +71,7 @@ PYTEST := $(BIN_)py.test
 COVERAGE := $(BIN_)coverage
 COVERAGE_SPACE := $(BIN_)coverage.space
 SNIFFER := $(BIN_)sniffer
-HONCHO := $(ACTIVATE) && honcho
+HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN_)honcho
 
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed
@@ -140,7 +140,7 @@ $(DEPENDS_DOC_FLAG): Makefile
 .PHONY: depends-dev
 depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
 $(DEPENDS_DEV_FLAG): Makefile
-	$(PIP) install --upgrade pip pep8radius wheel sniffer
+	$(PIP) install --upgrade pip pep8radius wheel sniffer honcho
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
 else ifdef MAC
