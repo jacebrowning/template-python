@@ -8,11 +8,11 @@ from {{cookiecutter.package_name}} import __project__, __version__
 
 try:
     README = open("README.rst").read()
-    CHANGES = open("CHANGES.rst").read()
+    CHANGELOG = open("CHANGELOG.rst").read()
 except IOError:
     DESCRIPTION = "<placeholder>"
 else:
-    DESCRIPTION = README + '\n' + CHANGES
+    DESCRIPTION = README + '\n' + CHANGELOG
 
 setuptools.setup(
     name=__project__,

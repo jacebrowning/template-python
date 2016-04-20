@@ -178,7 +178,7 @@ README-pypi.html: README.rst
 
 .PHONY: verify-readme
 verify-readme: $(DOCS_FLAG)
-$(DOCS_FLAG): README.rst CHANGES.rst
+$(DOCS_FLAG): README.rst CHANGELOG.rst
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	@ touch $(DOCS_FLAG)  # flag to indicate README has been checked
 
