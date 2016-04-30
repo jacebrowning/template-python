@@ -14,7 +14,7 @@ endif
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
-	WINDOWS := 1
+	WINDOWS := true
 	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
 	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}{% else %}
@@ -24,9 +24,9 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
 else
 	ifneq ($(findstring darwin, $(PLATFORM)), )
-		MAC := 1
+		MAC := true
 	else
-		LINUX := 1
+		LINUX := true
 	endif
 	SYS_PYTHON := python$(PYTHON_MAJOR)
 	ifdef PYTHON_MINOR
@@ -117,7 +117,9 @@ $(PIP):
 {%- else %}
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 {%- endif %}
+ifndef WINDOWS
 	$(PIP) install --upgrade pip setuptools
+endif
 
 # Tools Installation ###########################################################
 
