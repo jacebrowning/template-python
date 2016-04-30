@@ -232,14 +232,18 @@ test-unit: test
 test: depends-ci .clean-test
 	$(NOSE) $(PACKAGE) $(NOSE_OPTS)
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE) report --show-missing --fail-under=$(UNIT_TEST_COVERAGE)
+endif
 endif
 
 .PHONY: test-int
 test-int: depends-ci .clean-test
 	$(NOSE) tests $(NOSE_OPTS)
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE) report --show-missing --fail-under=$(INTEGRATION_TEST_COVERAGE)
+endif
 endif
 
 .PHONY: test-all
@@ -248,7 +252,9 @@ test-all: tests
 tests: depends-ci .clean-test
 	$(NOSE) $(PACKAGE) tests $(NOSE_OPTS) -xv
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE) report --show-missing --fail-under=$(COMBINED_TEST_COVERAGE)
+endif
 endif
 {% elif cookiecutter.test_runner == "pytest" %}
 PYTEST_CORE_OPTS := --doctest-modules -r xXw -vv
@@ -267,7 +273,9 @@ test-unit: depends-ci
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE_SPACE) {{cookiecutter.github_username}}/{{cookiecutter.github_repo}} unit
+endif
 endif
 
 .PHONY: test-int
@@ -275,7 +283,9 @@ test-int: depends-ci
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) tests
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE_SPACE) {{cookiecutter.github_username}}/{{cookiecutter.github_repo}} integration
+endif
 endif
 
 .PHONY: tests test-all
@@ -284,7 +294,9 @@ test-all: depends-ci
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
 ifndef TRAVIS
+ifndef APPVEYOR
 	$(COVERAGE_SPACE) {{cookiecutter.github_username}}/{{cookiecutter.github_repo}} overall
+endif
 endif
 {% endif %}
 .PHONY: read-coverage
