@@ -92,11 +92,7 @@ $(ALL_FLAG): $(SOURCES)
 	touch $(ALL_FLAG)  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ifdef TRAVIS
 ci: check test tests
-else
-ci: doc check test tests
-endif
 
 .PHONY: watch
 watch: depends .clean-test
