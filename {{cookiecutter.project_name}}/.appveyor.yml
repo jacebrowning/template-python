@@ -1,0 +1,28 @@
+environment:
+  global:
+    - RANDOM_SEED: 12345
+  matrix:
+    - PYTHON_MAJOR: 2
+      PYTHON_MINOR: 7
+    - PYTHON_MAJOR: 3
+      PYTHON_MINOR: 3
+    - PYTHON_MAJOR: 3
+      PYTHON_MINOR: 4
+    - PYTHON_MAJOR: 3
+      PYTHON_MINOR: 5
+
+cache:
+  - env
+
+install:
+  # Export build paths
+  - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe
+  - set PATH=%PATH%;C:\MinGW\bin
+  - make --version
+  # Install dependencies
+  - make depends-ci
+
+build: off
+
+test_script:
+  - make ci
