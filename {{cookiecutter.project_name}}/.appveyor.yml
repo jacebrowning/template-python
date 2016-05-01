@@ -1,6 +1,6 @@
 environment:
   global:
-    - RANDOM_SEED: 12345
+    RANDOM_SEED: 12345
   matrix:
     - PYTHON_MAJOR: 2
       PYTHON_MINOR: 7
