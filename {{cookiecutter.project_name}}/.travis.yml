@@ -1,4 +1,6 @@
-sudo: false
+os:
+- linux
+- osx
 
 language: python
 python:
@@ -6,11 +8,6 @@ python:
 - 3.3
 - 3.4
 - 3.5
-
-cache:
-  pip: true
-  directories:
-  - env
 
 env:
   global:
@@ -49,6 +46,11 @@ after_script: >
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub pages" ;
     git push -f https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} master:gh-pages ;
   fi
+
+cache:
+  pip: true
+  directories:
+  - env
 
 notifications:
   email:
