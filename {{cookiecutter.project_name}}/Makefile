@@ -111,11 +111,12 @@ ifdef LINUX
 	wget https://bootstrap.pypa.io/get-pip.py -O - | $(PYTHON)
 else
 	$(SYS_PYTHON) -m venv --clear $(ENV)
+	$(PIP) install --upgrade pip setuptools
 endif
 {%- else %}
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
-{%- endif %}
 	$(PIP) install --upgrade pip setuptools
+{%- endif %}
 
 # Tools Installation ###########################################################
 
