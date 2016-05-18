@@ -55,7 +55,7 @@ endif
 
 # Virtual environment executables
 PYTHON := $(BIN)/python
-PIP := $(BIN)/pip
+PIP := $(PYTHON) -m pip
 EASY_INSTALL := $(BIN)/easy_install
 RST2HTML := $(PYTHON) $(BIN)/rst2html.py
 PDOC := $(PYTHON) $(BIN)/pdoc
@@ -115,7 +115,7 @@ endif
 {%- else %}
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 {%- endif %}
-	$(PYTHON) -m pip install --upgrade pip setuptools
+	$(PIP) install --upgrade pip setuptools
 
 # Tools Installation ###########################################################
 
