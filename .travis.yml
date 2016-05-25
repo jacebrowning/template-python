@@ -1,4 +1,6 @@
-sudo: false
+os:
+- linux
+- osx
 
 language: python
 python:
@@ -6,8 +8,6 @@ python:
 - 3.3
 - 3.4
 - 3.5
-
-cache: pip
 
 env:
   matrix:
@@ -48,6 +48,8 @@ after_script: >
     git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo $BRANCH ;
 
   fi
+
+cache: pip
 
 notifications:
   email:
