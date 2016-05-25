@@ -92,7 +92,7 @@ $(ALL_FLAG): $(SOURCES)
 	@ touch $@  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ci: check test tests
+ci: check test
 
 .PHONY: watch
 watch: depends .clean-test
@@ -225,10 +225,11 @@ RANDOM_SEED ?= $(shell date +%s)
 {% if cookiecutter.test_runner == "nose" %}
 NOSE_OPTS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html
 
-.PHONY: test-unit
-test-unit: test
 .PHONY: test
-test: depends-ci .clean-test
+test: test-all
+
+.PHONY: test-unit
+test-unit: depends-ci .clean-test
 	$(NOSE) $(PACKAGE) $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -246,9 +247,7 @@ endif
 endif
 
 .PHONY: test-all
-test-all: tests
-.PHONY: test-all
-tests: depends-ci .clean-test
+test-all: depends-ci .clean-test
 	$(NOSE) $(PACKAGE) tests $(NOSE_OPTS) -xv
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -265,8 +264,10 @@ PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --last-failed --exitfirst
 
 FAILURES := .cache/v/cache/lastfailed
 
-.PHONY: test test-unit
-test: test-unit
+.PHONY: test
+test: test-all
+
+.PHONY: test-unit
 test-unit: depends-ci
 	@- mv $(FAILURES) $(FAILURES).bak
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
@@ -287,8 +288,7 @@ ifndef APPVEYOR
 endif
 endif
 
-.PHONY: tests test-all
-tests: test-all
+.PHONY: test-all
 test-all: depends-ci
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
