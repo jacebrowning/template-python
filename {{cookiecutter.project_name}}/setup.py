@@ -10,9 +10,9 @@ try:
     README = open("README.rst").read()
     CHANGELOG = open("CHANGELOG.rst").read()
 except IOError:
-    DESCRIPTION = "<placeholder>"
+    LONG_DESCRIPTION = "Coming soon..."
 else:
-    DESCRIPTION = README + '\n' + CHANGELOG
+    LONG_DESCRIPTION = README + '\n' + CHANGELOG
 
 setuptools.setup(
     name=__project__,
@@ -27,7 +27,7 @@ setuptools.setup(
 
     entry_points={'console_scripts': []},
 
-    long_description=(DESCRIPTION),
+    long_description=LONG_DESCRIPTION,
     license='MIT',
     classifiers=[
         # TODO: update this list to match your application: https://pypi.python.org/pypi?%3Aaction=list_classifiers
