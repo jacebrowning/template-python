@@ -1,3 +1,7 @@
+branches:
+  except:
+    - update
+
 environment:
   matrix:
     - PYTHON_MAJOR: 2
