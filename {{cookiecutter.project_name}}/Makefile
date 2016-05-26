@@ -1,6 +1,7 @@
 # Project settings
 PROJECT := {{cookiecutter.project_name}}
 PACKAGE := {{cookiecutter.package_name}}
+REPOSITORY := {{cookiecutter.github_username}}/{{cookiecutter.github_repo}}
 SOURCES := Makefile setup.py $(shell find $(PACKAGE) -name '*.py')
 
 # Python settings
@@ -274,7 +275,7 @@ test-unit: depends-ci
 	@- mv $(FAILURES).bak $(FAILURES)
 ifndef TRAVIS
 ifndef APPVEYOR
-	$(COVERAGE_SPACE) {{cookiecutter.github_username}}/{{cookiecutter.github_repo}} unit
+	$(COVERAGE_SPACE) $(REPOSITORY) unit
 endif
 endif
 
@@ -284,7 +285,7 @@ test-int: depends-ci
 	$(PYTEST) $(PYTEST_OPTS) tests
 ifndef TRAVIS
 ifndef APPVEYOR
-	$(COVERAGE_SPACE) {{cookiecutter.github_username}}/{{cookiecutter.github_repo}} integration
+	$(COVERAGE_SPACE) $(REPOSITORY) integration
 endif
 endif
 
@@ -294,7 +295,7 @@ test-all: depends-ci
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
 ifndef TRAVIS
 ifndef APPVEYOR
-	$(COVERAGE_SPACE) {{cookiecutter.github_username}}/{{cookiecutter.github_repo}} overall
+	$(COVERAGE_SPACE) $(REPOSITORY) overall
 endif
 endif
 {% endif %}
