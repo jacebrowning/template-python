@@ -10,7 +10,7 @@ try:
     README = open("README.rst").read()
     CHANGELOG = open("CHANGELOG.rst").read()
 except IOError:
-    LONG_DESCRIPTION = NotImplemented
+    LONG_DESCRIPTION = "<file not found>"
 else:
     LONG_DESCRIPTION = README + '\n' + CHANGELOG
 
