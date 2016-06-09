@@ -12,7 +12,7 @@ Unix: [![Unix Build Status](http://img.shields.io/travis/{{cookiecutter.github_u
 
 ### Installation
 
-{{cookiecutter.project_name}} can be installed with pip:
+Install {{cookiecutter.project_name}} with pip:
 
 ```
 $ pip install {{cookiecutter.project_name}}
