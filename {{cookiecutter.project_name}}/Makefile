@@ -92,10 +92,10 @@ $(ALL_FLAG): $(SOURCES)
 	@ touch $@  # flag to indicate all setup steps were successful
 
 .PHONY: ci
-ci: check test
+ci: check test ## Run all targets that determine CI status
 
 .PHONY: watch
-watch: depends .clean-test
+watch: depends .clean-test ## Continuously run all CI targets when files chanage
 	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
@@ -119,7 +119,7 @@ $(PIP):
 # Tools Installation ###########################################################
 
 .PHONY: depends
-depends: depends-ci depends-doc depends-dev
+depends: depends-ci depends-doc depends-dev ## Install all project dependnecies
 
 .PHONY: depends-ci
 depends-ci: env Makefile $(DEPENDS_CI_FLAG)
@@ -152,17 +152,17 @@ endif
 # Documentation ################################################################
 
 .PHONY: doc
-doc: uml pdoc mkdocs
+doc: uml pdoc mkdocs ## Run all documentation targets
 
 .PHONY: uml
-uml: depends-doc docs/*.png
+uml: depends-doc docs/*.png ## Generate UML diagrams for classes and packages
 docs/*.png: $(SOURCES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
 .PHONY: pdoc
-pdoc: depends-doc pdoc/$(PACKAGE)/index.html
+pdoc: depends-doc pdoc/$(PACKAGE)/index.html  ## Generate API documentaiton from the code
 pdoc/$(PACKAGE)/index.html: $(SOURCES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
 
@@ -179,18 +179,18 @@ mkdocs-live: depends-doc ## Launch and continuously rebuild the mkdocs site
 # Static Analysis ##############################################################
 
 .PHONY: check
-check: pep8 pep257 pylint
+check: pep8 pep257 pylint ## Run all static analysis targets
 
 .PHONY: pep8
-pep8: depends-ci
+pep8: depends-ci ## Check for convention issues
 	$(PEP8) $(PACKAGE) tests --config=.pep8rc
 
 .PHONY: pep257
-pep257: depends-ci
+pep257: depends-ci ## Check for docstring issues
 	$(PEP257) $(PACKAGE) tests
 
 .PHONY: pylint
-pylint: depends-ci
+pylint: depends-ci ## Check for code issues
 	$(PYLINT) $(PACKAGE) tests --rcfile=.pylintrc
 
 .PHONY: fix
@@ -207,7 +207,7 @@ NOSE_OPTS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html
 test: test-all
 
 .PHONY: test-unit
-test-unit: depends-ci .clean-test
+test-unit: depends-ci .clean-test ## Run the unit tests
 	$(NOSE) $(PACKAGE) $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -216,7 +216,7 @@ endif
 endif
 
 .PHONY: test-int
-test-int: depends-ci .clean-test
+test-int: depends-ci .clean-test ## Run the integration tests
 	$(NOSE) tests $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -225,7 +225,7 @@ endif
 endif
 
 .PHONY: test-all
-test-all: depends-ci .clean-test
+test-all: depends-ci .clean-test ## Run all the tests
 	$(NOSE) $(PACKAGE) tests $(NOSE_OPTS) -xv
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -246,7 +246,7 @@ FAILURES := .cache/v/cache/lastfailed
 test: test-all
 
 .PHONY: test-unit
-test-unit: depends-ci
+test-unit: depends-ci ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
@@ -257,7 +257,7 @@ endif
 endif
 
 .PHONY: test-int
-test-int: depends-ci
+test-int: depends-ci ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) tests
 ifndef TRAVIS
@@ -267,7 +267,7 @@ endif
 endif
 
 .PHONY: test-all
-test-all: depends-ci
+test-all: depends-ci ## Run all the tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGE) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) tests
 ifndef TRAVIS
