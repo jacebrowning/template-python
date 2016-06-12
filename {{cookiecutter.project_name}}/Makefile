@@ -81,7 +81,6 @@ INSTALLED_FLAG := $(ENV)/.installed
 DEPENDS_CI_FLAG := $(ENV)/.depends-ci
 DEPENDS_DOC_FLAG := $(ENV)/.depends-doc
 DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
-DOCS_FLAG := $(ENV)/.docs
 ALL_FLAG := $(ENV)/.all
 
 # Main Targets #################################################################
@@ -153,51 +152,29 @@ endif
 # Documentation ################################################################
 
 .PHONY: doc
-doc: readme verify-readme uml apidocs mkdocs
-
-.PHONY: doc-live
-doc-live: doc
-	eval "sleep 3; open http://127.0.0.1:8000" &
-	$(MKDOCS) serve
-
-.PHONY: read
-read: doc
-	$(OPEN) site/index.html
-	$(OPEN) apidocs/$(PACKAGE)/index.html
-	$(OPEN) README-pypi.html
-	$(OPEN) README-github.html
-
-.PHONY: readme
-readme: depends-doc README-github.html README-pypi.html
-README-github.html: README.md
-	pandoc -f markdown_github -t html -o README-github.html README.md
-README-pypi.html: README.rst
-	$(RST2HTML) README.rst README-pypi.html
-%.rst: %.md
-	pandoc -f markdown_github -t rst -o $@ $<
-
-.PHONY: verify-readme
-verify-readme: $(DOCS_FLAG)
-$(DOCS_FLAG): README.rst CHANGELOG.rst
-	$(PYTHON) setup.py check --restructuredtext --strict --metadata
-	@ touch $@  # flag to indicate README has been checked
+doc: uml pdoc mkdocs
 
 .PHONY: uml
 uml: depends-doc docs/*.png
 docs/*.png: $(SOURCES)
-	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore test
+	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
-.PHONY: apidocs
-apidocs: depends-doc apidocs/$(PACKAGE)/index.html
-apidocs/$(PACKAGE)/index.html: $(SOURCES)
-	$(PDOC) --html --overwrite $(PACKAGE) --html-dir apidocs
+.PHONY: pdoc
+pdoc: depends-doc pdoc/$(PACKAGE)/index.html
+pdoc/$(PACKAGE)/index.html: $(SOURCES)
+	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
 
 .PHONY: mkdocs
-mkdocs: depends-doc site/index.html
+mkdocs: depends-doc site/index.html ## Build the documentation with mkdocs
 site/index.html: mkdocs.yml docs/*.md
 	$(MKDOCS) build --clean --strict
+
+.PHONY: mkdocs-live
+mkdocs-live: depends-doc ## Launch and continuously rebuild the mkdocs site
+	eval "sleep 3; open http://127.0.0.1:8000" &
+	$(MKDOCS) serve
 
 # Static Analysis ##############################################################
 
@@ -320,7 +297,7 @@ clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-doc
 .clean-doc:
-	rm -rf README.rst apidocs *.html docs/*.png site
+	rm -rf README.rst docs/apidocs *.html docs/*.png site
 
 .PHONY: .clean-test
 .clean-test:
@@ -341,21 +318,22 @@ clean-all: clean .clean-env .clean-workspace
 # Release ######################################################################
 
 .PHONY: register-test
-register-test: doc
+register-test: README.rst CHANGELOG.rst ## Register the project on the test PyPI
 	$(PYTHON) setup.py register --strict --repository https://testpypi.python.org/pypi
 
+.PHONY: register
+register: README.rst CHANGELOG.rst ## Register the project on PyPI
+	$(PYTHON) setup.py register --strict
+
 .PHONY: upload-test
-upload-test: register-test
+upload-test: register-test ## Upload the current version to the test PyPI
 	$(PYTHON) setup.py sdist upload --repository https://testpypi.python.org/pypi
 	$(PYTHON) setup.py bdist_wheel upload --repository https://testpypi.python.org/pypi
 	$(OPEN) https://testpypi.python.org/pypi/$(PROJECT)
 
-.PHONY: register
-register: doc
-	$(PYTHON) setup.py register --strict
-
 .PHONY: upload
-upload: .git-no-changes register
+upload: .git-no-changes register ## Upload the current version to PyPI
+	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	$(PYTHON) setup.py sdist upload
 	$(PYTHON) setup.py bdist_wheel upload
 	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
@@ -371,6 +349,9 @@ upload: .git-no-changes register
 		exit -1;                                  \
 	fi;
 
+%.rst: %.md
+	pandoc -f markdown_github -t rst -o $@ $<
+
 # System Installation ##########################################################
 
 .PHONY: develop
@@ -384,3 +365,11 @@ install:
 .PHONY: download
 download:
 	$(SYS_PYTHON) -m pip install $(PROJECT)
+
+# Help #########################################################################
+
+.PHONY: help
+help: all
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.DEFAULT_GOAL := help
