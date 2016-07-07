@@ -19,7 +19,7 @@ install:
   - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe
   - set PATH=%PATH%;C:\MinGW\bin
   - make --version
-  # Install dependencies
+  # Install project dependencies
   - make depends-ci
 
 build: off
