@@ -54,26 +54,23 @@ else
 endif
 
 # Virtual environment executables
-ifndef TRAVIS
-	BIN_ := $(BIN)/
-endif
-PYTHON := $(BIN_)python
-PIP := $(BIN_)pip
-EASY_INSTALL := $(BIN_)easy_install
-RST2HTML := $(PYTHON) $(BIN_)rst2html.py
-PDOC := $(PYTHON) $(BIN_)pdoc
-MKDOCS := $(BIN_)mkdocs
-PEP8 := $(BIN_)pep8
-PEP8RADIUS := $(BIN_)pep8radius
-PEP257 := $(BIN_)pep257
-PYLINT := $(BIN_)pylint
-PYREVERSE := $(BIN_)pyreverse
-NOSE := $(BIN_)nosetests
-PYTEST := $(BIN_)py.test
-COVERAGE := $(BIN_)coverage
-COVERAGE_SPACE := $(BIN_)coverage.space
-SNIFFER := $(BIN_)sniffer
-HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN_)honcho
+PYTHON := $(BIN)/python
+PIP := $(PYTHON) -m pip
+EASY_INSTALL := $(BIN)/easy_install
+RST2HTML := $(PYTHON) $(BIN)/rst2html.py
+PDOC := $(PYTHON) $(BIN)/pdoc
+MKDOCS := $(BIN)/mkdocs
+PEP8 := $(BIN)/pep8
+PEP8RADIUS := $(BIN)/pep8radius
+PEP257 := $(BIN)/pep257
+PYLINT := $(BIN)/pylint
+PYREVERSE := $(BIN)/pyreverse
+NOSE := $(BIN)/nosetests
+PYTEST := $(BIN)/py.test
+COVERAGE := $(BIN)/coverage
+COVERAGE_SPACE := $(BIN)/coverage.space
+SNIFFER := $(BIN)/sniffer
+HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN)/honcho
 
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed
@@ -108,12 +105,17 @@ $(INSTALLED_FLAG): Makefile setup.py requirements.txt
 
 $(PIP):
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
+ifdef LINUX
+	$(SYS_PYTHON) -m venv --clear --without-pip $(ENV)
+	wget https://bootstrap.pypa.io/get-pip.py -O - | $(PYTHON)
+else
 	$(SYS_PYTHON) -m venv --clear $(ENV)
+	$(PIP) install --upgrade pip setuptools
+endif
 {%- else %}
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
+	$(PIP) install --upgrade pip setuptools
 {%- endif %}
-	$(PYTHON) -m pip install --upgrade pip setuptools
-
 
 # Tools Installation ###########################################################
 
