@@ -78,7 +78,6 @@ HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN_)honcho
 # Flags for PHONY targets
 INSTALLED_FLAG := $(ENV)/.installed
 DEPENDS_CI_FLAG := $(ENV)/.depends-ci
-DEPENDS_DOC_FLAG := $(ENV)/.depends-doc
 DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
 ALL_FLAG := $(ENV)/.all
 
@@ -109,7 +108,7 @@ doctor:  ## Confirm system dependencies are available
 
 .PHONY: env
 env: $(PIP) $(INSTALLED_FLAG)
-$(INSTALLED_FLAG): Makefile setup.py requirements.txt
+$(INSTALLED_FLAG): setup.py requirements.txt
 	$(PYTHON) setup.py develop
 	@ touch $@  # flag to indicate package is installed
 
@@ -122,31 +121,22 @@ $(PIP):
 	$(PYTHON) -m pip install --upgrade pip setuptools
 
 .PHONY: depends
-depends: depends-ci depends-doc depends-dev ## Install all project dependnecies
+depends: depends-ci depends-dev ## Install all project dependnecies
 
 .PHONY: depends-ci
-depends-ci: env Makefile $(DEPENDS_CI_FLAG)
-$(DEPENDS_CI_FLAG): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint coverage coverage.space
-		{%- if cookiecutter.test_runner == "nose" %} nose nose-cov expecter
-		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-describe pytest-expecter pytest-cov pytest-random
-		{%- endif %}
-	@ touch $@  # flag to indicate dependencies are installed
-
-.PHONY: depends-doc
-depends-doc: env Makefile $(DEPENDS_DOC_FLAG)
-$(DEPENDS_DOC_FLAG): Makefile
-	$(PIP) install --upgrade pylint docutils readme pdoc mkdocs pygments
+depends-ci: env $(DEPENDS_CI_FLAG)
+$(DEPENDS_CI_FLAG):
+	$(PIP) install -r requirements/ci.txt
 	@ touch $@  # flag to indicate dependencies are installed
 
 .PHONY: depends-dev
-depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
-$(DEPENDS_DEV_FLAG): Makefile
-	$(PIP) install --upgrade pip pep8radius wheel sniffer honcho
+depends-dev: env $(DEPENDS_DEV_FLAG)
+$(DEPENDS_DEV_FLAG): requirements/dev.txt
+	$(PIP) install pip -r requirements/dev.txt
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
 else ifdef MAC
-	$(PIP) install --upgrade pync MacFSEvents==0.4
+	$(PIP) install --upgrade pync MacFSEvents
 else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif

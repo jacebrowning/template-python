@@ -1,0 +1,21 @@
+# Linters
+pep8
+pep257
+pylint
+
+# Testing
+{%- if cookiecutter.test_runner == "nose" %}
+nose
+nose-cov
+{%- elif cookiecutter.test_runner == "pytest" %}
+pytest
+pytest-describe
+pytest-expecter
+pytest-cov
+pytest-random
+{%- endif %}
+expecter
+
+# Coverage
+coverage
+coverage.space
