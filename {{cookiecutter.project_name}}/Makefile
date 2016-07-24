@@ -85,7 +85,6 @@ ci: check test ## Run all targets that determine CI status
 
 .PHONY: watch
 watch: depends .clean-test ## Continuously run all CI targets when files chanage
-	@ rm -rf $(FAILURES)
 	$(SNIFFER)
 
 # SYSTEM DEPENDENCIES ##########################################################
