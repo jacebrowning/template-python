@@ -96,12 +96,11 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
+DEPENDS := $(ENV)/.depends
 DEPENDS_CI := $(ENV)/.depends-ci
 DEPENDS_DEV := $(ENV)/.depends-dev
 
-env: $(PYTHON) setup.py requirements.txt
-	$(PYTHON) setup.py develop
-	@ touch $@  # flag to indicate package is installed
+env: $(PYTHON)
 
 $(PYTHON):
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
@@ -112,14 +111,18 @@ $(PYTHON):
 	$(PYTHON) -m pip install --upgrade pip setuptools
 
 .PHONY: depends
-depends: $(DEPENDS_CI) $(DEPENDS_DEV) ## Install all project dependnecies
+depends: env $(DEPENDS) $(DEPENDS_CI) $(DEPENDS_DEV) ## Install all project dependnecies
 
-$(DEPENDS_CI): env requirements/ci.txt
-	$(PIP) install -r requirements/ci.txt
+$(DEPENDS): setup.py requirements.txt
+	$(PYTHON) setup.py develop
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPENDS_DEV): env requirements/dev.txt
-	$(PIP) install pip -r requirements/dev.txt
+$(DEPENDS_CI): requirements/ci.txt
+	$(PIP) install -r $^
+	@ touch $@  # flag to indicate dependencies are installed
+
+$(DEPENDS_DEV): requirements/dev.txt
+	$(PIP) install pip -r $^
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
 else ifdef MAC
