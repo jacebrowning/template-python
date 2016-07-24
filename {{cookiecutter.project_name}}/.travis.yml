@@ -21,10 +21,11 @@ install:
 
 before_script:
 - make env
-- make depends-ci
+- make depends
 
 script:
-- make ci
+- make check
+- make test
 
 after_success:
 - coveralls

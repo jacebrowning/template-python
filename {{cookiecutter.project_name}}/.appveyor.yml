@@ -20,9 +20,11 @@ install:
   - set PATH=%PATH%;C:\MinGW\bin
   - make --version
   # Install project dependencies
-  - make depends-ci
+  - make env
+  - make depends
 
 build: off
 
 test_script:
-  - make ci
+  - make check
+  - make test

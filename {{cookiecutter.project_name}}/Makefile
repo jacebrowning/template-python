@@ -3,7 +3,7 @@ PROJECT := {{cookiecutter.project_name}}
 PACKAGE := {{cookiecutter.package_name}}
 REPOSITORY := {{cookiecutter.github_username}}/{{cookiecutter.github_repo}}
 DIRECTORIES := $(PACKAGE) tests
-FILES := Makefile setup.py $(shell find $(DIRECTORIES) -name '*.py')
+FILES := setup.py $(shell find $(DIRECTORIES) -name '*.py')
 
 # Python settings
 ifndef TRAVIS
@@ -75,27 +75,16 @@ COVERAGE_SPACE := $(BIN_)coverage.space
 SNIFFER := $(BIN_)sniffer
 HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN_)honcho
 
-# Flags for PHONY targets
-INSTALLED_FLAG := $(ENV)/.installed
-DEPENDS_CI_FLAG := $(ENV)/.depends-ci
-DEPENDS_DOC_FLAG := $(ENV)/.depends-doc
-DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
-ALL_FLAG := $(ENV)/.all
-
 # MAIN TASKS ###################################################################
 
 .PHONY: all
-all: depends doc $(ALL_FLAG)
-$(ALL_FLAG): $(FILES)
-	make check
-	@ touch $@  # flag to indicate all setup steps were successful
+all: doc
 
 .PHONY: ci
 ci: check test ## Run all targets that determine CI status
 
 .PHONY: watch
 watch: depends .clean-test ## Continuously run all CI targets when files chanage
-	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
 # SYSTEM DEPENDENCIES ##########################################################
@@ -107,13 +96,14 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-.PHONY: env
-env: $(PIP) $(INSTALLED_FLAG)
-$(INSTALLED_FLAG): Makefile setup.py requirements.txt
+DEPENDS_CI := $(ENV)/.depends-ci
+DEPENDS_DEV := $(ENV)/.depends-dev
+
+env: $(PYTHON) setup.py requirements.txt
 	$(PYTHON) setup.py develop
 	@ touch $@  # flag to indicate package is installed
 
-$(PIP):
+$(PYTHON):
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
 	$(SYS_PYTHON) -m venv --clear $(ENV)
 {%- else %}
@@ -122,31 +112,18 @@ $(PIP):
 	$(PYTHON) -m pip install --upgrade pip setuptools
 
 .PHONY: depends
-depends: depends-ci depends-doc depends-dev ## Install all project dependnecies
+depends: $(DEPENDS_CI) $(DEPENDS_DEV) ## Install all project dependnecies
 
-.PHONY: depends-ci
-depends-ci: env Makefile $(DEPENDS_CI_FLAG)
-$(DEPENDS_CI_FLAG): Makefile
-	$(PIP) install --upgrade pep8 pep257 pylint coverage coverage.space
-		{%- if cookiecutter.test_runner == "nose" %} nose nose-cov expecter
-		{%- elif cookiecutter.test_runner == "pytest" %} pytest pytest-describe pytest-expecter pytest-cov pytest-random
-		{%- endif %}
+$(DEPENDS_CI): env requirements/ci.txt
+	$(PIP) install -r requirements/ci.txt
 	@ touch $@  # flag to indicate dependencies are installed
 
-.PHONY: depends-doc
-depends-doc: env Makefile $(DEPENDS_DOC_FLAG)
-$(DEPENDS_DOC_FLAG): Makefile
-	$(PIP) install --upgrade pylint docutils readme pdoc mkdocs pygments
-	@ touch $@  # flag to indicate dependencies are installed
-
-.PHONY: depends-dev
-depends-dev: env Makefile $(DEPENDS_DEV_FLAG)
-$(DEPENDS_DEV_FLAG): Makefile
-	$(PIP) install --upgrade pip pep8radius wheel sniffer honcho
+$(DEPENDS_DEV): env requirements/dev.txt
+	$(PIP) install pip -r requirements/dev.txt
 ifdef WINDOWS
-	$(PIP) install --upgrade pywin32
+	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
 else ifdef MAC
-	$(PIP) install --upgrade pync MacFSEvents==0.4
+	$(PIP) install --upgrade pync MacFSEvents
 else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif
@@ -158,19 +135,19 @@ endif
 check: pep8 pep257 pylint ## Run all static analysis targets
 
 .PHONY: pep8
-pep8: depends-ci ## Check for convention issues
+pep8: depends ## Check for convention issues
 	$(PEP8) $(DIRECTORIES) --config=.pep8rc
 
 .PHONY: pep257
-pep257: depends-ci ## Check for docstring issues
+pep257: depends ## Check for docstring issues
 	$(PEP257) $(DIRECTORIES)
 
 .PHONY: pylint
-pylint: depends-ci ## Check for code issues
+pylint: depends ## Check for code issues
 	$(PYLINT) $(DIRECTORIES) --rcfile=.pylintrc
 
 .PHONY: fix
-fix: depends-dev
+fix: depends
 	$(PEP8RADIUS) --docformatter --in-place
 
 # TESTS ########################################################################
@@ -183,7 +160,7 @@ NOSE_OPTS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html
 test: test-all
 
 .PHONY: test-unit
-test-unit: depends-ci .clean-test ## Run the unit tests
+test-unit: depends .clean-test ## Run the unit tests
 	$(NOSE) $(PACKAGE) $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -192,7 +169,7 @@ endif
 endif
 
 .PHONY: test-int
-test-int: depends-ci .clean-test ## Run the integration tests
+test-int: depends .clean-test ## Run the integration tests
 	$(NOSE) tests $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -201,7 +178,7 @@ endif
 endif
 
 .PHONY: test-all
-test-all: depends-ci .clean-test ## Run all the tests
+test-all: depends .clean-test ## Run all the tests
 	$(NOSE) $(DIRECTORIES) $(NOSE_OPTS) -xv
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -222,7 +199,7 @@ FAILURES := .cache/v/cache/lastfailed
 test: test-all
 
 .PHONY: test-unit
-test-unit: depends-ci ## Run the unit tests
+test-unit: depends ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
@@ -233,7 +210,7 @@ endif
 endif
 
 .PHONY: test-int
-test-int: depends-ci ## Run the integration tests
+test-int: depends ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) tests
 ifndef TRAVIS
@@ -243,7 +220,7 @@ endif
 endif
 
 .PHONY: test-all
-test-all: depends-ci ## Run all the tests
+test-all: depends ## Run all the tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(DIRECTORIES); fi
 	$(PYTEST) $(PYTEST_OPTS) $(DIRECTORIES)
 ifndef TRAVIS
@@ -258,24 +235,28 @@ read-coverage:
 
 # DOCUMENTATION ################################################################
 
+PDOC_INDEX := docs/apidocs/$(PACKAGE)/index.html
+MKDOCS_INDEX := site/index.html
+
 .PHONY: doc
 doc: uml pdoc mkdocs ## Run all documentation targets
 
 .PHONY: uml
-uml: depends-doc docs/*.png ## Generate UML diagrams for classes and packages
+uml: depends docs/*.png ## Generate UML diagrams for classes and packages
 docs/*.png: $(FILES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
 .PHONY: pdoc
-pdoc: depends-doc pdoc/$(PACKAGE)/index.html  ## Generate API documentaiton from the code
-pdoc/$(PACKAGE)/index.html: $(FILES)
+pdoc: depends $(PDOC_INDEX)  ## Generate API documentaiton with pdoc
+$(PDOC_INDEX): $(FILES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
+	@ touch $@
 
 .PHONY: mkdocs
-mkdocs: depends-doc site/index.html ## Build the documentation with mkdocs
-site/index.html: mkdocs.yml docs/*.md
+mkdocs: depends $(MKDOCS_INDEX) ## Build the documentation site with mkdocs
+$(MKDOCS_INDEX): mkdocs.yml docs/*.md
 	ln -sf `realpath README.md --relative-to=docs` docs/index.md
 	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
 	ln -sf `realpath CONTRIBUTING.md --relative-to=docs/about` docs/about/contributing.md
@@ -283,7 +264,7 @@ site/index.html: mkdocs.yml docs/*.md
 	$(MKDOCS) build --clean --strict
 
 .PHONY: mkdocs-live
-mkdocs-live: depends-doc ## Launch and continuously rebuild the mkdocs site
+mkdocs-live: depends ## Launch and continuously rebuild the mkdocs site
 	eval "sleep 3; open http://127.0.0.1:8000" &
 	$(MKDOCS) serve
 
@@ -328,7 +309,6 @@ upload: .git-no-changes register ## Upload the current version to PyPI
 
 .PHONY: clean
 clean: .clean-dist .clean-test .clean-doc .clean-build
-	rm -rf $(ALL_FLAG)
 
 .PHONY: clean-all
 clean-all: clean .clean-env .clean-workspace
@@ -337,7 +317,7 @@ clean-all: clean .clean-env .clean-workspace
 .clean-build:
 	find $(DIRECTORIES) -name '*.pyc' -delete
 	find $(DIRECTORIES) -name '__pycache__' -delete
-	rm -rf $(INSTALLED_FLAG) *.egg-info
+	rm -rf *.egg-info
 
 .PHONY: .clean-doc
 .clean-doc:
