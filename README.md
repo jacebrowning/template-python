@@ -11,10 +11,10 @@ A live demo of this template: [jacebrowning/template-python-demo](https://github
 
 And a few sample projects based on this template:
 
-* [flask-restful/flask-restful](https://github.com/flask-restful/flask-restful)
-* [jacebrowning/doorstop](https://github.com/jacebrowning/doorstop)
-* [theovoss/BoggleSolver](https://github.com/theovoss/BoggleSolver)
+* [jacebrowning/sappy](https://github.com/jacebrowning/sappy)
+* [theovoss/Chess](https://github.com/theovoss/Chess)
 * [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
+* [flask-restful/flask-restful](https://github.com/flask-restful/flask-restful)
 
 ## Get Started
 
