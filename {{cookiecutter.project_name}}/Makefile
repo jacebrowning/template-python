@@ -100,7 +100,6 @@ DEPENDS_CI := $(ENV)/.depends-ci
 DEPENDS_DEV := $(ENV)/.depends-dev
 
 env: $(PYTHON) setup.py requirements.txt
-	$(PYTHON) -m pip install --upgrade pip setuptools
 	$(PYTHON) setup.py develop
 	@ touch $@  # flag to indicate package is installed
 
@@ -110,15 +109,16 @@ $(PYTHON):
 {%- else %}
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 {%- endif %}
+	$(PYTHON) -m pip install --upgrade pip setuptools
 
 .PHONY: depends
 depends: $(DEPENDS_CI) $(DEPENDS_DEV) ## Install all project dependnecies
 
-$(DEPENDS_CI): $(PIP) requirements/ci.txt
+$(DEPENDS_CI): $(PYTHON) requirements/ci.txt
 	$(PIP) install -r requirements/ci.txt
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPENDS_DEV): $(PIP) requirements/dev.txt
+$(DEPENDS_DEV): $(PYTHON) requirements/dev.txt
 	$(PIP) install pip -r requirements/dev.txt
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
