@@ -82,7 +82,7 @@ DEPENDS_DOC_FLAG := $(ENV)/.depends-doc
 DEPENDS_DEV_FLAG := $(ENV)/.depends-dev
 ALL_FLAG := $(ENV)/.all
 
-# Main Targets #################################################################
+# MAIN TASKS ###################################################################
 
 .PHONY: all
 all: depends doc $(ALL_FLAG)
@@ -98,7 +98,14 @@ watch: depends .clean-test ## Continuously run all CI targets when files chanage
 	@ rm -rf $(FAILED_FLAG)
 	$(SNIFFER)
 
-# Development Installation #####################################################
+# SYSTEM DEPENDENCIES ##########################################################
+
+.PHONY: doctor
+doctor:  ## Confirm system dependencies are available
+	@ echo "Checking Python version:"
+	@ python --version | tee /dev/stderr | grep -q "{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}."
+
+# PROJECT DEPENDENCIES #########################################################
 
 .PHONY: env
 env: $(PIP) $(INSTALLED_FLAG)
@@ -113,9 +120,6 @@ $(PIP):
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 {%- endif %}
 	$(PYTHON) -m pip install --upgrade pip setuptools
-
-
-# Tools Installation ###########################################################
 
 .PHONY: depends
 depends: depends-ci depends-doc depends-dev ## Install all project dependnecies
@@ -148,38 +152,7 @@ else ifdef LINUX
 endif
 	@ touch $@  # flag to indicate dependencies are installed
 
-# Documentation ################################################################
-
-.PHONY: doc
-doc: uml pdoc mkdocs ## Run all documentation targets
-
-.PHONY: uml
-uml: depends-doc docs/*.png ## Generate UML diagrams for classes and packages
-docs/*.png: $(FILES)
-	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
-	- mv -f classes_$(PACKAGE).png docs/classes.png
-	- mv -f packages_$(PACKAGE).png docs/packages.png
-
-.PHONY: pdoc
-pdoc: depends-doc pdoc/$(PACKAGE)/index.html  ## Generate API documentaiton from the code
-pdoc/$(PACKAGE)/index.html: $(FILES)
-	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
-
-.PHONY: mkdocs
-mkdocs: depends-doc site/index.html ## Build the documentation with mkdocs
-site/index.html: mkdocs.yml docs/*.md
-	ln -sf `realpath README.md --relative-to=docs` docs/index.md
-	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
-	ln -sf `realpath CONTRIBUTING.md --relative-to=docs/about` docs/about/contributing.md
-	ln -sf `realpath LICENSE.md --relative-to=docs/about` docs/about/licence.md
-	$(MKDOCS) build --clean --strict
-
-.PHONY: mkdocs-live
-mkdocs-live: depends-doc ## Launch and continuously rebuild the mkdocs site
-	eval "sleep 3; open http://127.0.0.1:8000" &
-	$(MKDOCS) serve
-
-# Static Analysis ##############################################################
+# CHECKS #######################################################################
 
 .PHONY: check
 check: pep8 pep257 pylint ## Run all static analysis targets
@@ -200,7 +173,7 @@ pylint: depends-ci ## Check for code issues
 fix: depends-dev
 	$(PEP8RADIUS) --docformatter --in-place
 
-# Testing ######################################################################
+# TESTS ########################################################################
 
 RANDOM_SEED ?= $(shell date +%s)
 {% if cookiecutter.test_runner == "nose" %}
@@ -283,7 +256,38 @@ endif
 read-coverage:
 	$(OPEN) htmlcov/index.html
 
-# Cleanup ######################################################################
+# DOCUMENTATION ################################################################
+
+.PHONY: doc
+doc: uml pdoc mkdocs ## Run all documentation targets
+
+.PHONY: uml
+uml: depends-doc docs/*.png ## Generate UML diagrams for classes and packages
+docs/*.png: $(FILES)
+	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
+	- mv -f classes_$(PACKAGE).png docs/classes.png
+	- mv -f packages_$(PACKAGE).png docs/packages.png
+
+.PHONY: pdoc
+pdoc: depends-doc pdoc/$(PACKAGE)/index.html  ## Generate API documentaiton from the code
+pdoc/$(PACKAGE)/index.html: $(FILES)
+	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
+
+.PHONY: mkdocs
+mkdocs: depends-doc site/index.html ## Build the documentation with mkdocs
+site/index.html: mkdocs.yml docs/*.md
+	ln -sf `realpath README.md --relative-to=docs` docs/index.md
+	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
+	ln -sf `realpath CONTRIBUTING.md --relative-to=docs/about` docs/about/contributing.md
+	ln -sf `realpath LICENSE.md --relative-to=docs/about` docs/about/licence.md
+	$(MKDOCS) build --clean --strict
+
+.PHONY: mkdocs-live
+mkdocs-live: depends-doc ## Launch and continuously rebuild the mkdocs site
+	eval "sleep 3; open http://127.0.0.1:8000" &
+	$(MKDOCS) serve
+
+# CLEANUP ######################################################################
 
 .PHONY: clean
 clean: .clean-dist .clean-test .clean-doc .clean-build
@@ -318,7 +322,7 @@ clean-all: clean .clean-env .clean-workspace
 .clean-workspace:
 	rm -rf *.sublime-workspace
 
-# Release ######################################################################
+# RELEASE ######################################################################
 
 .PHONY: register-test
 register-test: README.rst CHANGELOG.rst ## Register the project on the test PyPI
@@ -355,21 +359,7 @@ upload: .git-no-changes register ## Upload the current version to PyPI
 %.rst: %.md
 	pandoc -f markdown_github -t rst -o $@ $<
 
-# System Installation ##########################################################
-
-.PHONY: develop
-develop:
-	$(SYS_PYTHON) setup.py develop
-
-.PHONY: install
-install:
-	$(SYS_PYTHON) setup.py install
-
-.PHONY: download
-download:
-	$(SYS_PYTHON) -m pip install $(PROJECT)
-
-# Help #########################################################################
+# HELP #########################################################################
 
 .PHONY: help
 help: all
