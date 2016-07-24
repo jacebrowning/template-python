@@ -287,41 +287,6 @@ mkdocs-live: depends-doc ## Launch and continuously rebuild the mkdocs site
 	eval "sleep 3; open http://127.0.0.1:8000" &
 	$(MKDOCS) serve
 
-# CLEANUP ######################################################################
-
-.PHONY: clean
-clean: .clean-dist .clean-test .clean-doc .clean-build
-	rm -rf $(ALL_FLAG)
-
-.PHONY: clean-all
-clean-all: clean .clean-env .clean-workspace
-
-.PHONY: .clean-build
-.clean-build:
-	find $(DIRECTORIES) -name '*.pyc' -delete
-	find $(DIRECTORIES) -name '__pycache__' -delete
-	rm -rf $(INSTALLED_FLAG) *.egg-info
-
-.PHONY: .clean-doc
-.clean-doc:
-	rm -rf README.rst docs/apidocs *.html docs/*.png site
-
-.PHONY: .clean-test
-.clean-test:
-	rm -rf .cache .pytest .coverage htmlcov
-
-.PHONY: .clean-dist
-.clean-dist:
-	rm -rf dist build
-
-.PHONY: .clean-env
-.clean-env: clean
-	rm -rf $(ENV)
-
-.PHONY: .clean-workspace
-.clean-workspace:
-	rm -rf *.sublime-workspace
-
 # RELEASE ######################################################################
 
 .PHONY: register-test
@@ -358,6 +323,41 @@ upload: .git-no-changes register ## Upload the current version to PyPI
 
 %.rst: %.md
 	pandoc -f markdown_github -t rst -o $@ $<
+
+# CLEANUP ######################################################################
+
+.PHONY: clean
+clean: .clean-dist .clean-test .clean-doc .clean-build
+	rm -rf $(ALL_FLAG)
+
+.PHONY: clean-all
+clean-all: clean .clean-env .clean-workspace
+
+.PHONY: .clean-build
+.clean-build:
+	find $(DIRECTORIES) -name '*.pyc' -delete
+	find $(DIRECTORIES) -name '__pycache__' -delete
+	rm -rf $(INSTALLED_FLAG) *.egg-info
+
+.PHONY: .clean-doc
+.clean-doc:
+	rm -rf README.rst docs/apidocs *.html docs/*.png site
+
+.PHONY: .clean-test
+.clean-test:
+	rm -rf .cache .pytest .coverage htmlcov
+
+.PHONY: .clean-dist
+.clean-dist:
+	rm -rf dist build
+
+.PHONY: .clean-env
+.clean-env: clean
+	rm -rf $(ENV)
+
+.PHONY: .clean-workspace
+.clean-workspace:
+	rm -rf *.sublime-workspace
 
 # HELP #########################################################################
 
