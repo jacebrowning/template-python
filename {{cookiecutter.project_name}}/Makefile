@@ -103,7 +103,7 @@ watch: depends .clean-test ## Continuously run all CI targets when files chanage
 .PHONY: env
 env: $(PIP) $(INSTALLED_FLAG)
 $(INSTALLED_FLAG): Makefile setup.py requirements.txt
-	VIRTUAL_ENV=$(ENV) $(PYTHON) setup.py develop
+	$(PYTHON) setup.py develop
 	@ touch $@  # flag to indicate package is installed
 
 $(PIP):
@@ -168,6 +168,10 @@ pdoc/$(PACKAGE)/index.html: $(FILES)
 .PHONY: mkdocs
 mkdocs: depends-doc site/index.html ## Build the documentation with mkdocs
 site/index.html: mkdocs.yml docs/*.md
+	ln -sf `realpath README.md --relative-to=docs` docs/index.md
+	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
+	ln -sf `realpath CONTRIBUTING.md --relative-to=docs/about` docs/about/contributing.md
+	ln -sf `realpath LICENSE.md --relative-to=docs/about` docs/about/licence.md
 	$(MKDOCS) build --clean --strict
 
 .PHONY: mkdocs-live
