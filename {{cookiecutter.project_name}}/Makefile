@@ -114,11 +114,11 @@ $(PYTHON):
 .PHONY: depends
 depends: $(DEPENDS_CI) $(DEPENDS_DEV) ## Install all project dependnecies
 
-$(DEPENDS_CI): $(PYTHON) requirements/ci.txt
+$(DEPENDS_CI): env requirements/ci.txt
 	$(PIP) install -r requirements/ci.txt
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPENDS_DEV): $(PYTHON) requirements/dev.txt
+$(DEPENDS_DEV): env requirements/dev.txt
 	$(PIP) install pip -r requirements/dev.txt
 ifdef WINDOWS
 	$(PIP) install --upgrade pywin32
