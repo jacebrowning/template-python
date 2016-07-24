@@ -121,7 +121,7 @@ $(DEPENDS_CI): env requirements/ci.txt
 $(DEPENDS_DEV): env requirements/dev.txt
 	$(PIP) install pip -r requirements/dev.txt
 ifdef WINDOWS
-	$(PIP) install --upgrade pywin32
+	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
 else ifdef MAC
 	$(PIP) install --upgrade pync MacFSEvents
 else ifdef LINUX
