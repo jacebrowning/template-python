@@ -249,13 +249,13 @@ docs/*.png: $(FILES)
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
 .PHONY: pdoc
-pdoc: depends $(PDOC_INDEX)  ## Generate API documentaiton from the code
+pdoc: depends $(PDOC_INDEX)  ## Generate API documentaiton with pdoc
 $(PDOC_INDEX): $(FILES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
 	@ touch $@
 
 .PHONY: mkdocs
-mkdocs: depends $(MKDOCS_INDEX) ## Build the documentation with mkdocs
+mkdocs: depends $(MKDOCS_INDEX) ## Build the documentation site with mkdocs
 $(MKDOCS_INDEX): mkdocs.yml docs/*.md
 	ln -sf `realpath README.md --relative-to=docs` docs/index.md
 	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
