@@ -267,7 +267,7 @@ $(MKDOCS_INDEX): mkdocs.yml docs/*.md
 	$(MKDOCS) build --clean --strict
 
 .PHONY: mkdocs-live
-mkdocs-live: depends ## Launch and continuously rebuild the mkdocs site
+mkdocs-live: mkdocs ## Launch and continuously rebuild the mkdocs site
 	eval "sleep 3; open http://127.0.0.1:8000" &
 	$(MKDOCS) serve
 
