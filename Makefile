@@ -1,5 +1,5 @@
 # match default value of project_name from cookiecutter.json
-COOKIE := PythonTemplateDemo
+COOKIE := TemplateDemo
 
 BASE_CC := {{cookiecutter.project_name}}
 CC_FILES := $(BASE_CC)/* $(BASE_CC)/*/* $(BASE_CC)/*/*/*
