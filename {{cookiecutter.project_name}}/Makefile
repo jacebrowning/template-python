@@ -81,10 +81,10 @@ HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN_)honcho
 all: doc
 
 .PHONY: ci
-ci: check test ## Run all targets that determine CI status
+ci: check test ## Run all tasks that determine CI status
 
 .PHONY: watch
-watch: depends .clean-test ## Continuously run all CI targets when files chanage
+watch: depends .clean-test ## Continuously run all CI tasks when files chanage
 	$(SNIFFER)
 
 # SYSTEM DEPENDENCIES ##########################################################
@@ -135,7 +135,7 @@ endif
 # CHECKS #######################################################################
 
 .PHONY: check
-check: pep8 pep257 pylint ## Run all static analysis targets
+check: pep8 pep257 pylint ## Run linters and static analysis
 
 .PHONY: pep8
 pep8: depends ## Check for convention issues
@@ -160,7 +160,7 @@ RANDOM_SEED ?= $(shell date +%s)
 NOSE_OPTS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html  --cov-report=term-missing
 
 .PHONY: test
-test: test-all
+test: test-all ## Run unit and integration tests
 
 .PHONY: test-unit
 test-unit: depends .clean-test ## Run the unit tests
@@ -242,7 +242,7 @@ PDOC_INDEX := docs/apidocs/$(PACKAGE)/index.html
 MKDOCS_INDEX := site/index.html
 
 .PHONY: doc
-doc: uml pdoc mkdocs ## Run all documentation targets
+doc: uml pdoc mkdocs ## Run documentation generators
 
 .PHONY: uml
 uml: depends docs/*.png ## Generate UML diagrams for classes and packages
@@ -311,7 +311,7 @@ upload: .git-no-changes register ## Upload the current version to PyPI
 # CLEANUP ######################################################################
 
 .PHONY: clean
-clean: .clean-dist .clean-test .clean-doc .clean-build
+clean: .clean-dist .clean-test .clean-doc .clean-build ## Delete all generated and temporary files
 
 .PHONY: clean-all
 clean-all: clean .clean-env .clean-workspace
