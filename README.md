@@ -13,6 +13,7 @@ And a few sample projects based on this template:
 
 * [jacebrowning/sappy](https://github.com/jacebrowning/sappy)
 * [theovoss/Chess](https://github.com/theovoss/Chess)
+* [sprout42/NamedStruct](https://github.com/sprout42/NamedStruct)
 * [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
 * [flask-restful/flask-restful](https://github.com/flask-restful/flask-restful)
 
