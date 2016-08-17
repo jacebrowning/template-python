@@ -111,7 +111,7 @@ $(PYTHON):
 	$(PYTHON) -m pip install --upgrade pip setuptools
 
 .PHONY: depends
-depends: env $(DEPENDS) $(DEPENDS_CI) $(DEPENDS_DEV) ## Install all project dependnecies
+depends: env $(DEPENDS) $(DEPENDS_CI) $(DEPENDS_DEV) ## Install all project dependencies
 
 $(DEPENDS): setup.py requirements.txt
 	$(PYTHON) setup.py develop
