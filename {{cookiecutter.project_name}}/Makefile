@@ -118,11 +118,11 @@ $(DEPENDS): setup.py requirements.txt
 	@ touch $@  # flag to indicate dependencies are installed
 
 $(DEPENDS_CI): requirements/ci.txt
-	$(PIP) install -r $^
+	$(PIP) install --upgrade -r $^
 	@ touch $@  # flag to indicate dependencies are installed
 
 $(DEPENDS_DEV): requirements/dev.txt
-	$(PIP) install pip -r $^
+	$(PIP) install --upgrade -r $^
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
 else ifdef MAC
