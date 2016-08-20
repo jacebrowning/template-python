@@ -14,13 +14,13 @@ Unix: [![Unix Build Status](http://img.shields.io/travis/{{cookiecutter.github_u
 
 Install {{cookiecutter.project_name}} with pip:
 
-```
+```sh
 $ pip install {{cookiecutter.project_name}}
 ```
 
 or directly from the source code:
 
-```
+```sh
 $ git clone https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}.git
 $ cd {{cookiecutter.github_repo}}
 $ python setup.py install
@@ -30,7 +30,7 @@ $ python setup.py install
 
 After installation, the package can imported:
 
-```
+```sh
 $ python
 >>> import {{cookiecutter.package_name}}
 >>> {{cookiecutter.package_name}}.__version__
