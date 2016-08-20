@@ -35,6 +35,7 @@ Icon*
 .coverage
 .coverage.*
 /htmlcov
+/xmlreport
 /pyunit.xml
 *.tmp
 
