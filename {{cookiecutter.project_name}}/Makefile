@@ -105,7 +105,7 @@ env: $(PYTHON)
 
 $(PYTHON):
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
-	$(SYS_PYTHON) -m venv --clear $(ENV)
+	$(SYS_PYTHON) -m venv $(ENV)
 {%- else %}
 	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
 {%- endif %}
