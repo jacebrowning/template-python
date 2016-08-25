@@ -2,8 +2,9 @@
 PROJECT := {{cookiecutter.project_name}}
 PACKAGE := {{cookiecutter.package_name}}
 REPOSITORY := {{cookiecutter.github_username}}/{{cookiecutter.github_repo}}
-DIRECTORIES := $(PACKAGE) tests
-FILES := setup.py $(shell find $(DIRECTORIES) -name '*.py')
+PACKAGES := $(PACKAGE) tests
+CONFIG := $(shell ls *.py)
+MODULES := $(shell find $(PACKAGES) -name '*.py') $(CONFIG)
 
 # Python settings
 ifndef TRAVIS
@@ -139,15 +140,15 @@ check: pep8 pep257 pylint ## Run linters and static analysis
 
 .PHONY: pep8
 pep8: depends ## Check for convention issues
-	$(PEP8) $(DIRECTORIES) --config=.pep8rc
+	$(PEP8) $(PACKAGES) $(CONFIG) --config=.pep8rc
 
 .PHONY: pep257
 pep257: depends ## Check for docstring issues
-	$(PEP257) $(DIRECTORIES)
+	$(PEP257) $(PACKAGES) $(CONFIG)
 
 .PHONY: pylint
 pylint: depends ## Check for code issues
-	$(PYLINT) $(DIRECTORIES) --rcfile=.pylintrc
+	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
 
 .PHONY: fix
 fix: depends
@@ -182,7 +183,7 @@ endif
 
 .PHONY: test-all
 test-all: depends .clean-test ## Run all the tests
-	$(NOSE) $(DIRECTORIES) $(NOSE_OPTS)
+	$(NOSE) $(PACKAGES) $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
@@ -224,8 +225,8 @@ endif
 
 .PHONY: test-all
 test-all: depends ## Run all the tests
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(DIRECTORIES); fi
-	$(PYTEST) $(PYTEST_OPTS) $(DIRECTORIES)
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
+	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES)
 ifndef TRAVIS
 ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
@@ -246,14 +247,14 @@ doc: uml pdoc mkdocs ## Run documentation generators
 
 .PHONY: uml
 uml: depends docs/*.png ## Generate UML diagrams for classes and packages
-docs/*.png: $(FILES)
+docs/*.png: $(MODULES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
 .PHONY: pdoc
 pdoc: depends $(PDOC_INDEX)  ## Generate API documentaiton with pdoc
-$(PDOC_INDEX): $(FILES)
+$(PDOC_INDEX): $(MODULES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
 	@ touch $@
 
@@ -318,8 +319,8 @@ clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-build
 .clean-build:
-	find $(DIRECTORIES) -name '*.pyc' -delete
-	find $(DIRECTORIES) -name '__pycache__' -delete
+	find $(PACKAGES) -name '*.pyc' -delete
+	find $(PACKAGES) -name '__pycache__' -delete
 	rm -rf *.egg-info
 
 .PHONY: .clean-doc
