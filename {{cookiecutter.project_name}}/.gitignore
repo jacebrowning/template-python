@@ -40,6 +40,7 @@ Icon*
 *.tmp
 
 # Build and release directories
+*.spec
 /build
 /dist
 
