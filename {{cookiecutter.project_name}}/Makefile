@@ -62,7 +62,7 @@ PYTHON := $(BIN_)python
 PIP := $(BIN_)pip
 EASY_INSTALL := $(BIN_)easy_install
 SNIFFER := $(BIN_)sniffer
-HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN_)honcho
+HONCHO := $(ACTIVATE) && $(BIN_)honcho
 
 # MAIN TASKS ###################################################################
 
