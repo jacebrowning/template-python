@@ -61,18 +61,6 @@ endif
 PYTHON := $(BIN_)python
 PIP := $(BIN_)pip
 EASY_INSTALL := $(BIN_)easy_install
-RST2HTML := $(PYTHON) $(BIN_)rst2html.py
-PDOC := $(PYTHON) $(BIN_)pdoc
-MKDOCS := $(BIN_)mkdocs
-PEP8 := $(BIN_)pep8
-PEP8RADIUS := $(BIN_)pep8radius
-PEP257 := $(BIN_)pep257
-PYLINT := $(BIN_)pylint
-PYREVERSE := $(BIN_)pyreverse
-NOSE := $(BIN_)nosetests
-PYTEST := $(BIN_)py.test
-COVERAGE := $(BIN_)coverage
-COVERAGE_SPACE := $(BIN_)coverage.space
 SNIFFER := $(BIN_)sniffer
 HONCHO := PYTHONPATH=$(PWD) $(ACTIVATE) && $(BIN_)honcho
 
@@ -135,6 +123,11 @@ endif
 
 # CHECKS #######################################################################
 
+PEP8 := $(BIN_)pep8
+PEP8RADIUS := $(BIN_)pep8radius
+PEP257 := $(BIN_)pep257
+PYLINT := $(BIN_)pylint
+
 .PHONY: check
 check: pep8 pep257 pylint ## Run linters and static analysis
 
@@ -155,6 +148,14 @@ fix: depends
 	$(PEP8RADIUS) --docformatter --in-place
 
 # TESTS ########################################################################
+
+{% if cookiecutter.test_runner == "nose" -%}
+NOSE := $(BIN_)nosetests
+{%- elif cookiecutter.test_runner == "pytest" -%}
+PYTEST := $(BIN_)py.test
+{%- endif %}
+COVERAGE := $(BIN_)coverage
+COVERAGE_SPACE := $(BIN_)coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
 {% if cookiecutter.test_runner == "nose" %}
@@ -239,6 +240,10 @@ read-coverage:
 
 # DOCUMENTATION ################################################################
 
+PYREVERSE := $(BIN_)pyreverse
+PDOC := $(PYTHON) $(BIN_)pdoc
+MKDOCS := $(BIN_)mkdocs
+
 PDOC_INDEX := docs/apidocs/$(PACKAGE)/index.html
 MKDOCS_INDEX := site/index.html
 
@@ -271,6 +276,19 @@ $(MKDOCS_INDEX): mkdocs.yml docs/*.md
 mkdocs-live: mkdocs ## Launch and continuously rebuild the mkdocs site
 	eval "sleep 3; open http://127.0.0.1:8000" &
 	$(MKDOCS) serve
+
+# BUILD ########################################################################
+
+PYINSTALLER := $(BIN_)pyinstaller
+PYINSTALLER_MAKESPEC := $(BIN_)pyi-makespec
+
+.PHONY: exe
+exe: depends $(PROJECT).spec
+	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
+	$(PYINSTALLER) $(PROJECT).spec --noconfirm --clean
+
+$(PROJECT).spec:
+	$(PYINSTALLER_MAKESPEC) $(PACKAGE)/__main__.py --noupx --onefile --windowed --name=$(PROJECT)
 
 # RELEASE ######################################################################
 
