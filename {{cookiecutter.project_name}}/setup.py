@@ -2,9 +2,13 @@
 
 """Setup script for {{cookiecutter.project_name}}."""
 
+import sys
+
 import setuptools
 
-from {{cookiecutter.package_name}} import __project__, __version__
+MINIMUM_PYTHON_VERSION = {{cookiecutter.python_major_version}}, {{cookiecutter.python_minor_version}}
+if sys.version_info < MINIMUM_PYTHON_VERSION:
+    sys.exit("Python {}.{}+ is required.".format(*MINIMUM_PYTHON_VERSION))
 
 try:
     README = open("README.rst").read()
@@ -15,8 +19,8 @@ else:
     LONG_DESCRIPTION = README + '\n' + CHANGELOG
 
 setuptools.setup(
-    name=__project__,
-    version=__version__,
+    name='{{cookiecutter.project_name}}',
+    version='0.0.0',
 
     description="{{cookiecutter.project_short_description}}",
     url='https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}',
