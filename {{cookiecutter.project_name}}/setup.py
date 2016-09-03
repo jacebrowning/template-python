@@ -42,7 +42,7 @@ def read_descriptions():
 
 check_python_version()
 setuptools.setup(
-    name=read_package_variable('__package__'),
+    name=read_package_variable('__project__'),
     version=read_package_variable('__version__'),
 
     description="{{cookiecutter.project_short_description}}",
