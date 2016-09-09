@@ -18,8 +18,7 @@ install:
 - pip install coveralls scrutinizer-ocular
 
 before_script:
-- make env
-- make depends
+- make install
 
 script:
 - make check
