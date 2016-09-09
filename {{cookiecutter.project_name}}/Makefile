@@ -277,10 +277,25 @@ mkdocs-live: mkdocs ## Launch and continuously rebuild the mkdocs site
 	eval "sleep 3; open http://127.0.0.1:8000" &
 	$(MKDOCS) serve
 
+%.rst: %.md
+	pandoc -f markdown_github -t rst -o $@ $<
+
 # BUILD ########################################################################
 
 PYINSTALLER := $(BIN_)pyinstaller
 PYINSTALLER_MAKESPEC := $(BIN_)pyi-makespec
+
+.PHONY: sdist
+sdist: install dist/*.tar.gz
+dist/*.tar.gz: $(MODULES) README.rst CHANGELOG.rst
+	$(PYTHON) setup.py check --restructuredtext --strict --metadata
+	$(PYTHON) setup.py sdist
+
+.PHONY: bdist
+bdist: install dist/*.whl
+dist/*.whl: $(MODULES) README.rst CHANGELOG.rst
+	$(PYTHON) setup.py check --restructuredtext --strict --metadata
+	$(PYTHON) setup.py bdist_wheel
 
 .PHONY: exe
 exe: install $(PROJECT).spec
@@ -292,25 +307,18 @@ $(PROJECT).spec:
 
 # RELEASE ######################################################################
 
-.PHONY: register-test
-register-test: README.rst CHANGELOG.rst ## Register the project on the test PyPI
-	$(PYTHON) setup.py register --strict --repository https://testpypi.python.org/pypi
+TWINE := $(BIN_)twine
 
 .PHONY: register
-register: README.rst CHANGELOG.rst ## Register the project on PyPI
-	$(PYTHON) setup.py register --strict
-
-.PHONY: upload-test
-upload-test: register-test ## Upload the current version to the test PyPI
-	$(PYTHON) setup.py sdist upload --repository https://testpypi.python.org/pypi
-	$(PYTHON) setup.py bdist_wheel upload --repository https://testpypi.python.org/pypi
-	$(OPEN) https://testpypi.python.org/pypi/$(PROJECT)
+register: sdist bdist ## Register the project on PyPI
+	@ echo NOTE: your project must be registered manually
+	@ echo https://github.com/pypa/python-packaging-user-guide/issues/263
+	# TODO: switch to twine when the above issue is resolved
+	# $(TWINE) register dist/*.whl
 
 .PHONY: upload
 upload: .git-no-changes register ## Upload the current version to PyPI
-	$(PYTHON) setup.py check --restructuredtext --strict --metadata
-	$(PYTHON) setup.py sdist upload
-	$(PYTHON) setup.py bdist_wheel upload
+	$(TWINE) upload dist/*
 	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
 
 .PHONY: .git-no-changes
@@ -323,9 +331,6 @@ upload: .git-no-changes register ## Upload the current version to PyPI
 		echo Commit your changes and try again.;  \
 		exit -1;                                  \
 	fi;
-
-%.rst: %.md
-	pandoc -f markdown_github -t rst -o $@ $<
 
 # CLEANUP ######################################################################
 
