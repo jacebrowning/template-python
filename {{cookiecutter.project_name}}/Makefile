@@ -73,7 +73,7 @@ all: doc
 ci: check test ## Run all tasks that determine CI status
 
 .PHONY: watch
-watch: depends .clean-test ## Continuously run all CI tasks when files chanage
+watch: install .clean-test ## Continuously run all CI tasks when files chanage
 	$(SNIFFER)
 
 # SYSTEM DEPENDENCIES ##########################################################
@@ -85,33 +85,19 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-DEPENDS := $(ENV)/.depends
-DEPENDS_CI := $(ENV)/.depends-ci
-DEPENDS_DEV := $(ENV)/.depends-dev
+DEPS_CI := $(ENV)/.install-ci
+DEPS_DEV := $(ENV)/.install-dev
+DEPS_BASE := $(ENV)/.install-base
 
-env: $(PYTHON)
+.PHONY: install
+install: $(DEPS_CI) $(DEPS_DEV) $(DEPS_BASE) ## Install all project dependencies
 
-$(PYTHON):
-{%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
-	$(SYS_PYTHON) -m venv $(ENV)
-{%- else %}
-	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
-{%- endif %}
-	$(PYTHON) -m pip install --upgrade pip setuptools
-
-.PHONY: depends
-depends: env $(DEPENDS) $(DEPENDS_CI) $(DEPENDS_DEV) ## Install all project dependencies
-
-$(DEPENDS): setup.py requirements.txt
-	$(PYTHON) setup.py develop
+$(DEPS_CI): requirements/ci.txt $(PIP)
+	$(PIP) install --upgrade -r $<
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPENDS_CI): requirements/ci.txt
-	$(PIP) install --upgrade -r $^
-	@ touch $@  # flag to indicate dependencies are installed
-
-$(DEPENDS_DEV): requirements/dev.txt
-	$(PIP) install --upgrade -r $^
+$(DEPS_DEV): requirements/dev.txt $(PIP)
+	$(PIP) install --upgrade -r $<
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
 else ifdef MAC
@@ -120,6 +106,20 @@ else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif
 	@ touch $@  # flag to indicate dependencies are installed
+
+$(DEPS_BASE): setup.py requirements.txt $(PYTHON)
+	$(PYTHON) setup.py develop
+	@ touch $@  # flag to indicate dependencies are installed
+
+$(PIP): $(PYTHON)
+	$(PYTHON) -m pip install --upgrade pip setuptools
+
+$(PYTHON):
+{%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
+	$(SYS_PYTHON) -m venv $(ENV)
+{%- else %}
+	$(SYS_VIRTUALENV) --python $(SYS_PYTHON) $(ENV)
+{%- endif %}
 
 # CHECKS #######################################################################
 
@@ -132,19 +132,19 @@ PYLINT := $(BIN_)pylint
 check: pep8 pep257 pylint ## Run linters and static analysis
 
 .PHONY: pep8
-pep8: depends ## Check for convention issues
+pep8: install ## Check for convention issues
 	$(PEP8) $(PACKAGES) $(CONFIG) --config=.pep8rc
 
 .PHONY: pep257
-pep257: depends ## Check for docstring issues
+pep257: install ## Check for docstring issues
 	$(PEP257) $(PACKAGES) $(CONFIG)
 
 .PHONY: pylint
-pylint: depends ## Check for code issues
+pylint: install ## Check for code issues
 	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
 
 .PHONY: fix
-fix: depends
+fix: install
 	$(PEP8RADIUS) --docformatter --in-place
 
 # TESTS ########################################################################
@@ -165,7 +165,7 @@ NOSE_OPTS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html  --cov
 test: test-all ## Run unit and integration tests
 
 .PHONY: test-unit
-test-unit: depends .clean-test ## Run the unit tests
+test-unit: install .clean-test ## Run the unit tests
 	$(NOSE) $(PACKAGE) $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -174,7 +174,7 @@ endif
 endif
 
 .PHONY: test-int
-test-int: depends .clean-test ## Run the integration tests
+test-int: install .clean-test ## Run the integration tests
 	$(NOSE) tests $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -183,7 +183,7 @@ endif
 endif
 
 .PHONY: test-all
-test-all: depends .clean-test ## Run all the tests
+test-all: install .clean-test ## Run all the tests
 	$(NOSE) $(PACKAGES) $(NOSE_OPTS)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -204,7 +204,7 @@ FAILURES := .cache/v/cache/lastfailed
 test: test-all
 
 .PHONY: test-unit
-test-unit: depends ## Run the unit tests
+test-unit: install ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
 	@- mv $(FAILURES).bak $(FAILURES)
@@ -215,7 +215,7 @@ endif
 endif
 
 .PHONY: test-int
-test-int: depends ## Run the integration tests
+test-int: install ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) tests
 ifndef TRAVIS
@@ -225,7 +225,7 @@ endif
 endif
 
 .PHONY: test-all
-test-all: depends ## Run all the tests
+test-all: install ## Run all the tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES)
 ifndef TRAVIS
@@ -251,20 +251,20 @@ MKDOCS_INDEX := site/index.html
 doc: uml pdoc mkdocs ## Run documentation generators
 
 .PHONY: uml
-uml: depends docs/*.png ## Generate UML diagrams for classes and packages
+uml: install docs/*.png ## Generate UML diagrams for classes and packages
 docs/*.png: $(MODULES)
 	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
 .PHONY: pdoc
-pdoc: depends $(PDOC_INDEX)  ## Generate API documentaiton with pdoc
+pdoc: install $(PDOC_INDEX)  ## Generate API documentaiton with pdoc
 $(PDOC_INDEX): $(MODULES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
 	@ touch $@
 
 .PHONY: mkdocs
-mkdocs: depends $(MKDOCS_INDEX) ## Build the documentation site with mkdocs
+mkdocs: install $(MKDOCS_INDEX) ## Build the documentation site with mkdocs
 $(MKDOCS_INDEX): mkdocs.yml docs/*.md
 	ln -sf `realpath README.md --relative-to=docs` docs/index.md
 	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
@@ -283,7 +283,7 @@ PYINSTALLER := $(BIN_)pyinstaller
 PYINSTALLER_MAKESPEC := $(BIN_)pyi-makespec
 
 .PHONY: exe
-exe: depends $(PROJECT).spec
+exe: install $(PROJECT).spec
 	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
 	$(PYINSTALLER) $(PROJECT).spec --noconfirm --clean
 
