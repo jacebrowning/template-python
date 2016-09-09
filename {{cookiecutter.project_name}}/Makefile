@@ -199,6 +199,7 @@ PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
 PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --last-failed --exitfirst
 
 FAILURES := .cache/v/cache/lastfailed
+REPORTS ?= xmlreport
 
 .PHONY: test
 test: test-all
@@ -206,7 +207,7 @@ test: test-all
 .PHONY: test-unit
 test-unit: install ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE)
+	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) --junitxml=$(REPORTS)/unit.xml
 	@- mv $(FAILURES).bak $(FAILURES)
 ifndef TRAVIS
 ifndef APPVEYOR
@@ -217,7 +218,7 @@ endif
 .PHONY: test-int
 test-int: install ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
-	$(PYTEST) $(PYTEST_OPTS) tests
+	$(PYTEST) $(PYTEST_OPTS) tests --junitxml=$(REPORTS)/integration.xml
 ifndef TRAVIS
 ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
@@ -227,7 +228,7 @@ endif
 .PHONY: test-all
 test-all: install ## Run all the tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES)
+	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
 ifndef TRAVIS
 ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
@@ -347,7 +348,7 @@ clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-test
 .clean-test:
-	rm -rf .cache .pytest .coverage htmlcov
+	rm -rf .cache .pytest .coverage htmlcov xmlreport
 
 .PHONY: .clean-dist
 .clean-dist:

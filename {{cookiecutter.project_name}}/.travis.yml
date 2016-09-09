@@ -1,32 +1,30 @@
 language: python
 python:
-- 2.7
-- 3.3
-- 3.4
-- 3.5
+  - 2.7
+  - 3.3
+  - 3.4
+  - 3.5
 
 cache:
   pip: true
   directories:
-  - env
+    - env
 
 env:
   global:
-  - RANDOM_SEED=12345
+    - RANDOM_SEED=0
 
 install:
-- pip install coveralls scrutinizer-ocular
-
-before_script:
-- make install
+  - make install
 
 script:
-- make check
-- make test
+  - make check
+  - make test
 
 after_success:
-- coveralls
-- ocular
+  - pip install coveralls scrutinizer-ocular
+  - coveralls
+  - ocular
 
 notifications:
   email:
