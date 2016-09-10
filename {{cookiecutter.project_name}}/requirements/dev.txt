@@ -13,6 +13,9 @@ sniffer
 # Runner
 honcho
 
-# Release
-pyinstaller
+# Build
 wheel
+pyinstaller
+
+# Release
+twine
