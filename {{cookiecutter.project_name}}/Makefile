@@ -167,29 +167,17 @@ test: test-all ## Run unit and integration tests
 .PHONY: test-unit
 test-unit: install .clean-test ## Run the unit tests
 	$(NOSE) $(PACKAGE) $(NOSE_OPTS)
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) unit
-endif
-endif
 
 .PHONY: test-int
 test-int: install .clean-test ## Run the integration tests
 	$(NOSE) tests $(NOSE_OPTS)
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
-endif
-endif
 
 .PHONY: test-all
 test-all: install .clean-test ## Run all the tests
 	$(NOSE) $(PACKAGES) $(NOSE_OPTS)
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
-endif
-endif
 {% elif cookiecutter.test_runner == "pytest" %}
 PYTEST_CORE_OPTS := --doctest-modules -r xXw -vv
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing --cov-report=html
@@ -209,31 +197,19 @@ test-unit: install ## Run the unit tests
 	@- mv $(FAILURES) $(FAILURES).bak
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) --junitxml=$(REPORTS)/unit.xml
 	@- mv $(FAILURES).bak $(FAILURES)
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) unit
-endif
-endif
 
 .PHONY: test-int
 test-int: install ## Run the integration tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
 	$(PYTEST) $(PYTEST_OPTS) tests --junitxml=$(REPORTS)/integration.xml
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
-endif
-endif
 
 .PHONY: test-all
 test-all: install ## Run all the tests
 	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
 	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
-ifndef TRAVIS
-ifndef APPVEYOR
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
-endif
-endif
 {% endif %}
 .PHONY: read-coverage
 read-coverage:
@@ -289,12 +265,14 @@ PYINSTALLER_MAKESPEC := $(BIN_)pyi-makespec
 .PHONY: sdist
 sdist: install dist/*.tar.gz
 dist/*.tar.gz: $(MODULES) README.rst CHANGELOG.rst
+	rm -f dist/*.tar.gz
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	$(PYTHON) setup.py sdist
 
 .PHONY: bdist
 bdist: install dist/*.whl
 dist/*.whl: $(MODULES) README.rst CHANGELOG.rst
+	rm -f dist/*.whle
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	$(PYTHON) setup.py bdist_wheel
 
