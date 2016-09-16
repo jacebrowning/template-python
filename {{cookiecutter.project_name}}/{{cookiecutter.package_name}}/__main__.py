@@ -3,11 +3,13 @@
 """Sample package entry point."""
 
 import sys
+import logging
+from os.path import abspath, dirname
 
+sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
-def main():
-    sys.stdout.write("Hello, world!\n")
+from demo import sample  # pylint: disable=wrong-import-position
 
+logging.basicConfig(level=logging.INFO)
 
-if __name__ == '__main__':
-    main()
+sample.Application()
