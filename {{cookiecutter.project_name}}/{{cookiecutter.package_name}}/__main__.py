@@ -10,6 +10,7 @@ sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
 from demo import sample  # pylint: disable=wrong-import-position
 
-logging.basicConfig(level=logging.INFO)
 
-sample.Application()
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    sample.Application()
