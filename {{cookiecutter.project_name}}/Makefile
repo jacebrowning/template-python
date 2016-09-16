@@ -254,30 +254,28 @@ mkdocs-live: mkdocs ## Launch and continuously rebuild the mkdocs site
 	eval "sleep 3; open http://127.0.0.1:8000" &
 	$(MKDOCS) serve
 
-%.rst: %.md
-	pandoc -f markdown_github -t rst -o $@ $<
-
 # BUILD ########################################################################
 
 PYINSTALLER := $(BIN_)pyinstaller
 PYINSTALLER_MAKESPEC := $(BIN_)pyi-makespec
 
-.PHONY: sdist
-sdist: install dist/*.tar.gz
-dist/*.tar.gz: $(MODULES) README.rst CHANGELOG.rst
-	rm -f dist/*.tar.gz
+DIST_FILES := dist/*.tar.gz dist/*.whl
+EXE_FILES := dist/$(PROJECT).*
+
+.PHONY: dist
+dist: install $(DIST_FILES)
+$(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
+	rm -f $(DIST_FILES)
 	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	$(PYTHON) setup.py sdist
-
-.PHONY: bdist
-bdist: install dist/*.whl
-dist/*.whl: $(MODULES) README.rst CHANGELOG.rst
-	rm -f dist/*.whle
-	$(PYTHON) setup.py check --restructuredtext --strict --metadata
 	$(PYTHON) setup.py bdist_wheel
 
+%.rst: %.md
+	pandoc -f markdown_github -t rst -o $@ $<
+
 .PHONY: exe
-exe: install $(PROJECT).spec
+exe: install $(EXE_FILES)
+$(EXE_FILES): $(MODULES) $(PROJECT).spec
 	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
 	$(PYINSTALLER) $(PROJECT).spec --noconfirm --clean
 
@@ -289,7 +287,7 @@ $(PROJECT).spec:
 TWINE := $(BIN_)twine
 
 .PHONY: register
-register: sdist bdist ## Register the project on PyPI
+register: dist ## Register the project on PyPI
 	@ echo NOTE: your project must be registered manually
 	@ echo https://github.com/pypa/python-packaging-user-guide/issues/263
 	# TODO: switch to twine when the above issue is resolved

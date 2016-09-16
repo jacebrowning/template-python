@@ -18,4 +18,4 @@ pytest-random
 
 # Coverage
 coverage
-coverage.space >= 0.6
+coverage.space >= 0.6.1
