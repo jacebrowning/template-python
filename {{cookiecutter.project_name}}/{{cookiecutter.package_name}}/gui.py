@@ -9,6 +9,8 @@ from ttk import *  # pylint: disable=wildcard-import,unused-wildcard-import
 {%- endif %}
 import logging
 
+from . import utils
+
 
 log = logging.getLogger(__name__)
 
@@ -94,29 +96,15 @@ class Application(object):
 
     def calculate(self, event=None):
         log.debug("Event: %s", event)
-        try:
-            value = float(self.feet.get())
-        except ValueError:
-            log.error("Unable to convert to float: %s", self.feet.get())
-        else:
-            self.meters.set((0.3048 * value * 10000.0 + 0.5) / 10000.0)
+        meters = utils.feet_to_meters(self.feet.get())
+        if meters is not None:
+            self.meters.set(meters)
 
 
-def function(value):
-    """A function with branches to demonstrate branch coverage reporting."""
-    if value is True:
-        return 'True'
-    elif value is False:
-        return 'False'
-    else:
-        return 'None'
+def main():
+    logging.basicConfig(level=logging.INFO)
+    Application()
 
 
-def function_with_network_stuff():
-    """A sample function that might take a long time to test."""
-    return True
-
-
-def function_with_disk_stuff():
-    """A sample function that might take a long time to test."""
-    return False
+if __name__ == '__main__':
+    main()

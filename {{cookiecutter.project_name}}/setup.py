@@ -52,7 +52,10 @@ setuptools.setup(
 
     packages=setuptools.find_packages(),
 
-    entry_points={'console_scripts': []},
+    entry_points={'console_scripts': [
+        '{{cookiecutter.package_name}}-cli = {{cookiecutter.package_name}}.cli:main',
+        '{{cookiecutter.package_name}}-gui = {{cookiecutter.package_name}}.gui:main',
+    ]},
 
     long_description=read_descriptions(),
     license='MIT',
