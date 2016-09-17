@@ -76,6 +76,10 @@ ci: check test ## Run all tasks that determine CI status
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
 	$(SNIFFER)
 
+.PHONY: run ## Start the program
+run: install
+	$(PYTHON) $(PACKAGE)/__main__.py
+
 # SYSTEM DEPENDENCIES ##########################################################
 
 .PHONY: doctor
