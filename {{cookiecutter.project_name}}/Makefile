@@ -113,6 +113,7 @@ $(DEPS_BASE): setup.py requirements.txt $(PYTHON)
 
 $(PIP): $(PYTHON)
 	$(PYTHON) -m pip install --upgrade pip setuptools
+	@ touch $@
 
 $(PYTHON):
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
