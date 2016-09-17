@@ -338,7 +338,7 @@ clean-all: clean .clean-env .clean-workspace
 
 .PHONY: .clean-dist
 .clean-dist:
-	rm -rf dist build
+	rm -rf *.spec dist build
 
 .PHONY: .clean-env
 .clean-env: clean
