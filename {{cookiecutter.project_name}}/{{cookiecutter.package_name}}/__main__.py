@@ -5,4 +5,6 @@
 
 from {{cookiecutter.package_name}}.gui import main
 
-main()
+
+if __name__ == '__main__':
+    main()
