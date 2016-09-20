@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Setup script for {{cookiecutter.project_name}}."""
+"""Setup script for the package."""
 
 import os
 import sys

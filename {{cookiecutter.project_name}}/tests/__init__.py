@@ -1,1 +1,1 @@
-"""Integration tests for the `{{cookiecutter.package_name}}` package."""
+"""Integration tests for the package."""
