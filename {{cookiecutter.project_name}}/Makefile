@@ -116,6 +116,7 @@ $(DEPS_BASE): setup.py requirements.txt $(PYTHON)
 	@ touch $@  # flag to indicate dependencies are installed
 
 $(PIP): $(PYTHON)
+	$(PYTHON) -m ensurepip
 	$(PYTHON) -m pip install --upgrade pip setuptools
 	@ touch $@
 
