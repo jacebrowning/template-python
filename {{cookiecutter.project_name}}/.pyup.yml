@@ -7,3 +7,5 @@ requirements:
       pin: False
   - requirements/dev.txt:
       pin: False
+
+branch: {{cookiecutter.default_branch}}
