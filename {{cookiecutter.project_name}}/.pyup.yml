@@ -1,11 +1,6 @@
 search: False
 
 requirements:
-  - requirements.txt:
-      pin: True
-  - requirements/ci.txt:
-      pin: False
-  - requirements/dev.txt:
-      pin: False
+  - requirements.txt
 
 branch: {{cookiecutter.default_branch}}
