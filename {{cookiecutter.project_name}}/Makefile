@@ -84,8 +84,7 @@ run: install
 
 .PHONY: doctor
 doctor:  ## Confirm system dependencies are available
-	@ echo "Checking Python version:"
-	@ python --version | tee /dev/stderr | grep -q "{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}."
+	bin/verchew
 
 # PROJECT DEPENDENCIES #########################################################
 

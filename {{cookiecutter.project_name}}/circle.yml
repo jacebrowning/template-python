@@ -5,6 +5,8 @@ machine:
     RANDOM_SEED: 0
 
 dependencies:
+  pre:
+    - make doctor || echo "Some system dependencies might be missing"
   override:
     - make install
   cache_directories:
