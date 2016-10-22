@@ -1,4 +1,6 @@
+# Temporary Python files
 *.pyc
 __pycache__
 
+# Generated project
 /TemplateDemo

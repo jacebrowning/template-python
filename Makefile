@@ -1,20 +1,32 @@
-# match default value of project_name from cookiecutter.json
-COOKIE := TemplateDemo
+SOURCE_FILES = Makefile cookiecutter.json $(shell find {{cookiecutter.project_name}})
 
-BASE_CC := {{cookiecutter.project_name}}
-CC_FILES := $(BASE_CC)/* $(BASE_CC)/*/* $(BASE_CC)/*/*/*
+GENERATED_PROJECT := TemplateDemo
+
+# MAIN #########################################################################
 
 .PHONY: all
-all: $(COOKIE)
-	cd $(COOKIE); make
+all: $(GENERATED_PROJECT)
+	make $@ -C $<
+
+.PHONY: doctor
+doctor: $(GENERATED_PROJECT)
+	make $@ -C $<
 
 .PHONY: ci
-ci: $(COOKIE)
-	cd $(COOKIE); make ci
+ci: $(GENERATED_PROJECT)
+	make $@ -C $<
+
+.PHONY: watch
+watch:
+	sniffer
+
+# BUILD ########################################################################
 
 _COOKIECUTTER_INPLACE = cookiecutter.json > tmp && mv tmp cookiecutter.json
 
-$(COOKIE): Makefile cookiecutter.json $(CC_FILES)
+.PHONY: build
+build: $(GENERATED_PROJECT)
+$(GENERATED_PROJECT): $(SOURCE_FILES)
 
 # Update template for selected test runner
 ifeq ($(TEST_RUNNER),nose)
@@ -47,16 +59,15 @@ else ifeq ($(PYTHON_MINOR),5)
 	sed "s/7/5/g" $(_COOKIECUTTER_INPLACE)
 endif
 
+# Generate a project from the template
 	sed "s/master/python2-pytest/g" $(_COOKIECUTTER_INPLACE)
 	cat cookiecutter.json
 	cookiecutter . --no-input --overwrite-if-exists
 	sed "s/python2-pytest/master/g" $(_COOKIECUTTER_INPLACE)
+	@ touch $(GENERATED_PROJECT)
 
-.PHONY: watch
-watch:
-	pip install sniffer MacFSEvents
-	sniffer
+# CLEANUP ######################################################################
 
 .PHONY: clean
 clean:
-	rm -rf $(COOKIE)
+	rm -rf $(GENERATED_PROJECT)
