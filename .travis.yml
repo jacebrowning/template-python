@@ -4,10 +4,10 @@ branches:
 
 language: python
 python:
-- 2.7
-- 3.3
-- 3.4
-- 3.5
+  - 2.7
+  - 3.3
+  - 3.4
+  - 3.5
 
 cache: pip
 
@@ -21,10 +21,10 @@ env:
   - secure: "MDXLN07Xqf5uKpPC6xqTwvtTAHT5kFzHKjcS+ufLyORTG6NPgpg3e3gukTn8Z00llLeI9Hjj1JNmII/EIIOmiVH5fmpUo6FGyks6gu0zOvK7/w/xMn9irsL1llDo6aaKHJcuI3lmFdCQ45LaxoIWjaKjuRlTT4l98+heC4lejL0="
 
 install:
-- pip install cookiecutter>=0.9.1
+  - pip install cookiecutter
 
 script:
-- make ci
+  - make ci
 
 after_script: >
   echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST; echo $TRAVIS_PYTHON_VERSION; echo $TEST_RUNNER;
