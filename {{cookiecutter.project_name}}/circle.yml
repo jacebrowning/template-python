@@ -1,12 +1,12 @@
 machine:
   python:
-    version: 3.5.0
+    version: 3.5.2
   environment:
     RANDOM_SEED: 0
 
 dependencies:
   pre:
-    - make doctor || echo "Some system dependencies might be missing"
+    - make doctor
   override:
     - make install
   cache_directories:

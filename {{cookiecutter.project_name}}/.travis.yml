@@ -15,7 +15,7 @@ env:
     - RANDOM_SEED=0
 
 before_install:
-  - make doctor || echo "Some system dependencies might be missing"
+  - make doctor
 
 install:
   - make install

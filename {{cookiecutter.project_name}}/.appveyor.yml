@@ -20,7 +20,7 @@ install:
   - set PATH=%PATH%;C:\MinGW\bin
   - make --version
   # Check system dependencies
-  - make doctor || echo "Some system dependencies might be missing"
+  - make doctor
   # Install project dependencies
   - make install
 
