@@ -22,7 +22,7 @@ install:
   # Check system dependencies
   - make doctor
   # Install project dependencies
-  - make install
+  - rm -rf env/.depends* && make install
 
 build: off
 
