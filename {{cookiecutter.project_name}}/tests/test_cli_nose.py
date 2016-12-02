@@ -1,4 +1,4 @@
-"""Sample integration test module."""
+"""Sample integration test module using nose."""
 # pylint: disable=no-self-use,missing-docstring
 
 import unittest
