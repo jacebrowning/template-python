@@ -39,7 +39,11 @@ else
 endif
 
 # Virtual environment paths
-ENV := env
+ifdef TRAVIS
+	ENV := $(shell dirname $(shell dirname $(shell which $(SYS_PYTHON))))/
+else
+	ENV := env
+endif
 ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	ACTIVATE := $(BIN)/activate.bat
@@ -55,14 +59,11 @@ else
 endif
 
 # Virtual environment executables
-ifndef TRAVIS
-	BIN_ := $(BIN)/
-endif
-PYTHON := $(BIN_)python
-PIP := $(BIN_)pip
-EASY_INSTALL := $(BIN_)easy_install
-SNIFFER := $(BIN_)sniffer
-HONCHO := $(ACTIVATE) && $(BIN_)honcho
+PYTHON := $(BIN)/python
+PIP := $(BIN)/pip
+EASY_INSTALL := $(BIN)/easy_install
+SNIFFER := $(BIN)/sniffer
+HONCHO := $(ACTIVATE) && $(BIN)/honcho
 
 # MAIN TASKS ###################################################################
 
@@ -127,10 +128,10 @@ $(PYTHON):
 
 # CHECKS #######################################################################
 
-PEP8 := $(BIN_)pep8
-PEP8RADIUS := $(BIN_)pep8radius
-PEP257 := $(BIN_)pep257
-PYLINT := $(BIN_)pylint
+PEP8 := $(BIN)/pep8
+PEP8RADIUS := $(BIN)/pep8radius
+PEP257 := $(BIN)/pep257
+PYLINT := $(BIN)/pylint
 
 .PHONY: check
 check: pep8 pep257 pylint ## Run linters and static analysis
@@ -154,12 +155,12 @@ fix: install
 # TESTS ########################################################################
 
 {% if cookiecutter.test_runner == "nose" -%}
-NOSE := $(BIN_)nosetests
+NOSE := $(BIN)/nosetests
 {%- elif cookiecutter.test_runner == "pytest" -%}
-PYTEST := $(BIN_)py.test
+PYTEST := $(BIN)/py.test
 {%- endif %}
-COVERAGE := $(BIN_)coverage
-COVERAGE_SPACE := $(BIN_)coverage.space
+COVERAGE := $(BIN)/coverage
+COVERAGE_SPACE := $(BIN)/coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
 {% if cookiecutter.test_runner == "nose" %}
@@ -221,9 +222,9 @@ read-coverage:
 
 # DOCUMENTATION ################################################################
 
-PYREVERSE := $(BIN_)pyreverse
-PDOC := $(PYTHON) $(BIN_)pdoc
-MKDOCS := $(BIN_)mkdocs
+PYREVERSE := $(BIN)/pyreverse
+PDOC := $(PYTHON) $(BIN)/pdoc
+MKDOCS := $(BIN)/mkdocs
 
 PDOC_INDEX := docs/apidocs/$(PACKAGE)/index.html
 MKDOCS_INDEX := site/index.html
@@ -260,8 +261,8 @@ mkdocs-live: mkdocs ## Launch and continuously rebuild the mkdocs site
 
 # BUILD ########################################################################
 
-PYINSTALLER := $(BIN_)pyinstaller
-PYINSTALLER_MAKESPEC := $(BIN_)pyi-makespec
+PYINSTALLER := $(BIN)/pyinstaller
+PYINSTALLER_MAKESPEC := $(BIN)/pyi-makespec
 
 DIST_FILES := dist/*.tar.gz dist/*.whl
 EXE_FILES := dist/$(PROJECT).*
@@ -288,7 +289,7 @@ $(PROJECT).spec:
 
 # RELEASE ######################################################################
 
-TWINE := $(BIN_)twine
+TWINE := $(BIN)/twine
 
 .PHONY: register
 register: dist ## Register the project on PyPI
