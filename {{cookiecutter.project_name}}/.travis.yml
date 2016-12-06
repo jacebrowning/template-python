@@ -1,14 +1,11 @@
 language: python
 python:
-  - 2.7
-  - 3.3
-  - 3.4
-  - 3.5
+  - {{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}
 
 cache:
   pip: true
   directories:
-    - ~/virtualenv
+    - ~/virtualenv/python{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}.*
 
 env:
   global:
