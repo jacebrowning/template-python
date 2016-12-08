@@ -17,7 +17,7 @@ ci: $(GENERATED_PROJECT)
 	make $@ -C $<
 
 .PHONY: watch
-watch:
+watch: clean
 	sniffer
 
 # BUILD ########################################################################
