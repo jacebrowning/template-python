@@ -68,7 +68,7 @@ HONCHO := $(ACTIVATE) && $(BIN)/honcho
 # MAIN TASKS ###################################################################
 
 .PHONY: all
-all: doc
+all: install
 
 .PHONY: ci
 ci: check test ## Run all tasks that determine CI status
