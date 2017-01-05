@@ -184,7 +184,7 @@ test-all: install .clean-test ## Run all the tests
 	$(NOSE) $(PACKAGES) $(NOSE_OPTS)
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
 {% elif cookiecutter.test_runner == "pytest" %}
-PYTEST_CORE_OPTS := --doctest-modules -r xXw -vv
+PYTEST_CORE_OPTS := --doctest-modules -ra -vv
 PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing --cov-report=html
 PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
 
