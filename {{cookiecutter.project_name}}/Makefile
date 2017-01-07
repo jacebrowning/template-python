@@ -3,6 +3,11 @@ PROJECT := {{cookiecutter.project_name}}
 PACKAGE := {{cookiecutter.package_name}}
 REPOSITORY := {{cookiecutter.github_username}}/{{cookiecutter.github_repo}}
 
+# Project paths
+PACKAGES := $(PACKAGE) tests
+CONFIG := $(wildcard *.py)
+MODULES := $(wildcard $(PACKAGE)/*.py)
+
 # Python settings
 ifndef TRAVIS
 	PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
@@ -34,11 +39,6 @@ else
 	SYS_VIRTUALENV := virtualenv
 {%- endif %}
 endif
-
-# Project paths
-PACKAGES := $(PACKAGE) tests
-CONFIG := $(shell python -c 'import glob; print("\n".join(glob.glob("*.py")))')
-MODULES := $(shell python -c 'import glob; print("\n".join(glob.glob("$(PACKAGE)/*.py")))')
 
 # Virtual environment paths
 ifdef TRAVIS
