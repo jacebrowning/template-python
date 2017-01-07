@@ -1,6 +1,6 @@
 # Linters
 pep8
-pep257
+pydocstyle
 pylint
 
 # Testing

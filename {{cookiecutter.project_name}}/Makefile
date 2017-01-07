@@ -132,19 +132,19 @@ $(PYTHON):
 
 PEP8 := $(BIN)/pep8
 PEP8RADIUS := $(BIN)/pep8radius
-PEP257 := $(BIN)/pep257
+PYDOCSTYLE := $(BIN)/pydocstyle
 PYLINT := $(BIN)/pylint
 
 .PHONY: check
-check: pep8 pep257 pylint ## Run linters and static analysis
+check: pep8 pydocstyle pylint ## Run linters and static analysis
 
 .PHONY: pep8
 pep8: install ## Check for convention issues
 	$(PEP8) $(PACKAGES) $(CONFIG) --config=.pep8rc
 
-.PHONY: pep257
-pep257: install ## Check for docstring issues
-	$(PEP257) $(PACKAGES) $(CONFIG)
+.PHONY: pydocstyle
+pydocstyle: install ## Check for docstring issues
+	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
 
 .PHONY: pylint
 pylint: install ## Check for code issues
