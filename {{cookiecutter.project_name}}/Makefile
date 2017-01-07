@@ -130,29 +130,24 @@ $(PYTHON):
 
 # CHECKS #######################################################################
 
-PEP8 := $(BIN)/pep8
-PEP8RADIUS := $(BIN)/pep8radius
-PYDOCSTYLE := $(BIN)/pydocstyle
 PYLINT := $(BIN)/pylint
+PYCODESTYLE := $(BIN)/pycodestyle
+PYDOCSTYLE := $(BIN)/pydocstyle
 
 .PHONY: check
-check: pep8 pydocstyle pylint ## Run linters and static analysis
-
-.PHONY: pep8
-pep8: install ## Check for convention issues
-	$(PEP8) $(PACKAGES) $(CONFIG) --config=.pep8rc
-
-.PHONY: pydocstyle
-pydocstyle: install ## Check for docstring issues
-	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
+check: pylint pycodestyle pydocstyle ## Run linters and static analysis
 
 .PHONY: pylint
 pylint: install ## Check for code issues
 	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
 
-.PHONY: fix
-fix: install
-	$(PEP8RADIUS) --docformatter --in-place
+.PHONY: pycodestyle
+pycodestyle: install ## Check for code conventions
+	$(PYCODESTYLE) $(PACKAGES) $(CONFIG) --config=.pycodestylerc
+
+.PHONY: pydocstyle
+pydocstyle: install ## Check for docstring conventions
+	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
 
 # TESTS ########################################################################
 
