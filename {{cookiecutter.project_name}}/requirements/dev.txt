@@ -7,8 +7,7 @@ mkdocs
 pygments
 
 # Tooling
-pep8radius
-sniffer >= 0.3.6
+sniffer
 
 # Runner
 honcho
