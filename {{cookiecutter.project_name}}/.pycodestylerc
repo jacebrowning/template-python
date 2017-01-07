@@ -1,4 +1,4 @@
-[pep8]
+[pycodestyle]
 
 # E401 multiple imports on one line (checked by PyLint)
 # E402 module level import not at top of file (checked by PyLint)
