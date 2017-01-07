@@ -1,6 +1,6 @@
 # Linters
 pycodestyle
-pep257
+pydocstyle
 pylint
 
 # Testing

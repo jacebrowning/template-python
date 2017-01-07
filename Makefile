@@ -1,4 +1,4 @@
-SOURCE_FILES = Makefile cookiecutter.json $(wildcard {{cookiecutter.project_name}}/*)
+SOURCE_FILES = Makefile cookiecutter.json {{cookiecutter.project_name}}/* {{cookiecutter.project_name}}/*/*
 
 GENERATED_PROJECT := TemplateDemo
 

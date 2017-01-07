@@ -130,24 +130,24 @@ $(PYTHON):
 
 # CHECKS #######################################################################
 
-PYCODESTYLE := $(BIN)/pycodestyle
-PEP257 := $(BIN)/pep257
 PYLINT := $(BIN)/pylint
+PYCODESTYLE := $(BIN)/pycodestyle
+PYDOCSTYLE := $(BIN)/pydocstyle
 
 .PHONY: check
-check: pycodestyle pep257 pylint ## Run linters and static analysis
-
-.PHONY: pycodestyle
-pycodestyle: install ## Check for convention issues
-	$(PYCODESTYLE) $(PACKAGES) $(CONFIG) --config=.pycodestylerc
-
-.PHONY: pep257
-pep257: install ## Check for docstring issues
-	$(PEP257) $(PACKAGES) $(CONFIG)
+check: pylint pycodestyle pydocstyle ## Run linters and static analysis
 
 .PHONY: pylint
 pylint: install ## Check for code issues
 	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
+
+.PHONY: pycodestyle
+pycodestyle: install ## Check for code conventions
+	$(PYCODESTYLE) $(PACKAGES) $(CONFIG) --config=.pycodestylerc
+
+.PHONY: pydocstyle
+pydocstyle: install ## Check for docstring conventions
+	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
 
 # TESTS ########################################################################
 
