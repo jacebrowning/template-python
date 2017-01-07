@@ -1,5 +1,5 @@
 # Linters
-pep8
+pycodestyle
 pep257
 pylint
 
