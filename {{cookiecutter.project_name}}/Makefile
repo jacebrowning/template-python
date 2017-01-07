@@ -139,11 +139,11 @@ check: pylint pycodestyle pydocstyle ## Run linters and static analysis
 
 .PHONY: pylint
 pylint: install ## Check for code issues
-	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylintrc
+	$(PYLINT) $(PACKAGES) $(CONFIG)
 
 .PHONY: pycodestyle
 pycodestyle: install ## Check for code conventions
-	$(PYCODESTYLE) $(PACKAGES) $(CONFIG) --config=.pycodestylerc
+	$(PYCODESTYLE) $(PACKAGES) $(CONFIG)
 
 .PHONY: pydocstyle
 pydocstyle: install ## Check for docstring conventions
