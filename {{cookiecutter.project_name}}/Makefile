@@ -2,9 +2,11 @@
 PROJECT := {{cookiecutter.project_name}}
 PACKAGE := {{cookiecutter.package_name}}
 REPOSITORY := {{cookiecutter.github_username}}/{{cookiecutter.github_repo}}
+
+# Project paths
 PACKAGES := $(PACKAGE) tests
-CONFIG := $(shell ls *.py)
-MODULES := $(shell find $(PACKAGES) -name '*.py') $(CONFIG)
+CONFIG := $(wildcard *.py)
+MODULES := $(wildcard $(PACKAGE)/*.py)
 
 # Python settings
 ifndef TRAVIS
