@@ -36,7 +36,7 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 import logging
 
-__version__ = '0.5'
+__version__ = '1.0'
 
 PY2 = sys.version_info[0] == 2
 CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
@@ -190,12 +190,19 @@ def show(text, start='', end='\n', head=False):
         sys.stdout.flush()
 
 
-def _(word, utf8=None, tty=None):
+def _(word, is_tty=None, supports_utf8=None, supports_ansi=None):
     """Format and colorize a word based on available encoding."""
     formatted = word
 
-    style_support = sys.stdout.encoding == 'UTF-8' if utf8 is None else utf8
-    color_support = sys.stdout.isatty() if tty is None else tty
+    if is_tty is None:
+        is_tty = hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
+    if supports_utf8 is None:
+        supports_utf8 = sys.stdout.encoding == 'UTF-8'
+    if supports_ansi is None:
+        supports_ansi = sys.platform != 'win32' or 'ANSICON' in os.environ
+
+    style_support = supports_utf8
+    color_support = is_tty and supports_ansi
 
     if style_support:
         formatted = STYLE.get(word, word)
