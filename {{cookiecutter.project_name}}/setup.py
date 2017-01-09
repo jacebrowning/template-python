@@ -18,9 +18,9 @@ def check_python_version():
         sys.exit("Python {0}.{1}+ is required.".format(*MINIMUM_PYTHON_VERSION))
 
 
-def read_package_variable(key):
+def read_package_variable(key, filename='__init__.py'):
     """Read the value of a variable from the package without importing."""
-    module_path = os.path.join(PACKAGE_NAME, '__init__.py')
+    module_path = os.path.join(PACKAGE_NAME, filename)
     with open(module_path) as module:
         for line in module:
             parts = line.strip().split(' ', 2)
