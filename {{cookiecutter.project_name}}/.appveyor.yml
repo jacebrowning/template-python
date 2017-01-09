@@ -16,7 +16,7 @@ install:
   # Check system dependencies
   - make doctor
   # Install project dependencies
-  - rm -rf env/.depends* && make install
+  - make install
 
 build: off
 
