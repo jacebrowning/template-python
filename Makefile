@@ -36,27 +36,17 @@ else ifeq ($(TEST_RUNNER),pytest)
 endif
 
 # Update template for selected Python on Travis CI
-ifeq ($(TRAVIS_PYTHON_VERSION),3.3)
+ifeq ($(TRAVIS_PYTHON_VERSION),3.6)
 	sed "s/2,/3,/g" $(_COOKIECUTTER_INPLACE)
-	sed "s/7/3/g" $(_COOKIECUTTER_INPLACE)
-else ifeq ($(TRAVIS_PYTHON_VERSION),3.4)
-	sed "s/2,/3,/g" $(_COOKIECUTTER_INPLACE)
-	sed "s/7/4/g" $(_COOKIECUTTER_INPLACE)
-else ifeq ($(TRAVIS_PYTHON_VERSION),3.5)
-	sed "s/2,/3,/g" $(_COOKIECUTTER_INPLACE)
-	sed "s/7/5/g" $(_COOKIECUTTER_INPLACE)
+	sed "s/7/6/g" $(_COOKIECUTTER_INPLACE)
 endif
 
 # Update template for selected Python on Appveyor
 ifeq ($(PYTHON_MAJOR),3)
 	sed "s/2,/3,/g" $(_COOKIECUTTER_INPLACE)
 endif
-ifeq ($(PYTHON_MINOR),3)
-	sed "s/7/3/g" $(_COOKIECUTTER_INPLACE)
-else ifeq ($(PYTHON_MINOR),4)
-	sed "s/7/4/g" $(_COOKIECUTTER_INPLACE)
-else ifeq ($(PYTHON_MINOR),5)
-	sed "s/7/5/g" $(_COOKIECUTTER_INPLACE)
+ifeq ($(PYTHON_MINOR),6)
+	sed "s/7/6/g" $(_COOKIECUTTER_INPLACE)
 endif
 
 # Generate a project from the template
