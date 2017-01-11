@@ -5,11 +5,11 @@
 ### Requirements
 
 * Make:
-    * Windows: https://cygwin.com/install.html
-    * Mac: https://developer.apple.com/xcode
-    * Linux: https://www.gnu.org/software/make (likely already installed)
+    * Windows: http://mingw.org/download/installer
+    * Mac: http://developer.apple.com/xcode
+    * Linux: http://www.gnu.org/software/make
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}{% else %}
-* virtualenv: https://pypi.python.org/pypi/virtualenv#installation
+* virtualenv: http://pypi.python.org/pypi/virtualenv#installation
 {%- endif %}
 * Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
