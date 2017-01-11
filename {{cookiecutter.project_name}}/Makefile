@@ -25,7 +25,7 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 {%- endif %}
 	# https://bugs.launchpad.net/virtualenv/+bug/449537
 	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
-	TOUCH := "dir >"
+	FLAG := "dir >"
 else
 	ifneq ($(findstring darwin, $(PLATFORM)), )
 		MAC := true
@@ -39,7 +39,7 @@ else
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}{% else %}
 	SYS_VIRTUALENV := virtualenv
 {%- endif %}
-	TOUCH := touch
+	FLAG := touch
 endif
 
 # Virtual environment paths
@@ -102,7 +102,7 @@ install: $(DEPS_CI) $(DEPS_DEV) $(DEPS_BASE) ## Install all project dependencies
 
 $(DEPS_CI): requirements/ci.txt $(PIP)
 	$(PIP) install --upgrade -r $<
-	@ $(TOUCH) $@  # flag to indicate dependencies are installed
+	@ $(FLAG) $@
 
 $(DEPS_DEV): requirements/dev.txt $(PIP)
 	$(PIP) install --upgrade -r $<
@@ -113,15 +113,15 @@ else ifdef MAC
 else ifdef LINUX
 	$(PIP) install --upgrade pyinotify
 endif
-	@ $(TOUCH) $@  # flag to indicate dependencies are installed
+	@ $(FLAG) $@
 
 $(DEPS_BASE): setup.py requirements.txt $(PYTHON)
 	$(PYTHON) setup.py develop
-	@ $(TOUCH) $@  # flag to indicate dependencies are installed
+	@ $(FLAG) $@
 
 $(PIP): $(PYTHON)
 	$(PYTHON) -m pip install --upgrade pip setuptools
-	@ $(TOUCH) $@
+	@ touch $@
 
 $(PYTHON):
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
@@ -244,7 +244,7 @@ docs/*.png: $(MODULES)
 pdoc: install $(PDOC_INDEX)  ## Generate API documentaiton with pdoc
 $(PDOC_INDEX): $(MODULES)
 	$(PDOC) --html --overwrite $(PACKAGE) --html-dir docs/apidocs
-	@ $(TOUCH) $@
+	@ touch $@
 
 .PHONY: mkdocs
 mkdocs: install $(MKDOCS_INDEX) ## Build the documentation site with mkdocs
