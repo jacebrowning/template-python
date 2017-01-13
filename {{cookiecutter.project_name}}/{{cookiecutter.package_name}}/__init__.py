@@ -1,5 +1,3 @@
-"""Package for {{cookiecutter.project_name}}."""
-
 __project__ = '{{cookiecutter.project_name}}'
 __version__ = '0.0.0'
 
