@@ -8,7 +8,7 @@ __pycache__
 Icon*
 
 # Temporary virtual environment files
-.cache
+/.cache
 /env
 
 # Temporary server files
@@ -30,19 +30,19 @@ Icon*
 *.gdraw
 
 # Testing and coverage results
-.cache
-.pytest
-.coverage
-.coverage.*
+/.pytest
+/.coverage
+/.coverage.*
 /htmlcov
 /xmlreport
 /pyunit.xml
+/tmp
 *.tmp
 
 # Build and release directories
-*.spec
 /build
 /dist
+*.spec
 
 # Sublime Text
 *.sublime-workspace
