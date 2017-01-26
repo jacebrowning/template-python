@@ -299,7 +299,7 @@ register: dist ## Register the project on PyPI
 
 .PHONY: upload
 upload: .git-no-changes register ## Upload the current version to PyPI
-	$(TWINE) upload dist/*
+	$(TWINE) upload dist/*.*
 	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
 
 .PHONY: .git-no-changes
