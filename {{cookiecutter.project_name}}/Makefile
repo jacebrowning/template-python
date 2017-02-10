@@ -228,7 +228,7 @@ PDOC_INDEX := docs/apidocs/$(PACKAGE)/index.html
 MKDOCS_INDEX := site/index.html
 
 .PHONY: doc
-doc: uml pdoc mkdocs ## Generate documentaiton
+doc: uml pdoc mkdocs ## Generate documentation
 
 .PHONY: uml
 uml: install docs/*.png
