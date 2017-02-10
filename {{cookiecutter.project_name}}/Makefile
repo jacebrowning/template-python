@@ -65,7 +65,6 @@ PYTHON := $(BIN)/python
 PIP := $(BIN)/pip
 EASY_INSTALL := $(BIN)/easy_install
 SNIFFER := $(BIN)/sniffer
-HONCHO := $(ACTIVATE) && $(BIN)/honcho
 
 # MAIN TASKS ###################################################################
 
