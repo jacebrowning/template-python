@@ -19,7 +19,7 @@ env:
   - secure: "MDXLN07Xqf5uKpPC6xqTwvtTAHT5kFzHKjcS+ufLyORTG6NPgpg3e3gukTn8Z00llLeI9Hjj1JNmII/EIIOmiVH5fmpUo6FGyks6gu0zOvK7/w/xMn9irsL1llDo6aaKHJcuI3lmFdCQ45LaxoIWjaKjuRlTT4l98+heC4lejL0="
 
 install:
-  - pip install cookiecutter
+  - make install
 
 script:
   - make ci

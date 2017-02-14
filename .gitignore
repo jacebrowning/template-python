@@ -1,6 +1,9 @@
+# Virtual environment
+/.venv/
+
 # Temporary Python files
 *.pyc
-__pycache__
+__pycache__/
 
 # Generated project
-/TemplateDemo
+/TemplateDemo/

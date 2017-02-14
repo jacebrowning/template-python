@@ -1,31 +1,44 @@
 SOURCE_FILES = Makefile cookiecutter.json {{cookiecutter.project_name}}/* {{cookiecutter.project_name}}/*/*
-
 GENERATED_PROJECT := TemplateDemo
+
+export PIPENV_SHELL_COMPAT=true
+export PIPENV_VENV_IN_PROJECT=true
+
+ENV := .venv
 
 # MAIN #########################################################################
 
 .PHONY: all
-all: $(GENERATED_PROJECT)
-	make $@ -C $<
-
-.PHONY: doctor
-doctor: $(GENERATED_PROJECT)
-	make $@ -C $<
+all: install
 
 .PHONY: ci
-ci: $(GENERATED_PROJECT)
-	make $@ -C $<
+ci: build
+	make doctor -C $(GENERATED_PROJECT)
+	make ci -C $(GENERATED_PROJECT)
 
 .PHONY: watch
-watch: clean
-	sniffer
+watch: install clean
+	pipenv run sniffer
+
+# DEPENDENCIES #################################################################
+
+.PHONY: install
+install: $(ENV)
+$(ENV): Pipfile*
+ifdef CI
+	pip install pipenv
+else
+	pipenv install --dev
+endif
+	pipenv install
+	@ touch $@
 
 # BUILD ########################################################################
 
 _COOKIECUTTER_INPLACE = cookiecutter.json > tmp && mv tmp cookiecutter.json
 
 .PHONY: build
-build: $(GENERATED_PROJECT)
+build: install $(GENERATED_PROJECT)
 $(GENERATED_PROJECT): $(SOURCE_FILES)
 
 # Update template for selected test runner
@@ -52,7 +65,7 @@ endif
 # Generate a project from the template
 	sed "s/master/python2-pytest/g" $(_COOKIECUTTER_INPLACE)
 	cat cookiecutter.json
-	cookiecutter . --no-input --overwrite-if-exists
+	pipenv run cookiecutter . --no-input --overwrite-if-exists
 	sed "s/python2-pytest/master/g" $(_COOKIECUTTER_INPLACE)
 	@ touch $(GENERATED_PROJECT)
 
@@ -61,3 +74,7 @@ endif
 .PHONY: clean
 clean:
 	rm -rf $(GENERATED_PROJECT)
+
+.PHONY: clean-all
+clean-all: clean
+	rm -rf $(ENV)
