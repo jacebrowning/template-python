@@ -17,10 +17,8 @@ install:
   - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe
   - set PATH=%PATH%;C:\MinGW\bin
   - make --version
-  # Install cookiecutter
-  - set PATH=%PATH%;C:\Python35\Scripts
-  - pip install cookiecutter
-  - cookiecutter --version
+  # Install project dependencies
+  - make install
 
 build: off
 
