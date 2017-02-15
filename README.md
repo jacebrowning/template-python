@@ -1,21 +1,24 @@
 # template-python
 
-A Python project template for [cookiecutter][cookiecutter].
+Generates the structure for Python libraries using [cookiecutter][cookiecutter].
 
 Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/template-python.svg)](https://ci.appveyor.com/project/jacebrowning/template-python)
 
-This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Pandoc, and Graphviz to fully automate all development and deployment tasks.
+This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Pandoc, and Graphviz to fully automate all development and deployment tasks. Check out the live demo: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
 
-A live demo of this template: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
-
-And a few sample projects based on this template:
+Here are a few sample projects based on this template:
 
 * [jacebrowning/sappy](https://github.com/jacebrowning/sappy)
 * [theovoss/Chess](https://github.com/theovoss/Chess)
 * [sprout42/StarStruct](https://github.com/sprout42/StarStruct)
 * [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
 * [flask-restful/flask-restful](https://github.com/flask-restful/flask-restful)
+
+If you are instead looking for a [Python application](https://caremad.io/posts/2013/07/setup-vs-requirement/) template, check out one of the sibling projects:
+
+* [jacebrowning/template-django](https://github.com/jacebrowning/template-django)
+* [jacebrowning/template-flask](https://github.com/jacebrowning/template-flask)
 
 ## Get Started
 
