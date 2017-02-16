@@ -6,7 +6,7 @@ environment:
       PYTHON_MINOR: {{cookiecutter.python_minor_version}}
 
 cache:
-  - env
+  - .venv
 
 install:
   # Export build paths
@@ -23,3 +23,4 @@ build: off
 test_script:
   - make check
   - make test
+  - make dist

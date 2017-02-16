@@ -10,10 +10,11 @@ dependencies:
   override:
     - make install
   cache_directories:
-    - env
+    - .venv
 
 test:
   override:
     - make check
     - make test-unit REPORTS=${CIRCLE_TEST_REPORTS}
     - make test-int REPORTS=${CIRCLE_TEST_REPORTS}
+    - make dist

@@ -5,7 +5,7 @@ python:
 cache:
   pip: true
   directories:
-    - ~/virtualenv/python{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}.*
+    - .venv
 
 env:
   global:
@@ -20,6 +20,7 @@ install:
 script:
   - make check
   - make test
+  - make dist
 
 after_success:
   - pip install coveralls scrutinizer-ocular

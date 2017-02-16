@@ -70,5 +70,7 @@ setuptools.setup(
         'Programming Language :: Python :: {{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}',
     ],
 
-    install_requires=open("requirements.txt").readlines(),
+    install_requires=[
+        "testpackage ~= 2.26",
+    ]
 )

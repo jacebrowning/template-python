@@ -29,7 +29,7 @@ def python(*_):
     group = int(time.time())  # unique per run
 
     for count, (command, title) in enumerate((
-        (('make', 'all'), "Generate Sample"),
+        (('make', 'build'), "Generate Sample"),
         (('make', 'ci'), "Test Sample"),
     ), start=1):
 
