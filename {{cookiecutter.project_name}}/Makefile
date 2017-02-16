@@ -90,19 +90,20 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-DEPS_CI := $(ENV)/.install-ci
-DEPS_DEV := $(ENV)/.install-dev
-DEPS_BASE := $(ENV)/.install-base
+DEPENDENCIES := $(ENV)/.dependencies-flag
+DEV_DEPENDENCIES := $(ENV)/.dev-dependencies-flag
 
 .PHONY: install
-install: $(DEPS_CI) $(DEPS_DEV) $(DEPS_BASE) ## Install all project dependencies
+install: $(DEPENDENCIES) $(DEV_DEPENDENCIES) ## Install all project dependencies
 
-$(DEPS_CI): requirements/ci.txt $(PIP)
-	$(PIP) install --upgrade -r $<
+$(DEPENDENCIES): setup.py requirements.txt $(PYTHON)
+	$(PYTHON) setup.py develop
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPS_DEV): requirements/dev.txt $(PIP)
-	$(PIP) install --upgrade -r $<
+$(DEV_DEPENDENCIES): requirements/*.txt $(PIP)
+	$(PIP) install --upgrade pip setuptools
+	$(PIP) install --upgrade -r requirements/ci.txt
+	$(PIP) install --upgrade -r requirements/dev.txt
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
 else ifdef MAC
@@ -112,13 +113,7 @@ else ifdef LINUX
 endif
 	@ touch $@  # flag to indicate dependencies are installed
 
-$(DEPS_BASE): setup.py requirements.txt $(PYTHON)
-	$(PYTHON) setup.py develop
-	@ touch $@  # flag to indicate dependencies are installed
-
 $(PIP): $(PYTHON)
-	$(PYTHON) -m pip install --upgrade pip setuptools
-	@ touch $@
 
 $(PYTHON):
 {%- if cookiecutter.python_major_version == "3" and cookiecutter.python_minor_version >= "3"  %}
