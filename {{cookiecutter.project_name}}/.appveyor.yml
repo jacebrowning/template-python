@@ -14,6 +14,8 @@ install:
   - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe
   - set PATH=%PATH%;C:\MinGW\bin
   - make --version
+  # Install pipenv
+  - pip install pipenv
   # Check system dependencies
   - make doctor
   # Install project dependencies

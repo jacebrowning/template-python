@@ -21,6 +21,9 @@ watch: install clean
 
 # DEPENDENCIES #################################################################
 
+export PIPENV_SHELL_COMPAT=true
+export PIPENV_VENV_IN_PROJECT=true
+
 .PHONY: install
 install: $(ENV)
 $(ENV): Pipfile*
