@@ -3,6 +3,8 @@ branches:
     - update
 
 environment:
+  global:
+    PIPENV_NOSPIN: true
   matrix:
     - PYTHON_MAJOR: 2
       PYTHON_MINOR: 7

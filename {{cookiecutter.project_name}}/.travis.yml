@@ -5,11 +5,12 @@ python:
 cache:
   pip: true
   directories:
-    - ~/virtualenv/python{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}.*
+    - .venv
 
 env:
   global:
     - RANDOM_SEED=0
+    - PIPENV_NOSPIN=true
 
 before_install:
   - make doctor

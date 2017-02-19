@@ -40,6 +40,7 @@ def python(*_):
         (('make', 'test-all'), "Combined Tests", False),
         (('make', 'check'), "Static Analysis", True),
         (('make', 'doc'), None, True),
+        (('make', 'dist'), None, True),
     ), start=1):
 
         if not run(command, title, count, retry):

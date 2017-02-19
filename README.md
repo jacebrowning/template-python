@@ -33,10 +33,9 @@ Cookiecutter will ask you for some basic info (your name, project name, python p
 
 * Preconfigured setup for [Travis-CI][travis], [Coveralls][coveralls], and [Scrutinizer][scrutinizer]
 * `Makefile` for automating common development tasks:
-    - Setting up a `virtualenv`
-    - Installing dependencies using `pip`
+    - Installing dependencies into a virtual environment using `pipenv`
     - Running tests
-    - Running style checkers (`pep8`/`pep257`) and linters (`pylint`)
+    - Running style checkers (`pycodestyle`/`pydocstyle`) and linters (`pylint`)
     - Building documentation
     - Creating and releasing distributions to PyPI
 
