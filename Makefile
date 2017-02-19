@@ -13,7 +13,7 @@ all: install
 
 .PHONY: ci
 ci: build
-	make doctor ci doc dist -C $(GENERATED_PROJECT)
+	make doctor ci -C $(GENERATED_PROJECT)
 
 .PHONY: watch
 watch: install clean

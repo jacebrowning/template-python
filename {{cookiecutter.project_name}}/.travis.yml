@@ -21,7 +21,6 @@ install:
 script:
   - make check
   - make test
-  - make dist
 
 after_success:
   - pip install coveralls scrutinizer-ocular
