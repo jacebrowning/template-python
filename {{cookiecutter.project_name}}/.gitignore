@@ -9,7 +9,7 @@ Icon*
 
 # Temporary virtual environment files
 /.cache
-/env
+/.venv
 
 # Temporary server files
 .env
