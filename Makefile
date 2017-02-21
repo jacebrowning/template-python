@@ -1,9 +1,6 @@
 SOURCE_FILES = Makefile cookiecutter.json {{cookiecutter.project_name}}/* {{cookiecutter.project_name}}/*/*
 GENERATED_PROJECT := TemplateDemo
 
-export PIPENV_SHELL_COMPAT=true
-export PIPENV_VENV_IN_PROJECT=true
-
 ENV := .venv
 
 # MAIN #########################################################################

@@ -81,7 +81,7 @@ doctor:  ## Confirm system dependencies are available
 # PROJECT DEPENDENCIES #########################################################
 
 export PIPENV_SHELL_COMPAT=true
-export PIPENV_ENV_IN_PROJECT=true
+export PIPENV_VENV_IN_PROJECT=true
 
 DEPS := $(ENV)/.deps
 INFO := *.egg-info
