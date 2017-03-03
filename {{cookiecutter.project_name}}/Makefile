@@ -74,6 +74,12 @@ run: install
 
 # SYSTEM DEPENDENCIES ##########################################################
 
+.PHONY: setup
+setup:
+	pip install pipenv==3.5.0
+	pipenv lock
+	touch Pipfile
+
 .PHONY: doctor
 doctor:  ## Confirm system dependencies are available
 	bin/verchew
