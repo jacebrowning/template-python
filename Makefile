@@ -25,7 +25,7 @@ export PIPENV_VENV_IN_PROJECT=true
 install: $(ENV)
 $(ENV): Pipfile*
 ifdef CI
-	pip install pipenv
+	pip install pipenv==3.5.0
 else
 	pipenv install --dev
 endif

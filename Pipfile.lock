@@ -12,6 +12,10 @@
         }
     },
     "default": {
+        "cookiecutter": {
+            "hash": "sha256:7d95c48717c725580b4ea6d80a7256479990ab8309003e60695ea1877c296fc9",
+            "version": "==1.5.1"
+        },
         "arrow": {
             "hash": "sha256:805906f09445afc1f0fc80187db8fe07670e3b25cdafa09b8d8ac264a8c0c722",
             "version": "==0.10.0"
@@ -28,15 +32,11 @@
             "hash": "sha256:29f99fc6125fbc931b758dc053b3114e55c77a6e4c6c3a2674a2dc986016381d",
             "version": "==6.7"
         },
-        "cookiecutter": {
-            "hash": "sha256:7d95c48717c725580b4ea6d80a7256479990ab8309003e60695ea1877c296fc9",
-            "version": "==1.5.1"
-        },
         "future": {
             "hash": "sha256:e39ced1ab767b5936646cedba8bcce582398233d6a627067d4c6a454c90cfedb",
             "version": "==0.16.0"
         },
-        "jinja2": {
+        "Jinja2": {
             "hash": "sha256:a7b7438120dbe76a8e735ef7eba6048eaf4e0b7dbc530e100812f8ec462a4d50",
             "version": "==2.9.5"
         },
@@ -66,17 +66,21 @@
         }
     },
     "develop": {
+        "sniffer": {
+            "hash": "sha256:e8a0daa4c51dff3d00482b45dc9b978159100a8d5a7df327c28ed96586559970",
+            "version": "==0.4.0"
+        },
+        "MacFSEvents": {
+            "hash": "sha256:95d3cddaf8a42435bfbd50087785ee9e3ebb8325242cfd06a88ea21f85bcb56f",
+            "version": "==0.7"
+        },
         "appdirs": {
-            "hash": "sha256:85e58578db8f29538f3109c11250c2a5514a2fcdc9890d9b2fe777eb55517736",
-            "version": "==1.4.0"
+            "hash": "sha256:a53330b9d53b66aba1e26907dea2958982ebad92735f9faf3897b73c909a20c1",
+            "version": "==1.4.2"
         },
         "colorama": {
             "hash": "sha256:a4c0f5bc358a62849653471e309dcc991223cf86abafbec17cd8f41327279e89",
             "version": "==0.3.7"
-        },
-        "macfsevents": {
-            "hash": "sha256:95d3cddaf8a42435bfbd50087785ee9e3ebb8325242cfd06a88ea21f85bcb56f",
-            "version": "==0.7"
         },
         "nose": {
             "hash": "sha256:9ff7c6cc443f8c51994b34a667bbcf45afd6d945be7477b52e97516fd17c53ac",
@@ -95,16 +99,12 @@
             "version": "==0.1.10"
         },
         "setuptools": {
-            "hash": "sha256:75d352eeeddd96a3fb702b1da9f8b89e5f8c045dbd86e3894516733eb5f99713",
-            "version": "==34.2.0"
+            "hash": "sha256:9349b47bcdef2e695065791260f9416b7aae8739fd30c6849f807bce5281d046",
+            "version": "==34.3.1"
         },
         "six": {
             "hash": "sha256:0ff78c403d9bccf5a425a6d31a12aa6b47f1c21ca4dc2573a7e2f32a97335eb1",
             "version": "==1.10.0"
-        },
-        "sniffer": {
-            "hash": "sha256:e8a0daa4c51dff3d00482b45dc9b978159100a8d5a7df327c28ed96586559970",
-            "version": "==0.4.0"
         }
     }
 }
