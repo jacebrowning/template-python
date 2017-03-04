@@ -8,17 +8,17 @@ __pycache__
 Icon*
 
 # Temporary virtual environment files
-/.cache
-/.venv
+/.cache/
+/.venv/
 
 # Temporary server files
 .env
 *.pid
 
 # Generated documentation
-/docs/gen
-/docs/apidocs
-/site
+/docs/gen/
+/docs/apidocs/
+/site/
 /*.html
 /*.rst
 /docs/*.png
@@ -30,18 +30,18 @@ Icon*
 *.gdraw
 
 # Testing and coverage results
-/.pytest
+/.pytest/
 /.coverage
 /.coverage.*
-/htmlcov
-/xmlreport
+/htmlcov/
+/xmlreport/
 /pyunit.xml
-/tmp
+/tmp/
 *.tmp
 
 # Build and release directories
-/build
-/dist
+/build/
+/dist/
 *.spec
 
 # Sublime Text
