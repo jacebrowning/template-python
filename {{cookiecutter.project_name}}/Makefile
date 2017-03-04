@@ -49,14 +49,12 @@ else
 		OPEN := open
 	endif
 endif
-
-# Virtual environment executables
-PYTHON := pipenv run python
-PIP := pipenv run pip
-EASY_INSTALL := pipenv run easy_install
-SNIFFER := pipenv run sniffer
+PYTHON := $(BIN)/python
+PIP := $(BIN)/pip
 
 # MAIN TASKS ###################################################################
+
+SNIFFER := pipenv run sniffer
 
 .PHONY: all
 all: install
@@ -95,7 +93,7 @@ METADATA := *.egg-info
 .PHONY: install
 install: $(DEPENDENCIES) $(METADATA)
 
-$(DEPENDENCIES): $(ENV) Pipfile*
+$(DEPENDENCIES): $(PIP) Pipfile*
 	pipenv install --dev
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
@@ -106,12 +104,12 @@ else ifdef LINUX
 endif
 	@ touch $@
 
-$(METADATA): $(ENV)
+$(METADATA): $(PIP)
 	pipenv install --dev
-	pipenv run python setup.py develop
+	$(PYTHON) setup.py develop
 	@ touch $@
 
-$(ENV):
+$(PIP):
 	pipenv --python=$(SYS_PYTHON)
 
 # CHECKS #######################################################################
