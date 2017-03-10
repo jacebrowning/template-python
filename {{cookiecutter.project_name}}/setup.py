@@ -29,7 +29,7 @@ def read_package_variable(key, filename='__init__.py'):
     sys.exit("'{0}' not found in '{1}'".format(key, module_path))
 
 
-def read_descriptions():
+def build_description():
     """Build a description for the project from documentation files."""
     try:
         readme = open("README.rst").read()
@@ -58,7 +58,7 @@ setuptools.setup(
         '{{cookiecutter.package_name}}-gui = {{cookiecutter.package_name}}.gui:main',
     ]},
 
-    long_description=read_descriptions(),
+    long_description=build_description(),
     license='MIT',
     classifiers=[
         # TODO: update this list to match your application: https://pypi.python.org/pypi?%3Aaction=list_classifiers
