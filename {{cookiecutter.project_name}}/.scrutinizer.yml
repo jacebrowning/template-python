@@ -6,7 +6,7 @@ tools:
   external_code_coverage: true
   pylint:
     python_version: {{cookiecutter.python_major_version}}
-    config_file: '.pylintrc'
+    config_file: .pylint.ini
 filter:
   excluded_paths:
     - "*/tests/*"
