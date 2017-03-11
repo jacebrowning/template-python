@@ -144,7 +144,7 @@ COVERAGE := pipenv run coverage
 COVERAGE_SPACE := pipenv run coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
-{%- if cookiecutter.test_runner == "nose" %}
+{% if cookiecutter.test_runner == "nose" %}
 NOSE_OPTIONS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html --cov-report=term-missing
 
 .PHONY: test
@@ -164,7 +164,7 @@ test-int: install .clean-test
 test-all: install .clean-test
 	$(NOSE) $(PACKAGES) $(NOSE_OPTIONS)
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
-{% elif cookiecutter.test_runner == "pytest" %}
+{% elif cookiecutter.test_runner == "pytest" -%}
 FAILURES := .cache/v/cache/lastfailed
 REPORTS ?= xmlreport
 
