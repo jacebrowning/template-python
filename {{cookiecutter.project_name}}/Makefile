@@ -145,7 +145,10 @@ COVERAGE_SPACE := pipenv run coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
 {% if cookiecutter.test_runner == "nose" %}
-NOSE_OPTIONS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html --cov-report=term-missing
+NOSE_OPTIONS := --with-doctest
+ifndef DISABLE_COVERAGE
+NOSE_OPTIONS += --with-cov --cov=$(PACKAGE) --cov-report=html --cov-report=term-missing
+endif
 
 .PHONY: test
 test: test-all ## Run unit and integration tests
@@ -173,7 +176,7 @@ PYTEST_COV_OPTIONS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missin
 PYTEST_RANDOM_OPTIONS := --random --random-seed=$(RANDOM_SEED)
 
 PYTEST_OPTIONS := $(PYTEST_CORE_OPTIONS) $(PYTEST_RANDOM_OPTIONS)
-ifndef CI
+ifndef DISABLE_COVERAGE
 PYTEST_OPTIONS += $(PYTEST_COV_OPTIONS)
 endif
 PYTEST_RURUN_OPTIONS := $(PYTEST_CORE_OPTIONS) --last-failed --exitfirst
