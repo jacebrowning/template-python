@@ -32,7 +32,7 @@ pytest-random = "*"
 
 # Coverage
 coverage = "*"
-"coverage.space" = "*"
+"coverage.space" = ">=0.7.1"
 
 # Documentation
 mkdocs = "*"

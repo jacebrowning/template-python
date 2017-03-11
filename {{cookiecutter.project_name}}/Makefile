@@ -144,36 +144,39 @@ COVERAGE := pipenv run coverage
 COVERAGE_SPACE := pipenv run coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
-{% if cookiecutter.test_runner == "nose" %}
-NOSE_OPTS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html  --cov-report=term-missing
+{%- if cookiecutter.test_runner == "nose" %}
+NOSE_OPTIONS := --with-doctest --with-cov --cov=$(PACKAGE) --cov-report=html --cov-report=term-missing
 
 .PHONY: test
 test: test-all ## Run unit and integration tests
 
 .PHONY: test-unit
 test-unit: install .clean-test
-	$(NOSE) $(PACKAGE) $(NOSE_OPTS)
+	$(NOSE) $(PACKAGE) $(NOSE_OPTIONS)
 	$(COVERAGE_SPACE) $(REPOSITORY) unit
 
 .PHONY: test-int
 test-int: install .clean-test
-	$(NOSE) tests $(NOSE_OPTS)
+	$(NOSE) tests $(NOSE_OPTIONS)
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install .clean-test
-	$(NOSE) $(PACKAGES) $(NOSE_OPTS)
+	$(NOSE) $(PACKAGES) $(NOSE_OPTIONS)
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
 {% elif cookiecutter.test_runner == "pytest" %}
-PYTEST_CORE_OPTS := --doctest-modules -ra -vv
-PYTEST_COV_OPTS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing:skip-covered --cov-report=html
-PYTEST_RANDOM_OPTS := --random --random-seed=$(RANDOM_SEED)
-
-PYTEST_OPTS := $(PYTEST_CORE_OPTS) $(PYTEST_COV_OPTS) $(PYTEST_RANDOM_OPTS)
-PYTEST_OPTS_FAILFAST := $(PYTEST_OPTS) --last-failed --exitfirst
-
 FAILURES := .cache/v/cache/lastfailed
 REPORTS ?= xmlreport
+
+PYTEST_CORE_OPTIONS := -ra -vv
+PYTEST_COV_OPTIONS := --cov=$(PACKAGE) --no-cov-on-fail --cov-report=term-missing:skip-covered --cov-report=html
+PYTEST_RANDOM_OPTIONS := --random --random-seed=$(RANDOM_SEED)
+
+PYTEST_OPTIONS := $(PYTEST_CORE_OPTIONS) $(PYTEST_RANDOM_OPTIONS)
+ifndef CI
+PYTEST_OPTIONS += $(PYTEST_COV_OPTIONS)
+endif
+PYTEST_RURUN_OPTIONS := $(PYTEST_CORE_OPTIONS) --last-failed --exitfirst
 
 .PHONY: test
 test: test-all ## Run unit and integration tests
@@ -181,22 +184,22 @@ test: test-all ## Run unit and integration tests
 .PHONY: test-unit
 test-unit: install
 	@- mv $(FAILURES) $(FAILURES).bak
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGE) --junitxml=$(REPORTS)/unit.xml
+	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGE) --junitxml=$(REPORTS)/unit.xml
 	@- mv $(FAILURES).bak $(FAILURES)
 	$(COVERAGE_SPACE) $(REPOSITORY) unit
 
 .PHONY: test-int
 test-int: install
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) tests; fi
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTIONS_FAILFAST) tests; fi
 	@ rm -rf $(FAILURES)
-	$(PYTEST) $(PYTEST_OPTS) tests --junitxml=$(REPORTS)/integration.xml
+	$(PYTEST) $(PYTEST_OPTIONS) tests --junitxml=$(REPORTS)/integration.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTS_FAILFAST) $(PACKAGES); fi
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTIONS_FAILFAST) $(PACKAGES); fi
 	@ rm -rf $(FAILURES)
-	$(PYTEST) $(PYTEST_OPTS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
+	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
 {% endif %}
 .PHONY: read-coverage

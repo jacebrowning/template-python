@@ -36,8 +36,7 @@ def python(*_):
 
     for count, (command, title, retry) in enumerate((
         (('make', 'test-unit', 'CI=true'), "Unit Tests", True),
-        (('make', 'test-int', 'CI=true'), "Integration Tests", False),
-        (('make', 'test-all'), "Combined Tests", False),
+        (('make', 'test-all'), "Integration Tests", False),
         (('make', 'check'), "Static Analysis", True),
         (('make', 'doc'), None, True),
         (('make', 'dist'), None, True),
