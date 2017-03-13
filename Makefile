@@ -27,7 +27,7 @@ $(ENV): Pipfile*
 ifdef CI
 	pip install pipenv==3.5.0
 else
-	pipenv install --dev
+	pipenv install --dev --ignore-hashes
 endif
 	pipenv install
 	@ touch $@
