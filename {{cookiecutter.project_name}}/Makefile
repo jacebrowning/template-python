@@ -192,14 +192,14 @@ test-unit: install
 
 .PHONY: test-int
 test-int: install
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTIONS_FAILFAST) tests; fi
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RURUN_OPTIONS) tests; fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTIONS) tests --junitxml=$(REPORTS)/integration.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_OPTIONS_FAILFAST) $(PACKAGES); fi
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RURUN_OPTIONS) $(PACKAGES); fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
