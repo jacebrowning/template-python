@@ -21,15 +21,18 @@ watch: install clean
 export PIPENV_SHELL_COMPAT=true
 export PIPENV_VENV_IN_PROJECT=true
 
+.PHONY: setup
+setup:
+	pip install pipenv==3.5.3
+
 .PHONY: install
 install: $(ENV)
 $(ENV): Pipfile*
 ifdef CI
-	pip install pipenv==3.5.0
+	pipenv install --ignore-hashes
 else
 	pipenv install --dev --ignore-hashes
 endif
-	pipenv install
 	@ touch $@
 
 # BUILD ########################################################################
