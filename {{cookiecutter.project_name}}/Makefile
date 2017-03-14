@@ -74,7 +74,7 @@ run: install
 
 .PHONY: setup
 setup:
-	pip install pipenv==3.5.3
+	pip install pipenv==3.5.4
 	pipenv lock
 	touch Pipfile
 
