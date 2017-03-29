@@ -104,7 +104,7 @@ else ifdef LINUX
 endif
 	@ touch $@
 
-$(METADATA): $(PIP)
+$(METADATA): $(PIP) setup.py
 	$(PYTHON) setup.py develop
 	@ touch $@
 
