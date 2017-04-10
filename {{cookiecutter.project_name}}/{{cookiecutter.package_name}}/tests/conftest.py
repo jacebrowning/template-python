@@ -11,7 +11,7 @@ def pytest_configure(config):
     base = terminal.TerminalReporter
 
     class QuietReporter(base):
-        """A py.test reporting that only shows dots when running tests."""
+        """Reporter that only shows dots when running tests."""
 
         def __init__(self, *args, **kwargs):
             {%- if cookiecutter.python_major_version == "3" %}
