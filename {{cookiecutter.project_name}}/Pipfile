@@ -12,8 +12,7 @@ testpackage = "*"
 [dev-packages]
 
 # Linters
-pylint = { git = "https://github.com/PyCQA/pylint.git", ref = "e0fdd25c214e60bef10fbaa46252f4aaa74de8c2" }
-astroid = { git = "https://github.com/PyCQA/astroid.git", ref = "4e7d9fee4080d2e0db67a3e0463be8b196e56a95" }
+pylint = "~=1.7.0"
 pycodestyle = "*"
 pydocstyle = "*"
 
