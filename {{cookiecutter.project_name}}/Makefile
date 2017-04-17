@@ -177,7 +177,7 @@ PYTEST_OPTIONS := $(PYTEST_CORE_OPTIONS) $(PYTEST_RANDOM_OPTIONS)
 ifndef DISABLE_COVERAGE
 PYTEST_OPTIONS += $(PYTEST_COV_OPTIONS)
 endif
-PYTEST_RURUN_OPTIONS := $(PYTEST_CORE_OPTIONS) --last-failed --exitfirst
+PYTEST_RERUN_OPTIONS := $(PYTEST_CORE_OPTIONS) --last-failed --exitfirst
 
 .PHONY: test
 test: test-all ## Run unit and integration tests
@@ -191,14 +191,14 @@ test-unit: install
 
 .PHONY: test-int
 test-int: install
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RURUN_OPTIONS) tests; fi
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RERUN_OPTIONS) tests; fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTIONS) tests --junitxml=$(REPORTS)/integration.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install
-	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RURUN_OPTIONS) $(PACKAGES); fi
+	@ if test -e $(FAILURES); then $(PYTEST) $(PYTEST_RERUN_OPTIONS) $(PACKAGES); fi
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PYTEST_OPTIONS) $(PACKAGES) --junitxml=$(REPORTS)/overall.xml
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
