@@ -13,7 +13,8 @@ env:
     - PIPENV_NOSPIN=true
 
 before_install:
-  - make setup doctor
+  - make setup
+  - make doctor
 
 install:
   - make install
