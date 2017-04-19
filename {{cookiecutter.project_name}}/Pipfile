@@ -12,9 +12,9 @@ testpackage = "*"
 [dev-packages]
 
 # Linters
-pylint = "~=1.7.0"
-pycodestyle = "*"
-pydocstyle = "*"
+pylint = "~=1.7"
+pycodestyle = "~=2.3"
+pydocstyle = "~=2.0"
 
 # Testing
 {%- if cookiecutter.test_runner == "nose" %}
