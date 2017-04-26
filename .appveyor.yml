@@ -21,12 +21,10 @@ install:
   - make --version
   # Install system dependencies
   - make setup
-  - make doctor
   # Install project dependencies
   - make install
 
 build: off
 
 test_script:
-  - make check
-  - make test
+  - make ci
