@@ -23,7 +23,7 @@ export PIPENV_VENV_IN_PROJECT=true
 
 .PHONY: setup
 setup:
-	pip install pipenv==3.5.6
+	pip install pipenv==3.6.0
 
 .PHONY: install
 install: $(ENV)
