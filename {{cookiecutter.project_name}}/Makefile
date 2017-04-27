@@ -74,7 +74,7 @@ run: install
 
 .PHONY: setup
 setup:
-	pip install pipenv==3.6.0
+	pip install pipenv==3.6.1
 	touch Pipfile
 
 .PHONY: doctor
