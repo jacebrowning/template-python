@@ -40,6 +40,8 @@ ifneq ($(findstring win32, $(PLATFORM)), )
 	BIN := $(ENV)/Scripts
 	ACTIVATE := $(BIN)/activate.bat
 	OPEN := cmd /c start
+	PYTHON := $(BIN)/python.exe
+	PIP := $(BIN)/pip.exe
 else
 	BIN := $(ENV)/bin
 	ACTIVATE := . $(BIN)/activate
@@ -48,9 +50,9 @@ else
 	else
 		OPEN := open
 	endif
+	PYTHON := $(BIN)/python
+	PIP := $(BIN)/pip
 endif
-PYTHON := $(BIN)/python
-PIP := $(BIN)/pip
 
 # MAIN TASKS ###################################################################
 
