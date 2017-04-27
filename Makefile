@@ -21,10 +21,6 @@ watch: install clean
 export PIPENV_SHELL_COMPAT=true
 export PIPENV_VENV_IN_PROJECT=true
 
-.PHONY: setup
-setup:
-	pip install pipenv==3.6.1
-
 .PHONY: install
 install: $(ENV)
 $(ENV): Pipfile*
