@@ -74,11 +74,6 @@ run: install
 
 # SYSTEM DEPENDENCIES ##########################################################
 
-.PHONY: setup
-setup:
-	pip install pipenv==3.6.1
-	touch Pipfile
-
 .PHONY: doctor
 doctor:  ## Confirm system dependencies are available
 	bin/verchew
