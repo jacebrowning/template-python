@@ -7,7 +7,7 @@ environment:
       PYTHON_MINOR: {{cookiecutter.python_minor_version}}
 
 cache:
-  - .venv -> .appveyor.yml
+  - .venv -> Makefile
 
 install:
   # Export build paths
