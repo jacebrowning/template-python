@@ -25,9 +25,9 @@ export PIPENV_VENV_IN_PROJECT=true
 install: $(ENV)
 $(ENV): Pipfile*
 ifdef CI
-	pipenv install --ignore-hashes
+	pipenv install
 else
-	pipenv install --dev --ignore-hashes
+	pipenv install --dev
 endif
 	@ touch $@
 

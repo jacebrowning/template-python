@@ -17,7 +17,7 @@ install:
   - set PATH=%PATH%;C:\MinGW\bin
   - make --version
   # Install system dependencies
-  - pip install pipenv==3.6.1
+  - pip install pipenv~=4.0.1
   # Install project dependencies
   - make install
 

@@ -7,7 +7,7 @@ machine:
 
 dependencies:
   pre:
-    - pip install pipenv==3.6.1
+    - pip install pipenv~=4.0.1
     - make doctor
   override:
     - make install
