@@ -16,8 +16,6 @@ env:
   global:
   - RANDOM_SEED=0
   - PIPENV_NOSPIN=true
-  # Encrypted GH_TOKEN token: https://benlimmer.com/2013/12/26/automatically-publish-javadoc-to-gh-pages-with-travis-ci
-  - secure: "MDXLN07Xqf5uKpPC6xqTwvtTAHT5kFzHKjcS+ufLyORTG6NPgpg3e3gukTn8Z00llLeI9Hjj1JNmII/EIIOmiVH5fmpUo6FGyks6gu0zOvK7/w/xMn9irsL1llDo6aaKHJcuI3lmFdCQ45LaxoIWjaKjuRlTT4l98+heC4lejL0="
 
 before_install:
   - pip install pipenv~=4.0.1
