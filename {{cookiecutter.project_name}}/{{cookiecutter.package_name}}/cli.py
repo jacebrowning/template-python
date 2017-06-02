@@ -1,3 +1,5 @@
+"""A sample CLI."""
+
 import logging
 
 import click
