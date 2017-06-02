@@ -1,4 +1,4 @@
-"""A sample module."""
+"""A sample GUI."""
 
 {%- if cookiecutter.python_major_version == "3" %}
 from tkinter import *  # pylint: disable=wildcard-import,unused-wildcard-import

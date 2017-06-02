@@ -8,12 +8,6 @@ PACKAGES := $(PACKAGE) tests
 CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
-# Python settings
-ifndef TRAVIS
-	PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
-	PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
-endif
-
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
@@ -89,7 +83,7 @@ METADATA := *.egg-info
 .PHONY: install
 install: $(DEPENDENCIES) $(METADATA)
 
-$(DEPENDENCIES): $(PIP) Pipfile*
+$(DEPENDENCIES): Pipfile*
 	pipenv install --dev
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
@@ -103,9 +97,6 @@ endif
 $(METADATA): $(PIP) setup.py
 	$(PYTHON) setup.py develop
 	@ touch $@
-
-$(PIP):
-	pipenv --python=$(SYS_PYTHON)
 
 # CHECKS #######################################################################
 

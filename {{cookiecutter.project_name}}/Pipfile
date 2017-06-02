@@ -4,6 +4,11 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 
+[requires]
+
+python_version = '{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}'
+
+
 [packages]
 
 testpackage = "*"
