@@ -1,5 +1,6 @@
 """A sample GUI."""
 
+import logging
 {%- if cookiecutter.python_major_version == "3" %}
 from tkinter import *  # pylint: disable=wildcard-import,unused-wildcard-import
 from tkinter.ttk import *  # pylint: disable=wildcard-import,unused-wildcard-import
@@ -7,7 +8,6 @@ from tkinter.ttk import *  # pylint: disable=wildcard-import,unused-wildcard-imp
 from Tkinter import *  # pylint: disable=wildcard-import,unused-wildcard-import
 from ttk import *  # pylint: disable=wildcard-import,unused-wildcard-import
 {%- endif %}
-import logging
 
 from . import utils
 
