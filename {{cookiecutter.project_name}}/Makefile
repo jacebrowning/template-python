@@ -76,6 +76,7 @@ doctor:  ## Confirm system dependencies are available
 
 export PIPENV_SHELL_COMPAT=true
 export PIPENV_VENV_IN_PROJECT=true
+export PIPENV_IGNORE_VIRTUALENVS=true
 
 DEPENDENCIES := $(ENV)/.installed
 METADATA := *.egg-info
@@ -83,7 +84,7 @@ METADATA := *.egg-info
 .PHONY: install
 install: $(DEPENDENCIES) $(METADATA)
 
-$(DEPENDENCIES): Pipfile*
+$(DEPENDENCIES): $(PIP) Pipfile*
 	pipenv install --dev
 ifdef WINDOWS
 	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
@@ -94,9 +95,12 @@ else ifdef LINUX
 endif
 	@ touch $@
 
-$(METADATA): $(PIP) setup.py
+$(METADATA): $(PYTHON) setup.py
 	$(PYTHON) setup.py develop
 	@ touch $@
+
+$(PYTHON) $(PIP):
+	pipenv run pip --version
 
 # CHECKS #######################################################################
 
