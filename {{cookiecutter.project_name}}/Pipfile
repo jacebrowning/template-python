@@ -6,7 +6,7 @@ verify_ssl = true
 
 [requires]
 
-python_version = '{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}'
+python_version = "{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
 
 
 [packages]
