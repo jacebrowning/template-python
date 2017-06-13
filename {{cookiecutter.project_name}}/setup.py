@@ -9,13 +9,13 @@ import setuptools
 
 
 PACKAGE_NAME = '{{cookiecutter.package_name}}'
-MINIMUM_PYTHON_VERSION = {{cookiecutter.python_major_version}}, {{cookiecutter.python_minor_version}}
+MINIMUM_PYTHON_VERSION = '{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}'
 
 
 def check_python_version():
     """Exit when the Python version is too low."""
-    if sys.version_info < MINIMUM_PYTHON_VERSION:
-        sys.exit("Python {0}.{1}+ is required.".format(*MINIMUM_PYTHON_VERSION))
+    if sys.version < MINIMUM_PYTHON_VERSION:
+        sys.exit("Python {0}+ is required.".format(MINIMUM_PYTHON_VERSION))
 
 
 def read_package_variable(key, filename='__init__.py'):
