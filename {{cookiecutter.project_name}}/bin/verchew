@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # The MIT License (MIT)
-# Copyright © 2016, Jace Browning
+# Copyright © 2017, Jace Browning
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+#
+# Source: https://github.com/jacebrowning/verchew
+# Documentation: https://verchew.readthedocs.io
+# Package: https://pypi.org/project/verchew
 
 
 from __future__ import unicode_literals
@@ -36,10 +40,39 @@ from collections import OrderedDict
 from subprocess import Popen, PIPE, STDOUT
 import logging
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 PY2 = sys.version_info[0] == 2
-CONFIG_FILENAMES = ['.verchew', '.verchewrc', 'verchew.ini', '.verchew.ini']
+CONFIG_FILENAMES = ['.verchew.ini', 'verchew.ini', '.verchew', '.verchewrc']
+SAMPLE_CONFIG = """
+[Make]
+
+cli = make
+
+version = GNU Make
+
+
+[Python 2]
+
+cli = python2
+
+version = Python 2.7.
+
+
+[virtualenv]
+
+cli = virtualenv
+
+version = 15.
+
+
+[Python 3]
+
+cli = python
+
+version = Python 3.
+
+""".strip()
 STYLE = {
     "x": "✘",
     "~": "✔"
@@ -60,7 +93,7 @@ def main():
     log.debug("PWD: %s", os.getenv('PWD'))
     log.debug("PATH: %s", os.getenv('PATH'))
 
-    path = find_config(args.root)
+    path = find_config(args.root, generate=args.init)
     config = parse_config(path)
 
     if not check_dependencies(config) and args.exit_code:
@@ -72,12 +105,14 @@ def parse_args():
 
     version = "%(prog)s v" + __version__
     parser.add_argument('--version', action='version', version=version)
-    parser.add_argument('-v', '--verbose', action='count', default=0,
-                        help="enable verbose logging")
     parser.add_argument('-r', '--root', metavar='PATH',
                         help="specify a custom project root directory")
+    parser.add_argument('--init', action='store_true',
+                        help="generate a sample configuration file")
     parser.add_argument('--exit-code', action='store_true',
                         help="return a non-zero exit code on failure")
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help="enable verbose logging")
 
     args = parser.parse_args()
 
@@ -95,21 +130,38 @@ def configure_logging(count=0):
     logging.basicConfig(level=level, format="%(levelname)s: %(message)s")
 
 
-def find_config(root=None, config_filenames=None):
+def find_config(root=None, filenames=None, generate=False):
     root = root or os.getcwd()
-    config_filenames = config_filenames or CONFIG_FILENAMES
+    filenames = filenames or CONFIG_FILENAMES
 
     path = None
     log.info("Looking for config file in: %s", root)
-    log.debug("Filename options: %s", ", ".join(config_filenames))
+    log.debug("Filename options: %s", ", ".join(filenames))
     for filename in os.listdir(root):
-        if filename in config_filenames:
+        if filename in filenames:
             path = os.path.join(root, filename)
             log.info("Found config file: %s", path)
             return path
 
+    if generate:
+        path = generate_config(root, filenames)
+        return path
+
     msg = "No config file found in: {0}".format(root)
     raise RuntimeError(msg)
+
+
+def generate_config(root=None, filenames=None):
+    root = root or os.getcwd()
+    filenames = filenames or CONFIG_FILENAMES
+
+    path = os.path.join(root, filenames[0])
+
+    log.info("Generating sample config: %s", path)
+    with open(path, 'w') as config:
+        config.write(SAMPLE_CONFIG + '\n')
+
+    return path
 
 
 def parse_config(path):
