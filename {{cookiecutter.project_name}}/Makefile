@@ -8,6 +8,10 @@ PACKAGES := $(PACKAGE) tests
 CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
+# Python settings
+PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
+PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
+
 # System paths
 PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
 ifneq ($(findstring win32, $(PLATFORM)), )
