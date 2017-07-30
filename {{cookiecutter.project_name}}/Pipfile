@@ -24,6 +24,7 @@ pytest-describe = "==0.11.0"
 pytest-expecter = "==0.2.2.post6"
 pytest-cov = "*"
 pytest-random = "*"
+pytest-catchlog = "*"
 {%- endif %}
 # Coverage
 coverage = "~=4.0"
