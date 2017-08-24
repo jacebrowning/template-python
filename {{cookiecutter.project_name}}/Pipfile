@@ -15,8 +15,7 @@ pycodestyle = "~=2.3"
 pydocstyle = "~=2.0"
 # Testing
 {%- if cookiecutter.test_runner == "nose" %}
-nose = "*"
-nose-cov = "*"
+nose = "~=1.3.7"
 expecter = "*"
 {%- elif cookiecutter.test_runner == "pytest" %}
 pytest = "~=3.0.7"
