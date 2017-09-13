@@ -1,18 +1,23 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [requires]
+
 python_version = "{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
 
 [packages]
+
 testpackage = "*"
 
 [dev-packages]
+
 # Linters
 pylint = "~=1.7"
 pycodestyle = "~=2.3"
 pydocstyle = "~=2.0"
+
 # Testing
 {%- if cookiecutter.test_runner == "nose" %}
 nose = "~=1.3.7"
@@ -25,17 +30,22 @@ pytest-cov = "*"
 pytest-random = "*"
 pytest-catchlog = "*"
 {%- endif %}
+
 # Coverage
 coverage = "~=4.0"
 "coverage.space" = "~=0.8"
+
 # Documentation
 mkdocs = "*"
 docutils = "*"
 pygments = "*"
+
 # Build
 wheel = "*"
 pyinstaller = "*"
+
 # Release
 twine = "*"
+
 # Tooling
 sniffer = "*"
