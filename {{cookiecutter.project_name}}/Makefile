@@ -8,49 +8,11 @@ PACKAGES := $(PACKAGE) tests
 CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
-# Python settings
-PYTHON_MAJOR ?= {{cookiecutter.python_major_version}}
-PYTHON_MINOR ?= {{cookiecutter.python_minor_version}}
-
-# System paths
-PLATFORM := $(shell python -c 'import sys; print(sys.platform)')
-ifneq ($(findstring win32, $(PLATFORM)), )
-	WINDOWS := true
-	SYS_PYTHON_DIR := C:\\Python$(PYTHON_MAJOR)$(PYTHON_MINOR)
-	SYS_PYTHON := $(SYS_PYTHON_DIR)\\python.exe
-	# https://bugs.launchpad.net/virtualenv/+bug/449537
-	export TCL_LIBRARY=$(SYS_PYTHON_DIR)\\tcl\\tcl8.5
-else
-	ifneq ($(findstring darwin, $(PLATFORM)), )
-		MAC := true
-	else
-		LINUX := true
-	endif
-	SYS_PYTHON := python$(PYTHON_MAJOR)
-	ifdef PYTHON_MINOR
-		SYS_PYTHON := $(SYS_PYTHON).$(PYTHON_MINOR)
-	endif
-endif
-
 # Virtual environment paths
+export PIPENV_SHELL_COMPAT=true
+export PIPENV_VENV_IN_PROJECT=true
+export PIPENV_IGNORE_VIRTUALENVS=true
 ENV := .venv
-ifneq ($(findstring win32, $(PLATFORM)), )
-	BIN := $(ENV)/Scripts
-	ACTIVATE := $(BIN)/activate.bat
-	OPEN := cmd /c start
-	PYTHON := $(BIN)/python.exe
-	PIP := $(BIN)/pip.exe
-else
-	BIN := $(ENV)/bin
-	ACTIVATE := . $(BIN)/activate
-	ifneq ($(findstring cygwin, $(PLATFORM)), )
-		OPEN := cygstart
-	else
-		OPEN := open
-	endif
-	PYTHON := $(BIN)/python
-	PIP := $(BIN)/pip
-endif
 
 # MAIN TASKS ###################################################################
 
@@ -68,7 +30,7 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run ## Start the program
 run: install
-	$(PYTHON) $(PACKAGE)/__main__.py
+	pipenv run python $(PACKAGE)/__main__.py
 
 # SYSTEM DEPENDENCIES ##########################################################
 
@@ -78,34 +40,19 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-export PIPENV_SHELL_COMPAT=true
-export PIPENV_VENV_IN_PROJECT=true
-export PIPENV_IGNORE_VIRTUALENVS=true
-
 DEPENDENCIES := $(ENV)/.installed
 METADATA := *.egg-info
 
 .PHONY: install
 install: $(DEPENDENCIES) $(METADATA)
 
-$(DEPENDENCIES): $(PIP) Pipfile*
+$(DEPENDENCIES): Pipfile*
 	pipenv install --dev
-ifdef WINDOWS
-	@ echo "Manually install pywin32: https://sourceforge.net/projects/pywin32/files/pywin32"
-else ifdef MAC
-	$(PIP) install pync MacFSEvents
-else ifdef LINUX
-	$(PIP) install pyinotify
-endif
 	@ touch $@
 
-$(METADATA): $(PYTHON) setup.py
-	$(PYTHON) setup.py develop
+$(METADATA): setup.py
+	pipenv run python setup.py develop
 	@ touch $@
-
-$(PYTHON) $(PIP):
-	pipenv --python=$(SYS_PYTHON)
-	pipenv run pip --version
 
 # CHECKS #######################################################################
 
@@ -202,7 +149,7 @@ test-all: install
 {% endif %}
 .PHONY: read-coverage
 read-coverage:
-	$(OPEN) htmlcov/index.html
+	bin/open htmlcov/index.html
 
 # DOCUMENTATION ################################################################
 
@@ -232,7 +179,7 @@ $(MKDOCS_INDEX): mkdocs.yml docs/*.md
 
 .PHONY: mkdocs-live
 mkdocs-live: mkdocs
-	eval "sleep 3; open http://127.0.0.1:8000" &
+	eval "sleep 3; bin/open http://127.0.0.1:8000" &
 	$(MKDOCS) serve
 
 # BUILD ########################################################################
@@ -247,9 +194,9 @@ EXE_FILES := dist/$(PROJECT).*
 dist: install $(DIST_FILES)
 $(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
 	rm -f $(DIST_FILES)
-	$(PYTHON) setup.py check --restructuredtext --strict --metadata
-	$(PYTHON) setup.py sdist
-	$(PYTHON) setup.py bdist_wheel
+	pipenv run python setup.py check --restructuredtext --strict --metadata
+	pipenv run python setup.py sdist
+	pipenv run python setup.py bdist_wheel
 
 %.rst: %.md
 	pandoc -f markdown_github -t rst -o $@ $<
@@ -277,7 +224,7 @@ register: dist ## Register the project on PyPI
 .PHONY: upload
 upload: .git-no-changes register ## Upload the current version to PyPI
 	$(TWINE) upload dist/*.*
-	$(OPEN) https://pypi.python.org/pypi/$(PROJECT)
+	bin/open https://pypi.python.org/pypi/$(PROJECT)
 
 .PHONY: .git-no-changes
 .git-no-changes:

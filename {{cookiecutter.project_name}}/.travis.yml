@@ -13,7 +13,7 @@ env:
     - PIPENV_NOSPIN=true
 
 before_install:
-  - pip install pipenv==6.2.9
+  - pip install pipenv==7.1.1
   - make doctor
 
 install:
