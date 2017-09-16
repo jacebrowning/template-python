@@ -12,10 +12,11 @@ environment:
       PYTHON_MINOR: 6
 
 install:
-  # Export build paths
+  # Add Make and Python to the PATH
   - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe
   - set PATH=%PATH%;C:\MinGW\bin
-  - make --version
+  - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%;%PATH%
+  - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%\Scripts;%PATH%
   # Install system dependencies
   - pip install pipenv==7.1.1 verchew
   - verchew
