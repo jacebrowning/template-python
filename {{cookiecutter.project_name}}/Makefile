@@ -47,8 +47,6 @@ METADATA := *.egg-info
 install: $(DEPENDENCIES) $(METADATA)
 
 $(DEPENDENCIES): Pipfile*
-	where python.exe
-	set
 	pipenv install --dev
 	@ touch $@
 
