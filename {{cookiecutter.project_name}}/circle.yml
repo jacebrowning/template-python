@@ -3,7 +3,6 @@ machine:
     version: 3.6.1
   environment:
     RANDOM_SEED: 0
-    PIPENV_NOSPIN: true
 
 dependencies:
   pre:
