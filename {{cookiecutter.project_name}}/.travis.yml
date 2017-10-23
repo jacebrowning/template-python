@@ -12,7 +12,7 @@ env:
     - RANDOM_SEED=0
 
 before_install:
-  - pip install pipenv==7.2.8
+  - pip install pipenv==8.2.7
   - make doctor
 
 install:
