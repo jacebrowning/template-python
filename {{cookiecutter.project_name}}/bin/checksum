@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+md5sum $1 | cut -d ' ' -f 1

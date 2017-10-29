@@ -40,13 +40,13 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-DEPENDENCIES := $(ENV)/.installed
+DEPENDENCIES := $(ENV)/.pipenv.($ shell bin/checksum Pipfile.lock)
 METADATA := *.egg-info
 
 .PHONY: install
 install: $(DEPENDENCIES) $(METADATA)
 
-$(DEPENDENCIES): Pipfile*
+$(DEPENDENCIES):
 	pipenv install --dev
 	@ touch $@
 
