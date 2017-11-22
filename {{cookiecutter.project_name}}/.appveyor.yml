@@ -15,7 +15,7 @@ install:
   - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%;%PATH%
   - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%\Scripts;%PATH%
   # Install system dependencies
-  - pip install pipenv==8.2.7
+  - pip install pipenv
   - make doctor
   # Install project dependencies
   - make install
