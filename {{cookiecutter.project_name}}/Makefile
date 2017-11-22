@@ -40,7 +40,7 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES #########################################################
 
-DEPENDENCIES := $(ENV)/.pipenv.($ shell bin/checksum Pipfile.lock)
+DEPENDENCIES := $(ENV)/.pipenv-($ shell bin/checksum Pipfile*)
 METADATA := *.egg-info
 
 .PHONY: install
