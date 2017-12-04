@@ -25,16 +25,16 @@ nose = "~=1.3.7"
 expecter = "*"
 {%- elif cookiecutter.test_runner == "pytest" %}
 pytest = "~=3.0.7"
-pytest-describe = "==0.11.0"
-pytest-expecter = "==0.2.2.post6"
+pytest-describe = "*"
+pytest-expecter = "*"
 pytest-cov = "*"
 pytest-random = "*"
 pytest-catchlog = "*"
 {%- endif %}
 
 # Coverage
-coverage = "~=4.0"
-"coverage.space" = "~=0.8"
+coverage = "*"
+"coverage.space" = "*"
 
 # Documentation
 mkdocs = "*"
