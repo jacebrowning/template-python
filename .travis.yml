@@ -45,6 +45,7 @@ after_script: >
     # Rebuild the repository from the generated files and push to GitHub
     cd TemplateDemo ;
     rm -rf .venv ;
+    echo '{"_meta": {"hash": {"sha256": ""}}}' > Pipfile.lock ;
     git add --all ;
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub" ;
     git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo $BRANCH ;
