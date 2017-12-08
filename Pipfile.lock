@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "07398c5e2ba5c7aca5609728a7792ade219129ea6c0bdfc18ad993ef7fe23a21"
+            "sha256": "02d9531f71816c3266b77e18e97799eacc7943fab7d187b93e3dcb6f4411c63c"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -151,12 +151,6 @@
                 "sha256:48eb22f4f8461b1df5734a074b57042430fb06e1d61bd1e11b078c0fe6d7a1f1"
             ],
             "version": "==0.3.9"
-        },
-        "macfsevents": {
-            "hashes": [
-                "sha256:95d3cddaf8a42435bfbd50087785ee9e3ebb8325242cfd06a88ea21f85bcb56f"
-            ],
-            "version": "==0.7"
         },
         "nose": {
             "hashes": [
