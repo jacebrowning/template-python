@@ -32,8 +32,8 @@ pytest-random = "*"
 {%- endif %}
 
 # Coverage
-coverage = "~=4.0"
-"coverage.space" = "~=0.8"
+coverage = "*"
+"coverage.space" = "*"
 
 # Documentation
 mkdocs = "*"
