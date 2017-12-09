@@ -72,6 +72,6 @@ setuptools.setup(
 
     install_requires=[
         # TODO: Add your library's requirements here
-        # "testpackage ~= 2.26",
+        "click ~= 6.0",
     ]
 )

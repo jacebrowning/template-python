@@ -10,7 +10,7 @@ python_version = "{{cookiecutter.python_major_version}}.{{cookiecutter.python_mi
 
 [packages]
 
-testpackage = "*"
+click = "*"
 
 [dev-packages]
 
