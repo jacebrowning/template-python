@@ -24,12 +24,11 @@ pydocstyle = "~=2.0"
 nose = "~=1.3.7"
 expecter = "*"
 {%- elif cookiecutter.test_runner == "pytest" %}
-pytest = "~=3.0.7"
-pytest-describe = "*"
+pytest = "~=3.3"
+pytest-describe = {git="https://github.com/ropez/pytest-describe", ref="master"}
 pytest-expecter = "*"
 pytest-cov = "*"
 pytest-random = "*"
-pytest-catchlog = "*"
 {%- endif %}
 
 # Coverage
