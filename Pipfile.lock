@@ -1,23 +1,25 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "02d9531f71816c3266b77e18e97799eacc7943fab7d187b93e3dcb6f4411c63c"
+            "sha256": "26fafa4b80123c5bbfe0026d0dd5eaa8b423a6670493854f412445264d534b9b"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
-            "implementation_version": "3.6.1",
+            "implementation_version": "0",
             "os_name": "posix",
             "platform_machine": "x86_64",
             "platform_python_implementation": "CPython",
             "platform_release": "17.2.0",
             "platform_system": "Darwin",
             "platform_version": "Darwin Kernel Version 17.2.0: Fri Sep 29 18:27:05 PDT 2017; root:xnu-4570.20.62~3/RELEASE_X86_64",
-            "python_full_version": "3.6.1",
-            "python_version": "3.6",
+            "python_full_version": "2.7.13",
+            "python_version": "2.7",
             "sys_platform": "darwin"
         },
         "pipfile-spec": 6,
-        "requires": {},
+        "requires": {
+            "python_version": "2.7"
+        },
         "sources": [
             {
                 "name": "pypi",
@@ -32,6 +34,13 @@
                 "sha256:a15ecfddf334316e3ac8695e48c15d1be0d6038603b33043930dcf0e675c86ee"
             ],
             "version": "==0.12.0"
+        },
+        "backports.functools-lru-cache": {
+            "hashes": [
+                "sha256:4ba998e881f285c1d1b73f5b6e3766539b4e162320f9589334400c5ddc35198c",
+                "sha256:31f235852f88edc1558d428d890663c49eb4514ffec9f3650e7f3c9e4a12e36f"
+            ],
+            "version": "==1.4"
         },
         "binaryornot": {
             "hashes": [
