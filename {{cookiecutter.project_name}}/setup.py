@@ -4,6 +4,7 @@
 
 import os
 import sys
+import logging
 
 import setuptools
 
@@ -26,7 +27,8 @@ def read_package_variable(key, filename='__init__.py'):
             parts = line.strip().split(' ', 2)
             if parts[:-1] == [key, '=']:
                 return parts[-1].strip("'")
-    sys.exit("'{0}' not found in '{1}'".format(key, module_path))
+    logging.warning("'%s' not found in '%s'", key, module_path)
+    return None
 
 
 def build_description():
