@@ -4,17 +4,14 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [requires]
 
 python_version = "2.7"
-
 
 [packages]
 
 cookiecutter = "*"
 "backports.functools_lru_cache" = "*"
-
 
 [dev-packages]
 

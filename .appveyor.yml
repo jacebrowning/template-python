@@ -1,10 +1,4 @@
-branches:
-  except:
-    - update
-
 environment:
-  global:
-    RANDOM_SEED: 0
   matrix:
     - PYTHON_MAJOR: 2
       PYTHON_MINOR: 7

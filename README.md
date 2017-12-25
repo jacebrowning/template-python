@@ -20,12 +20,14 @@ If you are instead looking for a [Python application](https://caremad.io/posts/2
 * [jacebrowning/template-django](https://github.com/jacebrowning/template-django)
 * [jacebrowning/template-flask](https://github.com/jacebrowning/template-flask)
 
-## Get Started
+## Usage
 
 Install `cookiecutter` and generate a project:
 
-    $ pip install cookiecutter
-    $ cookiecutter gh:jacebrowning/template-python -f
+```
+$ pip install cookiecutter
+$ cookiecutter gh:jacebrowning/template-python -f
+```
 
 Cookiecutter will ask you for some basic info (your name, project name, python package name, etc.) and generate a base Python project for you.
 
@@ -44,17 +46,6 @@ Cookiecutter will ask you for some basic info (your name, project name, python p
 [coveralls]: https://coveralls.io/
 [scrutinizer]: https://scrutinizer-ci.com/
 
-## Apply Updates
-
-### Regeneration
-
-To apply updates to an existing project, use the `update` branch and provide the same project details:
-
-    $ cd <parent directory of existing project>
-    $ cookiecutter gh:jacebrowning/template-python --checkout update
-
-Then, discard all undesired changes before committing.
-
-### Manual Diff
+## Updates
 
 Checkout the appropriate branch of [template-python-demo](https://github.com/jacebrowning/template-python-demo) and manually merge changes into your project.
