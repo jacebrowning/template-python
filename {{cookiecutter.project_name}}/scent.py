@@ -27,7 +27,7 @@ class Options(object):
         (('make', 'test-unit', 'DISABLE_COVERAGE=true'), "Unit Tests", True),
         (('make', 'test-all'), "Integration Tests", False),
         (('make', 'check'), "Static Analysis", True),
-        (('make', 'doc'), None, True),
+        (('make', 'docs'), None, True),
     ]
 
 
