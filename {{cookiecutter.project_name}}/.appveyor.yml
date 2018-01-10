@@ -1,4 +1,6 @@
 environment:
+  global:
+    RANDOM_SEED: 0
   matrix:
     - PYTHON_MAJOR: {{cookiecutter.python_major_version}}
       PYTHON_MINOR: {{cookiecutter.python_minor_version}}
