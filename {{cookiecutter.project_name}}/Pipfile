@@ -43,3 +43,4 @@ twine = "*"
 
 sniffer = "*"
 pync = "*"
+MacFSEvents = {version = "*", sys_platform = "== 'darwin'"}
