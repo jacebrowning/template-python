@@ -28,7 +28,6 @@ ifdef CI
 	pipenv install
 else
 	pipenv install --dev
-	- pipenv run pip install MacFSEvents
 endif
 	@ touch $@
 
