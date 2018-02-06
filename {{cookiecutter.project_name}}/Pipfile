@@ -14,10 +14,12 @@ click = "*"
 
 [dev-packages]
 
+# Linters
 pylint = "*"
 pycodestyle = "*"
 pydocstyle = "*"
 
+# Testing
 {%- if cookiecutter.test_runner == "nose" %}
 nose = "~=1.3"
 expecter = "*"
@@ -28,19 +30,24 @@ pytest-expecter = "*"
 pytest-random = "*"
 pytest-cov = "*"
 {%- endif %}
-
 freezegun = "*"
+
+# Reports
 "coverage.space" = "*"
 
+# Documentation
 mkdocs = "*"
 docutils = "*"
 pygments = "*"
 
+# Build
 wheel = "*"
 pyinstaller = "*"
 
+# Release
 twine = "*"
 
+# Tooling
 sniffer = "*"
 pync = {version = "*", sys_platform = "== 'darwin'"}
 MacFSEvents = {version = "*", sys_platform = "== 'darwin'"}
