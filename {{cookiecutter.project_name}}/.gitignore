@@ -30,7 +30,7 @@ Icon*
 *.gdraw
 
 # Testing and coverage results
-/.pytest/
+/.pytest_cache/
 /.coverage
 /.coverage.*
 /htmlcov/
