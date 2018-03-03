@@ -1,9 +1,6 @@
 """A sample module."""
 
-import logging
-
-
-log = logging.getLogger(__name__)
+import log
 
 
 def feet_to_meters(feet):

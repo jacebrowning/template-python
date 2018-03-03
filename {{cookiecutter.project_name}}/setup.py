@@ -71,5 +71,6 @@ setuptools.setup(
     install_requires=[
         # TODO: Add your library's requirements here
         "click ~= 6.0",
+        "minilog ~=0.2.1",
     ]
 )
