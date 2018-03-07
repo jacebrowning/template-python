@@ -39,18 +39,13 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES ########################################################
 
-DEPENDENCIES := $(VENV)/.pipenv-$(shell bin/checksum Pipfile*)
-METADATA := *.egg-info
+DEPENDENCIES := $(VENV)/.pipenv-$(shell bin/checksum Pipfile* setup.py)
 
 .PHONY: install
-install: $(DEPENDENCIES) $(METADATA)
+install: $(DEPENDENCIES)
 
 $(DEPENDENCIES):
 	pipenv install --dev
-	@ touch $@
-
-$(METADATA): setup.py
-	pipenv run python setup.py develop
 	@ touch $@
 
 # CHECKS ######################################################################
