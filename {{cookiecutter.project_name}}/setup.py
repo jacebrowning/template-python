@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
-"""Setup script for the package."""
-
 import os
 import sys
-import logging
 
 import setuptools
 
@@ -27,8 +24,7 @@ def read_package_variable(key, filename='__init__.py'):
             parts = line.strip().split(' ', 2)
             if parts[:-1] == [key, '=']:
                 return parts[-1].strip("'")
-    logging.warning("'%s' not found in '%s'", key, module_path)
-    return None
+    sys.exit("'%s' not found in '%s'", key, module_path)
 
 
 def build_description():
