@@ -45,6 +45,7 @@ DEPENDENCIES := $(VENV)/.pipenv-$(shell bin/checksum Pipfile* setup.py)
 install: $(DEPENDENCIES)
 
 $(DEPENDENCIES):
+	pipenv run python setup.py develop
 	pipenv install --dev
 	@ touch $@
 
