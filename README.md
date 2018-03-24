@@ -34,7 +34,7 @@ Cookiecutter will ask you for some basic info (your name, project name, python p
 If you still need to use legacy Python, older versions of this template are available on a branch:
 
 ```
-$ $ cookiecutter gh:jacebrowning/template-python -f --checkout python2
+$ cookiecutter gh:jacebrowning/template-python -f --checkout python2
 ```
 
 ## Features
