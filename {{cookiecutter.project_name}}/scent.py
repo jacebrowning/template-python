@@ -1,5 +1,3 @@
-{%- if cookiecutter.python_major_version == "2" -%}# -*- coding: utf-8 -*-
-{% endif -%}
 """Configuration file for sniffer."""
 # pylint: disable=superfluous-parens,bad-continuation
 
