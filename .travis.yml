@@ -1,6 +1,5 @@
 language: python
 python:
-  - 2.7
   - 3.6
 
 cache: pip
@@ -21,7 +20,7 @@ script:
 
 after_script: >
   echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST; echo $TRAVIS_PYTHON_VERSION; echo $TEST_RUNNER;
-  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' && ( $TRAVIS_PYTHON_VERSION == '2.7' || $TRAVIS_PYTHON_VERSION == '3.6' ) ]]; then
+  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
 
     # Configure Git with Travis CI information
     git config --global user.email "travis@travis-ci.org" ;

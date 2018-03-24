@@ -39,32 +39,15 @@ _COOKIECUTTER_INPLACE = cookiecutter.json > tmp && mv tmp cookiecutter.json
 build: install $(GENERATED_PROJECT)
 $(GENERATED_PROJECT): $(SOURCE_FILES)
 
-# Update template for selected test runner
 ifeq ($(TEST_RUNNER),nose)
 	sed "s/pytest/nose/g" $(_COOKIECUTTER_INPLACE)
 else ifeq ($(TEST_RUNNER),pytest)
 	sed "s/nose/pytest/g" $(_COOKIECUTTER_INPLACE)
 endif
-
-# Update template for selected Python on Travis CI
-ifeq ($(TRAVIS_PYTHON_VERSION),3.6)
-	sed "s/2,/3,/g" $(_COOKIECUTTER_INPLACE)
-	sed "s/7/6/g" $(_COOKIECUTTER_INPLACE)
-endif
-
-# Update template for selected Python on Appveyor
-ifeq ($(PYTHON_MAJOR),3)
-	sed "s/2,/3,/g" $(_COOKIECUTTER_INPLACE)
-endif
-ifeq ($(PYTHON_MINOR),6)
-	sed "s/7/6/g" $(_COOKIECUTTER_INPLACE)
-endif
-
-# Generate a project from the template
-	sed "s/master/python2-pytest/g" $(_COOKIECUTTER_INPLACE)
+	sed "s/master/python3-pytest/g" $(_COOKIECUTTER_INPLACE)
 	cat cookiecutter.json
 	pipenv run cookiecutter . --no-input --overwrite-if-exists
-	sed "s/python2-pytest/master/g" $(_COOKIECUTTER_INPLACE)
+	sed "s/python3-pytest/master/g" $(_COOKIECUTTER_INPLACE)
 	@ touch $(GENERATED_PROJECT)
 
 # CLEANUP ######################################################################
