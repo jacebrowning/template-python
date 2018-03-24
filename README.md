@@ -31,6 +31,12 @@ $ cookiecutter gh:jacebrowning/template-python -f
 
 Cookiecutter will ask you for some basic info (your name, project name, python package name, etc.) and generate a base Python project for you.
 
+If you still need to use legacy Python, older versions of this template are available on a branch:
+
+```
+$ $ cookiecutter gh:jacebrowning/template-python -f --checkout python2
+```
+
 ## Features
 
 * Preconfigured setup for [Travis-CI][travis], [Coveralls][coveralls], and [Scrutinizer][scrutinizer]
