@@ -1,19 +1,15 @@
 """A sample CLI."""
 
-import logging
-
 import click
+import log
 
 from . import utils
-
-
-log = logging.getLogger(__name__)
 
 
 @click.command()
 @click.argument('feet')
 def main(feet=None):
-    logging.basicConfig(level=logging.INFO)
+    log.init()
 
     meters = utils.feet_to_meters(feet)
 
