@@ -24,7 +24,7 @@ pydocstyle = "*"
 nose = "~=1.3"
 expecter = "*"
 {%- elif cookiecutter.test_runner == "pytest" %}
-pytest = "~= 3.3"
+pytest = "~=3.3"
 pytest-describe = "*"
 pytest-expecter = "~=1.1"
 pytest-random = "*"
