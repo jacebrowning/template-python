@@ -105,7 +105,7 @@ test-all: install .clean-test
 	$(NOSE) $(PACKAGES) $(NOSE_OPTIONS)
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
 {% elif cookiecutter.test_runner == "pytest" -%}
-FAILURES := .cache/v/cache/lastfailed
+FAILURES := .pytest_cache/v/cache/lastfailed
 REPORTS ?= xmlreport
 
 PYTEST_CORE_OPTIONS := -ra -vv
