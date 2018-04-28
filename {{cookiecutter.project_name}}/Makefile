@@ -39,7 +39,7 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES ########################################################
 
-DEPENDENCIES := $(VENV)/.pipenv-$(shell bin/checksum Pipfile* setup.py)
+DEPENDENCIES = $(VENV)/.pipenv-$(shell bin/checksum Pipfile* setup.py)
 
 .PHONY: install
 install: $(DEPENDENCIES)
