@@ -8,10 +8,6 @@ name = "pypi"
 
 python_version = "{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
 
-[packages]
-
-{{cookiecutter.package_name}} = { path = ".", editable = true }
-
 [dev-packages]
 
 # Linters
@@ -26,7 +22,7 @@ expecter = "*"
 {%- elif cookiecutter.test_runner == "pytest" %}
 pytest = "~=3.3"
 pytest-describe = "*"
-pytest-expecter = "~=1.1"
+pytest-expecter = "*"
 pytest-random = "*"
 pytest-cov = "*"
 {%- endif %}
@@ -45,7 +41,8 @@ wheel = "*"
 pyinstaller = "*"
 
 # Release
-twine = "*"
+setuptools = ">= 38.6.0"
+twine = ">= 1.11.0"
 
 # Tooling
 sniffer = "*"

@@ -190,14 +190,11 @@ build: dist
 
 .PHONY: dist
 dist: install $(DIST_FILES)
-$(DIST_FILES): $(MODULES) README.rst CHANGELOG.rst
+$(DIST_FILES): $(MODULES)
 	rm -f $(DIST_FILES)
-	pipenv run python setup.py check --restructuredtext --strict --metadata
+	pipenv run python setup.py check --strict --metadata
 	pipenv run python setup.py sdist
 	pipenv run python setup.py bdist_wheel
-
-%.rst: %.md
-	pandoc -f markdown_github -t rst -o $@ $<
 
 .PHONY: exe
 exe: install $(EXE_FILES)
