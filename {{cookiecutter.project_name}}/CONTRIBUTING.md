@@ -9,7 +9,6 @@
     * Mac: http://developer.apple.com/xcode
     * Linux: http://www.gnu.org/software/make
 * pipenv: http://docs.pipenv.org
-* Pandoc: http://johnmacfarlane.net/pandoc/installing.html
 * Graphviz: http://www.graphviz.org/Download.php
 
 To confirm these system dependencies are configured correctly:
