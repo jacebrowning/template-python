@@ -51,12 +51,17 @@ $(DEPENDENCIES):
 
 # CHECKS ######################################################################
 
+ISORT := pipenv run isort
 PYLINT := pipenv run pylint
 PYCODESTYLE := pipenv run pycodestyle
 PYDOCSTYLE := pipenv run pydocstyle
 
 .PHONY: check
-check: pylint pycodestyle pydocstyle ## Run linters and static analysis
+check: isort pylint pycodestyle pydocstyle ## Run linters and static analysis
+
+.PHONY: isort
+isort: install
+	$(ISORT) $(PACKAGES) $(CONFIG) --recursive --apply
 
 .PHONY: pylint
 pylint: install

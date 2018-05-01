@@ -29,16 +29,18 @@
 
 from __future__ import unicode_literals
 
+import argparse
+import logging
 import os
 import sys
-import argparse
+from collections import OrderedDict
+from subprocess import PIPE, STDOUT, Popen
+
+
 try:
     import configparser  # Python 3
 except ImportError:
     import ConfigParser as configparser  # Python 2
-from collections import OrderedDict
-from subprocess import Popen, PIPE, STDOUT
-import logging
 
 __version__ = '1.3'
 

@@ -38,7 +38,6 @@ _COOKIECUTTER_INPLACE = cookiecutter.json > tmp && mv tmp cookiecutter.json
 .PHONY: build
 build: install $(GENERATED_PROJECT)
 $(GENERATED_PROJECT): $(SOURCE_FILES)
-
 ifeq ($(TEST_RUNNER),nose)
 	sed "s/pytest/nose/g" $(_COOKIECUTTER_INPLACE)
 else ifeq ($(TEST_RUNNER),pytest)

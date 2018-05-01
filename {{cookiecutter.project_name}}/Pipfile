@@ -11,16 +11,17 @@ python_version = "{{cookiecutter.python_major_version}}.{{cookiecutter.python_mi
 [dev-packages]
 
 # Linters
+isort = "*"
 pylint = "*"
 pycodestyle = "*"
 pydocstyle = "*"
 
 # Testing
 {%- if cookiecutter.test_runner == "nose" %}
-nose = "~=1.3"
+nose = "~= 1.3"
 expecter = "*"
 {%- elif cookiecutter.test_runner == "pytest" %}
-pytest = "~=3.3"
+pytest = "~= 3.3"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
@@ -47,4 +48,4 @@ twine = ">= 1.11.0"
 # Tooling
 sniffer = "*"
 MacFSEvents = { version = "*", sys_platform = "== 'darwin'" }
-pync = { version = "<2.0", sys_platform = "== 'darwin'" }
+pync = { version = "< 2.0", sys_platform = "== 'darwin'" }

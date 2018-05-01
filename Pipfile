@@ -11,8 +11,8 @@ python_version = "3"
 [packages]
 
 cookiecutter = "*"
-"backports.functools_lru_cache" = "*"
 
 [dev-packages]
 
 sniffer = "*"
+MacFSEvents = { version = "*", sys_platform = "== 'darwin'" }
