@@ -48,4 +48,4 @@ twine = ">= 1.11.0"
 # Tooling
 sniffer = "*"
 MacFSEvents = { version = "*", sys_platform = "== 'darwin'" }
-pync = { version = "< 2.0", sys_platform = "== 'darwin'" }
+pync = { version = "*", sys_platform = "== 'darwin'" }
