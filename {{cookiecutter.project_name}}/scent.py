@@ -53,12 +53,12 @@ def run_targets(*args):
 
         success = call(command, title, retry)
         if not success:
-            message = "✅ " * (count - 1) + "❌"
+            message = u"✅ " * (count - 1) + u"❌"
             show_notification(message, title)
 
             return False
 
-    message = "✅ " * count
+    message = u"✅ " * count
     title = "All Targets"
     show_notification(message, title)
     show_coverage()
