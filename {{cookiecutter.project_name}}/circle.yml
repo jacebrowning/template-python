@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   pre:
-    - pip install pipenv
+    - pip install poetry
     - make doctor
   override:
     - make install

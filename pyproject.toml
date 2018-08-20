@@ -1,0 +1,18 @@
+[tool.poetry]
+
+name = "template-python"
+version = "0.0"
+description = "A template for new Python libraries."
+authors = ["Jace Browning <jacebrowning@gmail.com>"]
+
+
+[tool.poetry.dependencies]
+
+python= "^3"
+
+cookiecutter = "*"
+
+[tool.poetry.dev-dependencies]
+
+sniffer = "*"
+MacFSEvents = { version = "*", platform = "darwin" }

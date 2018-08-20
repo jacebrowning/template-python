@@ -5,14 +5,14 @@ python:
 cache:
   pip: true
   directories:
-    - .venv
+    - ${VIRTUAL_ENV}
 
 env:
   global:
     - RANDOM_SEED=0
 
 before_install:
-  - pip install pipenv
+  - pip install poetry
   - make doctor
 
 install:
