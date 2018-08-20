@@ -14,20 +14,17 @@ ci: build
 
 .PHONY: watch
 watch: install clean
-	pipenv run sniffer
+	poetry run sniffer
 
 # DEPENDENCIES #################################################################
 
-export PIPENV_SHELL_COMPAT=true
-export PIPENV_VENV_IN_PROJECT=true
-
 .PHONY: install
 install: $(ENV)
-$(ENV): Pipfile*
+$(ENV): pyproject.*
 ifdef CI
-	pipenv install
+	poetry install --no-dev
 else
-	pipenv install --dev
+	poetry install
 endif
 	@ touch $@
 
@@ -45,8 +42,9 @@ else ifeq ($(TEST_RUNNER),pytest)
 endif
 	sed "s/master/python3-pytest/g" $(_COOKIECUTTER_INPLACE)
 	cat cookiecutter.json
-	pipenv run cookiecutter . --no-input --overwrite-if-exists
+	poetry run cookiecutter . --no-input --overwrite-if-exists
 	sed "s/python3-pytest/master/g" $(_COOKIECUTTER_INPLACE)
+	cd $(GENERATED_PROJECT) && poetry lock
 	@ touch $(GENERATED_PROJECT)
 
 # CLEANUP ######################################################################

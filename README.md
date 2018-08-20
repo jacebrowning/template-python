@@ -41,7 +41,7 @@ $ cookiecutter gh:jacebrowning/template-python -f --checkout python2
 
 * Preconfigured setup for [Travis-CI][travis], [Coveralls][coveralls], and [Scrutinizer][scrutinizer]
 * `Makefile` for automating common development tasks:
-    - Installing dependencies into a virtual environment using `pipenv`
+    - Installing dependencies into a virtual environment using `poetry`
     - Running tests
     - Running style checkers (`pycodestyle`/`pydocstyle`) and linters (`pylint`)
     - Building documentation

@@ -10,7 +10,7 @@ env:
   - TEST_RUNNER=pytest
 
 before_install:
-  - pip install pipenv
+  - pip install poetry
 
 install:
   - make install

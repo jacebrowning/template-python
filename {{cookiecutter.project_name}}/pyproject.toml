@@ -1,0 +1,72 @@
+[tool.poetry]
+
+name = "{{cookiecutter.package_name}}"
+version = "0.0"
+description = "{{cookiecutter.project_short_description}}"
+
+license = "MIT"
+
+authors = ["{{cookiecutter.project_name}} <{{cookiecutter.email}}>"]
+
+readme = "README.md"
+
+homepage = "https://coverage.space/client/"
+documentation = "https://cli.coverage.space"
+repository = "https://github.com/jacebrowning/coverage-space-cli"
+
+keywords = [
+]
+classifiers = [
+    # TODO: update this list to match your application: https://pypi.org/pypi?%3Aaction=list_classifiers
+    "Development Status :: 1 - Planning",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: {{cookiecutter.python_major_version}}",
+    "Programming Language :: Python :: {{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}",
+]
+
+[tool.poetry.dependencies]
+
+python = "^{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
+
+# TODO: Add your library's requirements here
+click = "^6.0"
+minilog = "~0.4"
+
+[tool.poetry.dev-dependencies]
+
+# Linters
+isort = "*"
+pylint = "*"
+pycodestyle = "*"
+pydocstyle = "*"
+snowballstemmer = "*" # missing dependency for pydocstyle
+
+# Testing
+{%- if cookiecutter.test_runner == "nose" %}
+nose = "^1.3"
+expecter = "*"
+{%- elif cookiecutter.test_runner == "pytest" %}
+pytest = "^3.3"
+pytest-describe = "*"
+pytest-expecter = "*"
+pytest-random = "*"
+pytest-cov = "*"
+{%- endif %}
+freezegun = "*"
+
+# Reports
+coverage-space = "*"
+
+# Documentation
+mkdocs = "*"
+pygments = "*"
+
+# Build
+pyinstaller = "*"
+
+# Tooling
+sniffer = "*"
+MacFSEvents = { version = "*", platform = "darwin" }
+pync = { version = "*", platform = "darwin" }

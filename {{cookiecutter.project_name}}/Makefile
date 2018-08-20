@@ -9,13 +9,11 @@ CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
 # Virtual environment paths
-export PIPENV_VENV_IN_PROJECT=true
-export PIPENV_IGNORE_VIRTUALENVS=true
-VENV := .venv
+VIRTUAL_ENV ?= .venv
 
 # MAIN TASKS ##################################################################
 
-SNIFFER := pipenv run sniffer
+SNIFFER := poetry run sniffer
 
 .PHONY: all
 all: install
@@ -29,7 +27,7 @@ watch: install .clean-test ## Continuously run all CI tasks when files chanage
 
 .PHONY: run ## Start the program
 run: install
-	pipenv run python $(PACKAGE)/__main__.py
+	poetry run python $(PACKAGE)/__main__.py
 
 # SYSTEM DEPENDENCIES #########################################################
 
@@ -39,22 +37,22 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES ########################################################
 
-DEPENDENCIES = $(VENV)/.pipenv-$(shell bin/checksum Pipfile* setup.py)
+DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.*)
 
 .PHONY: install
 install: $(DEPENDENCIES)
 
 $(DEPENDENCIES):
-	pipenv run python setup.py develop
-	pipenv install --dev
+	@ poetry config settings.virtualenvs.in-project true
+	poetry develop
 	@ touch $@
 
 # CHECKS ######################################################################
 
-ISORT := pipenv run isort
-PYLINT := pipenv run pylint
-PYCODESTYLE := pipenv run pycodestyle
-PYDOCSTYLE := pipenv run pydocstyle
+ISORT := poetry run isort
+PYLINT := poetry run pylint
+PYCODESTYLE := poetry run pycodestyle
+PYDOCSTYLE := poetry run pydocstyle
 
 .PHONY: check
 check: isort pylint pycodestyle pydocstyle ## Run linters and static analysis
@@ -78,12 +76,12 @@ pydocstyle: install
 # TESTS #######################################################################
 
 {% if cookiecutter.test_runner == "nose" -%}
-NOSE := pipenv run nosetests
+NOSE := poetry run nosetests
 {%- elif cookiecutter.test_runner == "pytest" -%}
-PYTEST := pipenv run py.test
+PYTEST := poetry run pytest
 {%- endif %}
-COVERAGE := pipenv run coverage
-COVERAGE_SPACE := pipenv run coverage.space
+COVERAGE := poetry run coverage
+COVERAGE_SPACE := poetry run coverage.space
 
 RANDOM_SEED ?= $(shell date +%s)
 {% if cookiecutter.test_runner == "nose" %}
@@ -148,8 +146,8 @@ read-coverage:
 
 # DOCUMENTATION ###############################################################
 
-PYREVERSE := pipenv run pyreverse
-MKDOCS := pipenv run mkdocs
+PYREVERSE := poetry run pyreverse
+MKDOCS := poetry run mkdocs
 
 MKDOCS_INDEX := site/index.html
 
@@ -179,8 +177,8 @@ mkdocs-live: mkdocs
 
 # BUILD #######################################################################
 
-PYINSTALLER := pipenv run pyinstaller
-PYINSTALLER_MAKESPEC := pipenv run pyi-makespec
+PYINSTALLER := poetry run pyinstaller
+PYINSTALLER_MAKESPEC := poetry run pyi-makespec
 
 DIST_FILES := dist/*.tar.gz dist/*.whl
 EXE_FILES := dist/$(PROJECT).*
@@ -192,9 +190,7 @@ build: dist
 dist: install $(DIST_FILES)
 $(DIST_FILES): $(MODULES)
 	rm -f $(DIST_FILES)
-	pipenv run python setup.py check --strict --metadata
-	pipenv run python setup.py sdist
-	pipenv run python setup.py bdist_wheel
+	poetry build
 
 .PHONY: exe
 exe: install $(EXE_FILES)
@@ -207,12 +203,10 @@ $(PROJECT).spec:
 
 # RELEASE #####################################################################
 
-TWINE := pipenv run twine
-
 .PHONY: upload
 upload: dist ## Upload the current version to PyPI
 	git diff --name-only --exit-code
-	$(TWINE) upload dist/*.*
+	poetry publish
 	bin/open https://pypi.org/project/$(PROJECT)
 
 # CLEANUP #####################################################################
@@ -222,7 +216,7 @@ clean: .clean-build .clean-docs .clean-test .clean-install ## Delete all generat
 
 .PHONY: clean-all
 clean-all: clean
-	rm -rf $(VENV)
+	rm -rf $(VIRTUAL_ENV)
 
 .PHONY: .clean-install
 .clean-install:
