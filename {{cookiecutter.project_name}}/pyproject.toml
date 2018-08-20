@@ -30,6 +30,10 @@ classifiers = [
 
 python = "^{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
 
+# TODO: Add your library's requirements here
+click = "^6.0"
+minilog = "~0.4"
+
 [tool.poetry.dev-dependencies]
 
 # Linters
