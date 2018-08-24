@@ -60,7 +60,7 @@ freezegun = "*"
 coverage-space = "*"
 
 # Documentation
-mkdocs = "*"
+mkdocs = "^1.0"
 pygments = "*"
 
 # Build

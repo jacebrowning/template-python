@@ -5,7 +5,7 @@ repo_url: https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.git
 
 theme: readthedocs
 
-pages:
+nav:
 - Home: index.md
 - About:
   - Release Notes: about/changelog.md
