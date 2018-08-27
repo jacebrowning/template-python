@@ -182,10 +182,6 @@ PYINSTALLER_MAKESPEC := poetry run pyi-makespec
 
 DIST_FILES := dist/*.tar.gz dist/*.whl
 EXE_FILES := dist/$(PROJECT).*
-
-.PHONY: build
-build: dist
-
 .PHONY: dist
 dist: install $(DIST_FILES)
 $(DIST_FILES): $(MODULES)
