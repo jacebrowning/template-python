@@ -38,7 +38,7 @@ minilog = "~0.4"
 
 # Linters
 isort = "*"
-pylint = "*"
+pylint = "^2.0"
 pycodestyle = "*"
 pydocstyle = "*"
 snowballstemmer = "*" # missing dependency for pydocstyle
