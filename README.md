@@ -5,7 +5,7 @@ Generates the structure for Python libraries using [cookiecutter][cookiecutter].
 Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/template-python.svg)](https://ci.appveyor.com/project/jacebrowning/template-python)
 
-This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make, Pandoc, and Graphviz to fully automate all development and deployment tasks. Check out the live demo: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
+This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make and Graphviz to fully automate all development and deployment tasks. Check out the live demo: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
 
 Here are a few sample projects based on this template:
 
@@ -34,17 +34,19 @@ Cookiecutter will ask you for some basic info (your name, project name, python p
 If you still need to use legacy Python, older versions of this template are available on a branch:
 
 ```
-$ cookiecutter gh:jacebrowning/template-python -f --checkout python2
+$ cookiecutter gh:jacebrowning/template-python -f --checkout=python2
 ```
 
 ## Features
 
-* Preconfigured setup for [Travis-CI][travis], [Coveralls][coveralls], and [Scrutinizer][scrutinizer]
-* `Makefile` for automating common development tasks:
+* Preconfigured setup for [Travis CI][travis], [Coveralls][coveralls], and [Scrutinizer][scrutinizer]
+* `pyproject.toml` for managing dependencies and package metadata
+* `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/master/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
     - Installing dependencies into a virtual environment using `poetry`
-    - Running tests
+    - Running tests with `pytest` or `nose`
     - Running style checkers (`pycodestyle`/`pydocstyle`) and linters (`pylint`)
-    - Building documentation
+    - Formatting imports automatically with `isort`
+    - Building documentation with `mkdocs`
     - Creating and releasing distributions to PyPI
 
 [cookiecutter]: https://github.com/audreyr/cookiecutter

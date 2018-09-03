@@ -1,4 +1,6 @@
-__project__ = '{{cookiecutter.project_name}}'
-__version__ = '0.0.0'
+from pkg_resources import get_distribution, DistributionNotFound
 
-VERSION = "{0} v{1}".format(__project__, __version__)
+try:
+    __version__ = get_distribution('{{cookiecutter.project_name}}').version
+except DistributionNotFound:
+    __version__ = '(local)'
