@@ -1,11 +1,8 @@
 # template-python
 
-Generates the structure for Python libraries using [cookiecutter][cookiecutter].
+[![Unix Build Status](https://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
 
-Unix: [![Unix Build Status](https://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
-Windows: [![Windows Build Status](https://img.shields.io/appveyor/ci/jacebrowning/template-python.svg)](https://ci.appveyor.com/project/jacebrowning/template-python)
-
-This is a template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make and Graphviz to fully automate all development and deployment tasks. Check out the live demo: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
+This is a [cookiecutter](https://github.com/audreyr/cookiecutter) template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make and Graphviz to fully automate all development and deployment tasks. Check out the live demo: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
 
 Here are a few sample projects based on this template:
 
@@ -39,7 +36,7 @@ $ cookiecutter gh:jacebrowning/template-python -f --checkout=python2
 
 ## Features
 
-* Preconfigured setup for [Travis CI][travis], [Coveralls][coveralls], and [Scrutinizer][scrutinizer]
+* Preconfigured setup for [Travis CI](https://travis-ci.org/), [Coveralls](https://coveralls.io/), and [Scrutinizer](https://scrutinizer-ci.com/)
 * `pyproject.toml` for managing dependencies and package metadata
 * `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/master/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
     - Installing dependencies into a virtual environment using `poetry`
@@ -48,11 +45,6 @@ $ cookiecutter gh:jacebrowning/template-python -f --checkout=python2
     - Formatting imports automatically with `isort`
     - Building documentation with `mkdocs`
     - Creating and releasing distributions to PyPI
-
-[cookiecutter]: https://github.com/audreyr/cookiecutter
-[travis]: https://travis-ci.org/
-[coveralls]: https://coveralls.io/
-[scrutinizer]: https://scrutinizer-ci.com/
 
 ## Updates
 
