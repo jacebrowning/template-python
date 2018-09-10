@@ -30,7 +30,7 @@ classifiers = [
 
 python = "^{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
 
-# TODO: Add your library's requirements here
+# TODO: Remove these and add your library's requirements
 click = "^6.0"
 minilog = "~0.4"
 
@@ -57,7 +57,7 @@ pytest-cov = "*"
 freezegun = "*"
 
 # Reports
-coverage-space = "*"
+coveragespace = "*"
 
 # Documentation
 mkdocs = "^1.0"
