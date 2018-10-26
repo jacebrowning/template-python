@@ -37,14 +37,14 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES ########################################################
 
-DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.*) *.egg-info
+DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock) *.egg-info
 
 .PHONY: install
 install: $(DEPENDENCIES)
 
 $(DEPENDENCIES):
 	@ poetry config settings.virtualenvs.in-project true
-	poetry develop
+	poetry install
 	@ touch $@
 
 # CHECKS ######################################################################
