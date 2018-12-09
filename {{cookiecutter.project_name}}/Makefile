@@ -184,7 +184,7 @@ DIST_FILES := dist/*.tar.gz dist/*.whl
 EXE_FILES := dist/$(PROJECT).*
 .PHONY: dist
 dist: install $(DIST_FILES)
-$(DIST_FILES): $(MODULES)
+$(DIST_FILES): $(MODULES) pyproject.toml
 	rm -f $(DIST_FILES)
 	poetry build
 
