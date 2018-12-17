@@ -164,10 +164,11 @@ docs/*.png: $(MODULES)
 .PHONY: mkdocs
 mkdocs: install $(MKDOCS_INDEX)
 $(MKDOCS_INDEX): mkdocs.yml docs/*.md
-	ln -sf `realpath README.md --relative-to=docs` docs/index.md
-	ln -sf `realpath CHANGELOG.md --relative-to=docs/about` docs/about/changelog.md
-	ln -sf `realpath CONTRIBUTING.md --relative-to=docs/about` docs/about/contributing.md
-	ln -sf `realpath LICENSE.md --relative-to=docs/about` docs/about/license.md
+	mkdir -p docs/about
+	cd docs && ln -sf ../README.md index.md
+	cd docs/about && ln -sf ../../CHANGELOG.md changelog.md
+	cd docs/about && ln -sf ../../CONTRIBUTING.md contributing.md
+	cd docs/about && ln -sf ../../LICENSE.md license.md
 	$(MKDOCS) build --clean --strict
 
 .PHONY: mkdocs-live
