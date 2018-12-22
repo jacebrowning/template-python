@@ -10,9 +10,9 @@ authors = ["{{cookiecutter.project_name}} <{{cookiecutter.email}}>"]
 
 readme = "README.md"
 
-homepage = "https://coverage.space/client/"
-documentation = "https://cli.coverage.space"
-repository = "https://github.com/jacebrowning/coverage-space-cli"
+homepage = "https://pypi.org/project/{{cookiecutter.package_name}}"
+documentation = "https://{{cookiecutter.package_name}}.readthedocs.io"
+repository = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}"
 
 keywords = [
 ]
