@@ -38,7 +38,7 @@ doctor:  ## Confirm system dependencies are available
 DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock)
 
 .PHONY: install
-install: $(DEPENDENCIES)
+install: $(DEPENDENCIES) .cache
 
 $(DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true
@@ -48,6 +48,9 @@ $(DEPENDENCIES): poetry.lock
 poetry.lock: pyproject.toml
 	poetry lock
 	@ touch $@
+	
+.cache:
+	@ mkdir -p .cache
 
 # CHECKS ######################################################################
 
