@@ -6,7 +6,7 @@ description = "{{cookiecutter.project_short_description}}"
 
 license = "MIT"
 
-authors = ["{{cookiecutter.project_name}} <{{cookiecutter.email}}>"]
+authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
 
 readme = "README.md"
 
@@ -36,12 +36,13 @@ minilog = "~0.4"
 
 [tool.poetry.dev-dependencies]
 
+# Formatters
+isort = "=4.3.4"
+black = "=18.9b0"
+
 # Linters
-isort = "*"
 pylint = "^2.0"
-pycodestyle = "*"
 pydocstyle = "*"
-snowballstemmer = "*" # missing dependency for pydocstyle
 
 # Testing
 pytest = "^3.3"
@@ -65,3 +66,17 @@ pyinstaller = "*"
 sniffer = "*"
 MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
+
+[tool.poetry.scripts]
+
+{{cookiecutter.project_name}} = "{{cookiecutter.package_name}}.cli:main"
+
+[tool.black]
+
+py36 = true
+skip-string-normalization = true
+
+[build-system]
+
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

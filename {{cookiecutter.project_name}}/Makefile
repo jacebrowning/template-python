@@ -40,30 +40,30 @@ DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetr
 .PHONY: install
 install: $(DEPENDENCIES)
 
-$(DEPENDENCIES):
+$(DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true
 	poetry install
 	@ touch $@
 
+poetry.lock: pyproject.toml
+	poetry lock
+	@ touch $@
+
 # CHECKS ######################################################################
 
+.PHONY: format
+format: install
+	poetry run isort $(PACKAGES) --recursive --apply
+	poetry run black $(PACKAGES)
+	@ echo
+
 .PHONY: check
-check: isort pylint pycodestyle pydocstyle ## Run linters and static analysis
-
-.PHONY: isort
-isort: install
-	poetry run isort $(PACKAGES) $(CONFIG) --recursive --apply
-
-.PHONY: pylint
-pylint: install
-	poetry run pylint $(PACKAGES) $(CONFIG) --rcfile=.pylint.ini
-
-.PHONY: pycodestyle
-pycodestyle: install
-	poetry run pycodestyle $(PACKAGES) $(CONFIG) --config=.pycodestyle.ini
-
-.PHONY: pydocstyle
-pydocstyle: install
+check: install format  ## Run formaters, linters, and static analysis
+ifdef CI
+	git diff --exit-code
+endif
+	poetry run pylint $(PACKAGES) --rcfile=.pylint.ini
+	# poetry run mypy $(PACKAGES) --config-file=.mypy.ini
 	poetry run pydocstyle $(PACKAGES) $(CONFIG)
 
 # TESTS #######################################################################
