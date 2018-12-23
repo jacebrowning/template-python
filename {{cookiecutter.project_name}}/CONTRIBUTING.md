@@ -27,23 +27,19 @@ $ make install
 
 ## Development Tasks
 
-### Testing
+### Manual
 
-Manually run the tests:
+Run the tests:
 
 ```sh
 $ make test
 ```
 
-or keep them running on change:
+Run static analysis:
 
 ```sh
-$ make watch
+$ make check
 ```
-
-> In order to have OS X notifications, `brew install terminal-notifier`.
-
-### Documentation
 
 Build the documentation:
 
@@ -51,16 +47,15 @@ Build the documentation:
 $ make docs
 ```
 
-### Static Analysis
+### Automatic
 
-Run linters and static analyzers:
+Keep all of the above tasks running on change:
 
 ```sh
-$ make pylint
-$ make pycodestyle
-$ make pydocstyle
-$ make check  # includes all checks
+$ make watch
 ```
+
+> In order to have OS X notifications, `brew install terminal-notifier`.
 
 ## Continuous Integration
 

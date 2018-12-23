@@ -10,9 +10,9 @@ This is a [cookiecutter](https://github.com/audreyr/cookiecutter) template for a
 * `pyproject.toml` for managing dependencies and package metadata
 * `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/master/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
     - Installing dependencies into a virtual environment using `poetry`
+    - Automatic formatting with `isort` and `black`
+    - Running style checkers (`pydocstyle`) and linters (`pylint`)
     - Running tests with `pytest`
-    - Running style checkers (`pycodestyle`/`pydocstyle`) and linters (`pylint`)
-    - Formatting imports automatically with `isort`
     - Building documentation with `mkdocs`
     - Creating and releasing distributions to PyPI using `poetry`
     

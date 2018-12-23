@@ -13,8 +13,6 @@ VIRTUAL_ENV ?= .venv
 
 # MAIN TASKS ##################################################################
 
-SNIFFER := poetry run sniffer
-
 .PHONY: all
 all: install
 
@@ -23,7 +21,7 @@ ci: check test ## Run all tasks that determine CI status
 
 .PHONY: watch
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
-	$(SNIFFER)
+	poetry run sniffer
 
 .PHONY: run ## Start the program
 run: install
@@ -37,47 +35,38 @@ doctor:  ## Confirm system dependencies are available
 
 # PROJECT DEPENDENCIES ########################################################
 
-DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock) *.egg-info
+DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock)
 
 .PHONY: install
 install: $(DEPENDENCIES)
 
-$(DEPENDENCIES):
+$(DEPENDENCIES): poetry.lock
 	@ poetry config settings.virtualenvs.in-project true
 	poetry install
 	@ touch $@
 
+poetry.lock: pyproject.toml
+	poetry lock
+	@ touch $@
+
 # CHECKS ######################################################################
 
-ISORT := poetry run isort
-PYLINT := poetry run pylint
-PYCODESTYLE := poetry run pycodestyle
-PYDOCSTYLE := poetry run pydocstyle
+.PHONY: format
+format: install
+	poetry run isort $(PACKAGES) --recursive --apply
+	poetry run black $(PACKAGES)
+	@ echo
 
 .PHONY: check
-check: isort pylint pycodestyle pydocstyle ## Run linters and static analysis
-
-.PHONY: isort
-isort: install
-	$(ISORT) $(PACKAGES) $(CONFIG) --recursive --apply
-
-.PHONY: pylint
-pylint: install
-	$(PYLINT) $(PACKAGES) $(CONFIG) --rcfile=.pylint.ini
-
-.PHONY: pycodestyle
-pycodestyle: install
-	$(PYCODESTYLE) $(PACKAGES) $(CONFIG) --config=.pycodestyle.ini
-
-.PHONY: pydocstyle
-pydocstyle: install
-	$(PYDOCSTYLE) $(PACKAGES) $(CONFIG)
+check: install format  ## Run formaters, linters, and static analysis
+ifdef CI
+	git diff --exit-code
+endif
+	poetry run pylint $(PACKAGES) --rcfile=.pylint.ini
+	# poetry run mypy $(PACKAGES) --config-file=.mypy.ini
+	poetry run pydocstyle $(PACKAGES) $(CONFIG)
 
 # TESTS #######################################################################
-
-PYTEST := poetry run pytest
-COVERAGE := poetry run coverage
-COVERAGE_SPACE := poetry run coveragespace
 
 RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/v/cache/lastfailed
@@ -94,32 +83,29 @@ test: test-all ## Run unit and integration tests
 .PHONY: test-unit
 test-unit: install
 	@ ( mv $(FAILURES) $(FAILURES).bak || true ) > /dev/null 2>&1
-	$(PYTEST) $(PACKAGE) $(PYTEST_OPTIONS)
+	poetry run pytest $(PACKAGE) $(PYTEST_OPTIONS)
 	@ ( mv $(FAILURES).bak $(FAILURES) || true ) > /dev/null 2>&1
-	$(COVERAGE_SPACE) $(REPOSITORY) unit
+	poetry run coveragespace $(REPOSITORY) unit
 
 .PHONY: test-int
 test-int: install
-	@ if test -e $(FAILURES); then $(PYTEST) tests $(PYTEST_RERUN_OPTIONS); fi
+	@ if test -e $(FAILURES); then poetry run pytest tests $(PYTEST_RERUN_OPTIONS); fi
 	@ rm -rf $(FAILURES)
-	$(PYTEST) tests $(PYTEST_OPTIONS)
-	$(COVERAGE_SPACE) $(REPOSITORY) integration
+	poetry run pytest tests $(PYTEST_OPTIONS)
+	poetry run coveragespace $(REPOSITORY) integration
 
 .PHONY: test-all
 test-all: install
-	@ if test -e $(FAILURES); then $(PYTEST) $(PACKAGES) $(PYTEST_RERUN_OPTIONS); fi
+	@ if test -e $(FAILURES); then poetry run pytest $(PACKAGES) $(PYTEST_RERUN_OPTIONS); fi
 	@ rm -rf $(FAILURES)
-	$(PYTEST) $(PACKAGES) $(PYTEST_OPTIONS)
-	$(COVERAGE_SPACE) $(REPOSITORY) overall
+	poetry run pytest $(PACKAGES) $(PYTEST_OPTIONS)
+	poetry run coveragespace $(REPOSITORY) overall
 
 .PHONY: read-coverage
 read-coverage:
 	bin/open htmlcov/index.html
 
 # DOCUMENTATION ###############################################################
-
-PYREVERSE := poetry run pyreverse
-MKDOCS := poetry run mkdocs
 
 MKDOCS_INDEX := site/index.html
 
@@ -129,7 +115,7 @@ docs: uml mkdocs ## Generate documentation
 .PHONY: uml
 uml: install docs/*.png
 docs/*.png: $(MODULES)
-	$(PYREVERSE) $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
+	poetry run pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
@@ -141,20 +127,18 @@ $(MKDOCS_INDEX): mkdocs.yml docs/*.md
 	cd docs/about && ln -sf ../../CHANGELOG.md changelog.md
 	cd docs/about && ln -sf ../../CONTRIBUTING.md contributing.md
 	cd docs/about && ln -sf ../../LICENSE.md license.md
-	$(MKDOCS) build --clean --strict
+	poetry run mkdocs build --clean --strict
 
 .PHONY: mkdocs-live
 mkdocs-live: mkdocs
 	eval "sleep 3; bin/open http://127.0.0.1:8000" &
-	$(MKDOCS) serve
+	poetry run mkdocs serve
 
 # BUILD #######################################################################
 
-PYINSTALLER := poetry run pyinstaller
-PYINSTALLER_MAKESPEC := poetry run pyi-makespec
-
 DIST_FILES := dist/*.tar.gz dist/*.whl
 EXE_FILES := dist/$(PROJECT).*
+
 .PHONY: dist
 dist: install $(DIST_FILES)
 $(DIST_FILES): $(MODULES) pyproject.toml
@@ -165,10 +149,10 @@ $(DIST_FILES): $(MODULES) pyproject.toml
 exe: install $(EXE_FILES)
 $(EXE_FILES): $(MODULES) $(PROJECT).spec
 	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
-	$(PYINSTALLER) $(PROJECT).spec --noconfirm --clean
+	poetry run pyinstaller $(PROJECT).spec --noconfirm --clean
 
 $(PROJECT).spec:
-	$(PYINSTALLER_MAKESPEC) $(PACKAGE)/__main__.py --onefile --windowed --name=$(PROJECT)
+	poetry run pyi-makespec $(PACKAGE)/__main__.py --onefile --windowed --name=$(PROJECT)
 
 # RELEASE #####################################################################
 
@@ -189,17 +173,16 @@ clean-all: clean
 
 .PHONY: .clean-install
 .clean-install:
-	find $(PACKAGES) -name '*.pyc' -delete
 	find $(PACKAGES) -name '__pycache__' -delete
 	rm -rf *.egg-info
 
 .PHONY: .clean-test
 .clean-test:
-	rm -rf .cache .pytest .coverage htmlcov xmlreport
+	rm -rf .cache .pytest .coverage htmlcov
 
 .PHONY: .clean-docs
 .clean-docs:
-	rm -rf *.rst docs/apidocs *.html docs/*.png site
+	rm -rf docs/*.png site
 
 .PHONY: .clean-build
 .clean-build:
