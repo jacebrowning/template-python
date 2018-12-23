@@ -4,8 +4,6 @@ python:
 
 cache:
   pip: true
-  directories:
-    - ${VIRTUAL_ENV}
 
 before_install:
   - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
