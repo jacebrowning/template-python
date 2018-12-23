@@ -2,15 +2,14 @@ language: python
 python:
   - 3.6
 
-cache: pip
-
-env:
-  matrix:
-  - TEST_RUNNER=nose
-  - TEST_RUNNER=pytest
+cache:
+  pip: true
+  directories:
+    - ${VIRTUAL_ENV}
 
 before_install:
-  - pip install poetry
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - source $HOME/.poetry/env
 
 install:
   - make install
@@ -19,7 +18,7 @@ script:
   - make ci
 
 after_script: >
-  echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST; echo $TRAVIS_PYTHON_VERSION; echo $TEST_RUNNER;
+  echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST;
   if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
 
     # Configure Git with Travis CI information
@@ -30,8 +29,7 @@ after_script: >
     rm -rf .git ;
 
     # Clone the destination repository
-    BRANCH=python${TRAVIS_PYTHON_VERSION%.*}-$TEST_RUNNER ;
-    git clone https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo temp --branch $BRANCH ;
+    git clone https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo temp ;
     mv temp/.git TemplateDemo/.git ;
     rm -rf temp ;
 
@@ -39,7 +37,7 @@ after_script: >
     cd TemplateDemo ;
     git add --all ;
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub" ;
-    git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo $BRANCH ;
+    git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo master ;
 
   fi
 

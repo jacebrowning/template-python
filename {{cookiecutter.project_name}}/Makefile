@@ -75,39 +75,11 @@ pydocstyle: install
 
 # TESTS #######################################################################
 
-{% if cookiecutter.test_runner == "nose" -%}
-NOSE := poetry run nosetests
-{%- elif cookiecutter.test_runner == "pytest" -%}
 PYTEST := poetry run pytest
-{%- endif %}
 COVERAGE := poetry run coverage
 COVERAGE_SPACE := poetry run coveragespace
 
 RANDOM_SEED ?= $(shell date +%s)
-{% if cookiecutter.test_runner == "nose" %}
-NOSE_OPTIONS := --with-doctest
-ifndef DISABLE_COVERAGE
-NOSE_OPTIONS += --with-coverage --cover-package=$(PACKAGE) --cover-html --cover-html-dir=htmlcov --cover-branches
-endif
-
-.PHONY: test
-test: test-all ## Run unit and integration tests
-
-.PHONY: test-unit
-test-unit: install .clean-test
-	$(NOSE) $(PACKAGE) $(NOSE_OPTIONS)
-	$(COVERAGE_SPACE) $(REPOSITORY) unit
-
-.PHONY: test-int
-test-int: install .clean-test
-	$(NOSE) tests $(NOSE_OPTIONS)
-	$(COVERAGE_SPACE) $(REPOSITORY) integration
-
-.PHONY: test-all
-test-all: install .clean-test
-	$(NOSE) $(PACKAGES) $(NOSE_OPTIONS)
-	$(COVERAGE_SPACE) $(REPOSITORY) overall
-{% elif cookiecutter.test_runner == "pytest" -%}
 FAILURES := .cache/v/cache/lastfailed
 
 PYTEST_OPTIONS := --random --random-seed=$(RANDOM_SEED)
@@ -139,7 +111,7 @@ test-all: install
 	@ rm -rf $(FAILURES)
 	$(PYTEST) $(PACKAGES) $(PYTEST_OPTIONS)
 	$(COVERAGE_SPACE) $(REPOSITORY) overall
-{% endif %}
+
 .PHONY: read-coverage
 read-coverage:
 	bin/open htmlcov/index.html
