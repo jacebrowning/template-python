@@ -8,17 +8,12 @@ def pytest_configure(config):
     log.init(debug=True)
 
     terminal = config.pluginmanager.getplugin('terminal')
-    base = terminal.TerminalReporter
 
-    class QuietReporter(base):
+    class QuietReporter(terminal.TerminalReporter):  # type: ignore
         """Reporter that only shows dots when running tests."""
 
         def __init__(self, *args, **kwargs):
-            {%- if cookiecutter.python_major_version == "3" %}
             super().__init__(*args, **kwargs)
-            {%- else %}
-            base.__init__(self, *args, **kwargs)
-            {%- endif %}
             self.verbosity = 0
             self.showlongtestinfo = False
             self.showfspath = False

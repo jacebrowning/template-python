@@ -9,12 +9,14 @@ This is a [cookiecutter](https://github.com/audreyr/cookiecutter) template for a
 * Preconfigured setup for [Travis CI](https://travis-ci.org/), [Coveralls](https://coveralls.io/), and [Scrutinizer](https://scrutinizer-ci.com/)
 * `pyproject.toml` for managing dependencies and package metadata
 * `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/master/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
-    - Installing dependencies into a virtual environment using `poetry`
+    - Installing dependencies with `poetry`
     - Automatic formatting with `isort` and `black`
-    - Running style checkers (`pydocstyle`) and linters (`pylint`)
+    - Static analysis with `pylint`
+    - Type checking with `mypy`
+    - Docstring styling with `pydocstyle`
     - Running tests with `pytest`
     - Building documentation with `mkdocs`
-    - Creating and releasing distributions to PyPI using `poetry`
+    - Publishing to PyPI using `poetry`
     
 If you are instead looking for a [Python application](https://caremad.io/posts/2013/07/setup-vs-requirement/) template, check out one of the sibling projects:
 

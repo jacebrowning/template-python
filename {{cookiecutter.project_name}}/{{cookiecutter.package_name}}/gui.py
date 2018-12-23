@@ -1,12 +1,8 @@
 """A sample GUI."""
 
-{%- if cookiecutter.python_major_version == "3" %}
-from tkinter import *  # pylint: disable=wildcard-import,unused-wildcard-import
-from tkinter.ttk import *  # pylint: disable=wildcard-import,unused-wildcard-import
-{%- else %}
-from Tkinter import *  # pylint: disable=wildcard-import,unused-wildcard-import
-from ttk import *  # pylint: disable=wildcard-import,unused-wildcard-import
-{%- endif %}
+# pylint: disable=wildcard-import,unused-wildcard-import
+from tkinter import *
+from tkinter.ttk import *  # type: ignore
 
 import log
 

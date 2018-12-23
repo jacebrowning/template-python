@@ -37,30 +37,29 @@ minilog = "~0.4"
 [tool.poetry.dev-dependencies]
 
 # Formatters
-isort = "=4.3.4"
 black = "=18.9b0"
+isort = "=4.3.4"
 
 # Linters
-pylint = "^2.0"
+mypy = "*"
 pydocstyle = "*"
+pylint = "^2.0"
 
 # Testing
 pytest = "^3.3"
+pytest-cov = "*"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
-pytest-cov = "*"
-freezegun = "*"
 
-# Reports
+# Utilities
 coveragespace = "*"
+freezegun = "*"
+pyinstaller = "*"
 
 # Documentation
 mkdocs = "^1.0"
 pygments = "*"
-
-# Build
-pyinstaller = "*"
 
 # Tooling
 sniffer = "*"
