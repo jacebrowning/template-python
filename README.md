@@ -28,10 +28,12 @@ $ cookiecutter gh:jacebrowning/template-python -f
 
 Cookiecutter will ask you for some basic info (your name, project name, python package name, etc.) and generate a base Python project for you.
 
-If you still need to use legacy Python, older versions of this template are available on a branch:
+If you still need to use legacy Python or `nose` as the test runner, older versions of this template are available on branches:
 
 ```
 $ cookiecutter gh:jacebrowning/template-python -f --checkout=python2
+
+$ cookiecutter gh:jacebrowning/template-python -f --checkout=nose
 ```
 
 ## Features
@@ -40,11 +42,11 @@ $ cookiecutter gh:jacebrowning/template-python -f --checkout=python2
 * `pyproject.toml` for managing dependencies and package metadata
 * `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/master/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
     - Installing dependencies into a virtual environment using `poetry`
-    - Running tests with `pytest` or `nose`
+    - Running tests with `pytest`
     - Running style checkers (`pycodestyle`/`pydocstyle`) and linters (`pylint`)
     - Formatting imports automatically with `isort`
     - Building documentation with `mkdocs`
-    - Creating and releasing distributions to PyPI
+    - Creating and releasing distributions to PyPI using `poetry`
 
 ## Updates
 
