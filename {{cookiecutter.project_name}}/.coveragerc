@@ -5,3 +5,4 @@ branch = true
 omit =
     .venv/*
     */tests/*
+    */__main__.py
