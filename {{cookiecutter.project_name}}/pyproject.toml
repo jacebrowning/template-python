@@ -51,17 +51,17 @@ pytest-cov = "*"
 pytest-describe = "*"
 pytest-expecter = "*"
 pytest-random = "*"
-
-# Utilities
-coveragespace = "*"
 freezegun = "*"
-pyinstaller = "*"
+
+# Reports
+coveragespace = "*"
 
 # Documentation
 mkdocs = "^1.0"
 pygments = "*"
 
 # Tooling
+pyinstaller = "*"
 sniffer = "*"
 MacFSEvents = { version = "*", platform = "darwin" }
 pync = { version = "*", platform = "darwin" }
