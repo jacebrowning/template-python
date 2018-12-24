@@ -17,7 +17,7 @@ VIRTUAL_ENV ?= .venv
 all: install
 
 .PHONY: ci
-ci: check test ## Run all tasks that determine CI status
+ci: format check test mkdocs ## Run all tasks that determine CI status
 
 .PHONY: watch
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
