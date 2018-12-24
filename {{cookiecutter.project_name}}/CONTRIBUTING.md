@@ -6,7 +6,8 @@
     * Windows: http://mingw.org/download/installer
     * Mac: http://developer.apple.com/xcode
     * Linux: http://www.gnu.org/software/make
-* Poetry: https://poetry.eustace.io
+* Python: `$ pyenv install`
+* Poetry: https://poetry.eustace.io/docs/#installation
 * Graphviz: http://www.graphviz.org/Download.php
 
 To confirm these system dependencies are configured correctly:
