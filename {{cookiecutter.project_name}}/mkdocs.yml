@@ -7,6 +7,7 @@ theme: readthedocs
 
 nav:
 - Home: index.md
+- Advanced: advanced.md
 - About:
   - Release Notes: about/changelog.md
   - Contributing: about/contributing.md
