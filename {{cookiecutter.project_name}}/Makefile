@@ -113,24 +113,24 @@ read-coverage:
 MKDOCS_INDEX := site/index.html
 
 .PHONY: docs
-docs: uml mkdocs ## Generate documentation
+docs: mkdocs uml ## Generate documentation and UML
 
+.PHONY: mkdocs
+mkdocs: install $(MKDOCS_INDEX)
+$(MKDOCS_INDEX): mkdocs.yml docs/*.md
+	@ mkdir -p docs/about
+	@ cd docs && ln -sf ../README.md index.md
+	@ cd docs/about && ln -sf ../../CHANGELOG.md changelog.md
+	@ cd docs/about && ln -sf ../../CONTRIBUTING.md contributing.md
+	@ cd docs/about && ln -sf ../../LICENSE.md license.md
+	poetry run mkdocs build --clean --strict
+	
 .PHONY: uml
 uml: install docs/*.png
 docs/*.png: $(MODULES)
 	poetry run pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
-
-.PHONY: mkdocs
-mkdocs: install $(MKDOCS_INDEX)
-$(MKDOCS_INDEX): mkdocs.yml docs/*.md
-	mkdir -p docs/about
-	cd docs && ln -sf ../README.md index.md
-	cd docs/about && ln -sf ../../CHANGELOG.md changelog.md
-	cd docs/about && ln -sf ../../CONTRIBUTING.md contributing.md
-	cd docs/about && ln -sf ../../LICENSE.md license.md
-	poetry run mkdocs build --clean --strict
 
 .PHONY: mkdocs-live
 mkdocs-live: mkdocs
