@@ -27,7 +27,7 @@ If you are instead looking for a [Python application](https://caremad.io/posts/2
 
 Here are a few sample projects based on this template:
 
-* [jacebrowning/sappy](https://github.com/jacebrowning/sappy)
+* [jacebrowning/minilog](https://github.com/jacebrowning/minilog)
 * [theovoss/Chess](https://github.com/theovoss/Chess)
 * [sprout42/StarStruct](https://github.com/sprout42/StarStruct)
 * [MichiganLabs/flask-gcm](https://github.com/MichiganLabs/flask-gcm)
