@@ -19,18 +19,16 @@ This project was generated with [cookiecutter](https://github.com/audreyr/cookie
 
 ## Installation
 
-Install {{cookiecutter.project_name}} with pip:
+Install this library directly into an activated virtual environment:
 
-```sh
+```
 $ pip install {{cookiecutter.project_name}}
 ```
 
-or directly from the source code:
+or add it to your [Poetry](https://poetry.eustace.io/) project:
 
-```sh
-$ git clone https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}.git
-$ cd {{cookiecutter.github_repo}}
-$ python setup.py install
+```
+$ poetry add {{cookiecutter.project_name}}
 ```
 
 # Usage
