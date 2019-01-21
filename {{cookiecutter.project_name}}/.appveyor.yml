@@ -6,7 +6,7 @@ environment:
       PYTHON_MINOR: {{cookiecutter.python_minor_version}}
 
 cache:
-  - .venv -> Makefile
+  - .venv -> poetry.lock
 
 install:
   # Add Make and Python to the PATH
