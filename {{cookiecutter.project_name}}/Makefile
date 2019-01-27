@@ -127,7 +127,7 @@ $(MKDOCS_INDEX): docs/requirements.txt mkdocs.yml docs/*.md
 
 # Workaround: https://github.com/rtfd/readthedocs.org/issues/5090
 docs/requirements.txt: poetry.lock
-	poetry run pip freeze | grep mkdocs > $@
+	@ poetry run pip freeze -qqq | grep mkdocs > $@
 
 .PHONY: uml
 uml: install docs/*.png
