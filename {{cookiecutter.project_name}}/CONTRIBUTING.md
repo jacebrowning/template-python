@@ -3,12 +3,15 @@
 ## Requirements
 
 * Make:
-    * Windows: http://mingw.org/download/installer
-    * Mac: http://developer.apple.com/xcode
-    * Linux: http://www.gnu.org/software/make
+    * macOS: `$ xcode-select --install`
+    * Linux: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
+    * Windows: [https://mingw.org/download/installer](https://mingw.org/download/installer)
 * Python: `$ pyenv install`
-* Poetry: https://poetry.eustace.io/docs/#installation
-* Graphviz: http://www.graphviz.org/Download.php
+* Poetry: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
+* Graphviz:
+    * macOS: `$ brew install graphviz`
+    * Linux: [https://graphviz.org/download](https://graphviz.org/download/)
+    * Windows: [https://graphviz.org/download](https://graphviz.org/download/)
 
 To confirm these system dependencies are configured correctly:
 
