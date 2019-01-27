@@ -12,7 +12,7 @@
 
 To confirm these system dependencies are configured correctly:
 
-```sh
+```text
 $ make doctor
 ```
 
@@ -20,7 +20,7 @@ $ make doctor
 
 Install project dependencies into a virtual environment:
 
-```sh
+```text
 $ make install
 ```
 
@@ -30,19 +30,19 @@ $ make install
 
 Run the tests:
 
-```sh
+```text
 $ make test
 ```
 
 Run static analysis:
 
-```sh
+```text
 $ make check
 ```
 
 Build the documentation:
 
-```sh
+```text
 $ make docs
 ```
 
@@ -50,7 +50,7 @@ $ make docs
 
 Keep all of the above tasks running on change:
 
-```sh
+```text
 $ make watch
 ```
 
@@ -60,7 +60,7 @@ $ make watch
 
 The CI server will report overall build status:
 
-```sh
+```text
 $ make ci
 ```
 
@@ -68,6 +68,6 @@ $ make ci
 
 Release to PyPI:
 
-```sh
+```text
 $ make upload
 ```

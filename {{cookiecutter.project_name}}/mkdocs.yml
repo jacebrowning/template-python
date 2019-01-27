@@ -7,6 +7,10 @@ edit_uri: https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.git
 
 theme: readthedocs
 
+markdown_extensions:
+  - codehilite:
+      linenums: true
+
 nav:
 - Home: index.md
 - Advanced: advanced.md

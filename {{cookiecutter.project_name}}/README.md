@@ -21,13 +21,13 @@ This project was generated with [cookiecutter](https://github.com/audreyr/cookie
 
 Install this library directly into an activated virtual environment:
 
-```
+```text
 $ pip install {{cookiecutter.project_name}}
 ```
 
 or add it to your [Poetry](https://poetry.eustace.io/) project:
 
-```
+```text
 $ poetry add {{cookiecutter.project_name}}
 ```
 
@@ -35,7 +35,7 @@ $ poetry add {{cookiecutter.project_name}}
 
 After installation, the package can imported:
 
-```sh
+```text
 $ python
 >>> import {{cookiecutter.package_name}}
 >>> {{cookiecutter.package_name}}.__version__
