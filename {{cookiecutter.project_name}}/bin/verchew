@@ -43,15 +43,17 @@ try:
 except ImportError:
     import ConfigParser as configparser  # Python 2
 
-__version__ = '1.5'
+__version__ = '1.6'
 
 PY2 = sys.version_info[0] == 2
+
 CONFIG_FILENAMES = [
     'verchew.ini',
     '.verchew.ini',
     '.verchewrc',
     '.verchew',
 ]
+
 SAMPLE_CONFIG = """
 [Python]
 
@@ -76,12 +78,14 @@ version = GNU Make
 optional = true
 
 """.strip()
+
 STYLE = {
     "~": "✔",
     "*": "⭑",
     "?": "⚠",
     "x": "✘",
 }
+
 COLOR = {
     "x": "\033[91m",  # red
     "~": "\033[92m",  # green
@@ -90,12 +94,18 @@ COLOR = {
     None: "\033[0m",  # reset
 }
 
+QUIET = False
+
 log = logging.getLogger(__name__)
 
 
 def main():
+    global QUIET
+
     args = parse_args()
     configure_logging(args.verbose)
+    if args.quiet:
+        QUIET = True
 
     log.debug("PWD: %s", os.getenv('PWD'))
     log.debug("PATH: %s", os.getenv('PATH'))
@@ -118,8 +128,12 @@ def parse_args():
                         help="generate a sample configuration file")
     parser.add_argument('--exit-code', action='store_true',
                         help="return a non-zero exit code on failure")
-    parser.add_argument('-v', '--verbose', action='count', default=0,
-                        help="enable verbose logging")
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('-v', '--verbose', action='count', default=0,
+                       help="enable verbose logging")
+    group.add_argument('-q', '--quiet', action='store_true',
+                       help="suppress all output on success")
 
     args = parser.parse_args()
 
@@ -208,6 +222,11 @@ def check_dependencies(config):
                 show(_("?") + " EXPECTED: {0}".format(settings['versions']))
                 success.append(_("?"))
             else:
+                if QUIET:
+                    print("Unmatched {0} version: {1}".format(
+                        name,
+                        settings['versions'],
+                    ))
                 show(_("x") + " EXPECTED: {0}".format(settings['versions']))
                 success.append(_("x"))
             if settings.get('message'):
@@ -260,6 +279,9 @@ def call(args):
 
 def show(text, start='', end='\n', head=False):
     """Python 2 and 3 compatible version of print."""
+    if QUIET:
+        return
+
     if head:
         start = '\n'
         end = '\n\n'
