@@ -37,7 +37,7 @@ minilog = "~0.4"
 [tool.poetry.dev-dependencies]
 
 # Formatters
-black = "=18.9b0"
+black = "=19.3b0"
 isort = "=4.3.4"
 
 # Linters
@@ -46,7 +46,7 @@ pydocstyle = "*"
 pylint = "^2.0"
 
 # Testing
-pytest = "^3.3"
+pytest = "^4.3.1"
 pytest-cov = "*"
 pytest-describe = "*"
 pytest-expecter = "*"
@@ -72,7 +72,7 @@ pync = { version = "*", platform = "darwin" }
 
 [tool.black]
 
-py36 = true
+target-version = ["py36", "py37"]
 skip-string-normalization = true
 
 [build-system]
