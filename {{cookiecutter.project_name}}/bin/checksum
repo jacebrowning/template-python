@@ -9,9 +9,12 @@ def run(paths):
     hash_md5 = hashlib.md5()
 
     for path in paths:
-        with open(path, 'rb') as f:
-            for chunk in iter(lambda: f.read(4096), b''):
-                hash_md5.update(chunk)
+        try:
+            with open(path, 'rb') as f:
+                for chunk in iter(lambda: f.read(4096), b''):
+                    hash_md5.update(chunk)
+        except IOError:
+            hash_md5.update(path.encode())
 
     print(hash_md5.hexdigest())
 
