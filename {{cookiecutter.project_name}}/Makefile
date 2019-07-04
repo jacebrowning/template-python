@@ -136,8 +136,8 @@ docs/*.png: $(MODULES)
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
 
-.PHONY: mkdocs-live
-mkdocs-live: mkdocs
+.PHONY: mkdocs-serve
+mkdocs-serve: mkdocs
 	eval "sleep 3; bin/open http://127.0.0.1:8000" &
 	poetry run mkdocs serve
 
