@@ -2,14 +2,17 @@ dist: xenial
 
 language: python
 python:
-  - 3.6
+  - 3.7
 
 cache:
   pip: true
 
 before_install:
-  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | POETRY_PREVIEW=1 python
   - source $HOME/.poetry/env
+  - mkdir -p $HOME/.config/pypoetry
+  - touch $HOME/.config/pypoetry/config.toml
+  - make doctor
 
 install:
   - make install
