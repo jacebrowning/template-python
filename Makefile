@@ -23,6 +23,7 @@ watch: install clean
 .PHONY: install
 install: $(ENV)
 $(ENV): pyproject.toml poetry.lock
+	@ poetry config virtualenvs.in-project true
 ifdef CI
 	poetry install --no-dev
 else
