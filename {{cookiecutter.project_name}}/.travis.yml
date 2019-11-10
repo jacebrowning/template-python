@@ -14,7 +14,7 @@ env:
     - RANDOM_SEED=0
 
 before_install:
-  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | POETRY_PREVIEW=1 python
+  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | POETRY_PREVIEW=true python
   - source $HOME/.poetry/env
   - mkdir -p $HOME/.config/pypoetry
   - touch $HOME/.config/pypoetry/config.toml
