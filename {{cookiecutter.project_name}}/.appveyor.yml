@@ -1,5 +1,6 @@
 environment:
   global:
+    POETRY_PREVIEW: 1
     RANDOM_SEED: 0
   matrix:
     - PYTHON_MAJOR: {{cookiecutter.python_major_version}}
@@ -15,7 +16,6 @@ install:
   - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%;%PATH%
   - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%\Scripts;%PATH%
   # Install system dependencies
-  - set POETRY_PREVIEW=true
   - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
   - set PATH=%USERPROFILE%\.poetry\bin;%PATH%
   - make doctor
