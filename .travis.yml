@@ -49,4 +49,4 @@ after_script: >
 notifications:
   email:
     on_success: never
-    on_failure: change
+    on_failure: never
