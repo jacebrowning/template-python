@@ -2,7 +2,7 @@ dist: xenial
 
 language: python
 python:
-  - 3.7
+  - 3.8
 
 cache:
   pip: true
@@ -49,4 +49,4 @@ after_script: >
 notifications:
   email:
     on_success: never
-    on_failure: change
+    on_failure: never
