@@ -8,5 +8,5 @@
     "package_name": "demo",
     "project_short_description": "Sample project generated from Jace's Python Template.",
     "python_major_version": 3,
-    "python_minor_version": 7
+    "python_minor_version": 8
 }
