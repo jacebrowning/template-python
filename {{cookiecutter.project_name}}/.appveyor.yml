@@ -1,6 +1,5 @@
 environment:
   global:
-    POETRY_PREVIEW: 1
     RANDOM_SEED: 0
   matrix:
     - PYTHON_MAJOR: {{cookiecutter.python_major_version}}
