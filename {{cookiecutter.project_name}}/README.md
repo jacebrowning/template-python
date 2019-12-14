@@ -19,7 +19,7 @@ This project was generated with [cookiecutter](https://github.com/audreyr/cookie
 
 ## Installation
 
-Install this library directly into an activated virtual environment:
+Install it directly into an activated virtual environment:
 
 ```text
 $ pip install {{cookiecutter.project_name}}
