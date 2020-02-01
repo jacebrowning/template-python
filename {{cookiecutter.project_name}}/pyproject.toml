@@ -37,8 +37,8 @@ minilog = "*"
 [tool.poetry.dev-dependencies]
 
 # Formatters
-black = "=19.3b0"
-isort = "=4.3.4"
+black = "=19.10b0"
+isort = "=4.3.21"
 
 # Linters
 mypy = "*"
@@ -54,7 +54,7 @@ pytest-random = "*"
 freezegun = "*"
 
 # Reports
-coveragespace = "^3.1"
+coveragespace = "^3.1.1"
 
 # Documentation
 mkdocs = "^1.0"
