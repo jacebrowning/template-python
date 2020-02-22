@@ -70,7 +70,7 @@ def copy():
     ]:
         src = os.path.join(TMP, CONFIG['project_name'], filename)
         dst = os.path.join(CWD, filename)
-        print("Copying " + filename)
+        print("Updating " + filename)
         shutil.copy(src, dst)
 
 
