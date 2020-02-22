@@ -17,7 +17,7 @@ This is a [cookiecutter](https://github.com/audreyr/cookiecutter) template for a
     - Running tests with `pytest`
     - Building documentation with `mkdocs`
     - Publishing to PyPI using `poetry`
-    
+
 If you are instead looking for a [Python application](https://caremad.io/posts/2013/07/setup-vs-requirement/) template, check out one of the sibling projects:
 
 * [jacebrowning/template-django](https://github.com/jacebrowning/template-django)
@@ -54,4 +54,8 @@ $ cookiecutter gh:jacebrowning/template-python -f --checkout=nose
 
 ## Updates
 
-Checkout the appropriate branch of [template-python-demo](https://github.com/jacebrowning/template-python-demo) and manually merge changes into your project.
+Run the update tool, which is generated inside each project:
+
+```
+$ bin/update
+```
