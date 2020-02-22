@@ -67,6 +67,20 @@ The CI server will report overall build status:
 $ make ci
 ```
 
+# Demo Tasks
+
+Run the program:
+
+```text
+$ make run
+````
+
+Launch an IPython session:
+
+```text
+$ make ipython
+```
+
 # Release Tasks
 
 Release to PyPI:

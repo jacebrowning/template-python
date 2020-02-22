@@ -17,6 +17,7 @@ This is a [cookiecutter](https://github.com/audreyr/cookiecutter) template for a
     - Running tests with `pytest`
     - Building documentation with `mkdocs`
     - Publishing to PyPI using `poetry`
+* Tooling to launch an IPython session with automatic reloading enabled
 
 If you are instead looking for a [Python application](https://caremad.io/posts/2013/07/setup-vs-requirement/) template, check out one of the sibling projects:
 
