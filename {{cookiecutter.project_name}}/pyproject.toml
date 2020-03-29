@@ -32,7 +32,7 @@ python = "^{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_ver
 
 # TODO: Remove these and add your library's requirements
 click = "^6.0"
-minilog = "^1.4"
+minilog = "^1.5"
 
 [tool.poetry.dev-dependencies]
 
@@ -49,7 +49,7 @@ pylint = "^2.0"
 pytest = "^5.3.2"
 pytest-cov = "*"
 pytest-describe = "*"
-pytest-expecter = "*"
+pytest-expecter = "^2.1"
 pytest-random = "*"
 freezegun = "*"
 
@@ -57,8 +57,8 @@ freezegun = "*"
 coveragespace = "^3.1.1"
 
 # Documentation
-mkdocs = "^1.0"
-pygments = "*"
+mkdocs = "~1.0"
+pygments = "^2.5.2"
 
 # Tooling
 pyinstaller = "*"
