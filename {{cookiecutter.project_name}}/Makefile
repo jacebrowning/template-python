@@ -81,8 +81,8 @@ RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/v/cache/lastfailed
 
 PYTEST_OPTIONS := --random --random-seed=$(RANDOM_SEED)
-ifdef DISABLE_COVERAGE
-PYTEST_OPTIONS += --no-cov --disable-warnings
+ifndef DISABLE_COVERAGE
+PYTEST_OPTIONS += --cov=$(PACKAGE)
 endif
 PYTEST_RERUN_OPTIONS := --last-failed --exitfirst
 
