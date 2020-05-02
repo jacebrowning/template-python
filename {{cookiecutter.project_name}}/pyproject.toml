@@ -37,8 +37,8 @@ minilog = "^1.5"
 [tool.poetry.dev-dependencies]
 
 # Formatters
-black = "=19.10b0"
-isort = "=4.3.21"
+black = "19.10b0"
+isort = "4.3.21"
 
 # Linters
 mypy = "*"
