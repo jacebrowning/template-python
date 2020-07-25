@@ -20,7 +20,7 @@ script:
 
 after_script: >
   echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST;
-  if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
+  if [[ $TRAVIS_BRANCH == 'main' && $TRAVIS_PULL_REQUEST == 'false' ]]; then
 
     # Configure Git with Travis CI information
     git config --global user.email "travis@travis-ci.org" ;
@@ -38,7 +38,7 @@ after_script: >
     cd TemplateDemo ;
     git add --all ;
     git commit -m "Deploy Travis CI build $TRAVIS_BUILD_NUMBER to GitHub" ;
-    git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo master ;
+    git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo main ;
 
   fi
 

@@ -2,13 +2,13 @@
 
 This is a [cookiecutter](https://github.com/audreyr/cookiecutter) template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make and Graphviz to fully automate all development and deployment tasks. Check out the live demo: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
 
-[![Build Status](https://img.shields.io/travis/jacebrowning/template-python/master.svg)](https://travis-ci.org/jacebrowning/template-python)
+[![Build Status](https://img.shields.io/travis/jacebrowning/template-python/main.svg)](https://travis-ci.org/jacebrowning/template-python)
 
 ## Features
 
 * Preconfigured setup for [Travis CI](https://travis-ci.org/), [Coveralls](https://coveralls.io/), and [Scrutinizer](https://scrutinizer-ci.com/)
 * `pyproject.toml` for managing dependencies and package metadata
-* `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/master/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
+* `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/main/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
     - Installing dependencies with `poetry`
     - Automatic formatting with `isort` and `black`
     - Static analysis with `pylint`

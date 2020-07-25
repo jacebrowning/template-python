@@ -3,7 +3,7 @@
     "email": "you@yourdomain.com",
     "github_username": "jacebrowning",
     "github_repo": "template-python-demo",
-    "default_branch": "master",
+    "default_branch": "main",
     "project_name": "TemplateDemo",
     "package_name": "demo",
     "project_short_description": "Sample project generated from Jace's Python Template.",
