@@ -2,7 +2,7 @@
 
 This is a [cookiecutter](https://github.com/audreyr/cookiecutter) template for a typical Python library following modern packaging conventions. It utilizes popular libraries alongside Make and Graphviz to fully automate all development and deployment tasks. Check out the live demo: [jacebrowning/template-python-demo](https://github.com/jacebrowning/template-python-demo)
 
-[![Build Status](https://img.shields.io/travis/jacebrowning/template-python/main.svg)](https://travis-ci.org/jacebrowning/template-python)
+[![Build Status](https://img.shields.io/travis/jacebrowning/template-python.svg)](https://travis-ci.org/jacebrowning/template-python)
 
 ## Features
 
