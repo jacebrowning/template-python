@@ -9,7 +9,7 @@ CONFIG := $(wildcard *.py)
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
 # Virtual environment paths
-VIRTUAL_ENV ?= .venv
+VIRTUAL_ENV ?= $(shell poetry env info -p || echo .venv)
 
 # MAIN TASKS ##################################################################
 
