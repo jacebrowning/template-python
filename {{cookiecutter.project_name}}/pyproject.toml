@@ -31,19 +31,19 @@ classifiers = [
 python = "^{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
 
 # TODO: Remove these and add your library's requirements
-click = "^6.0"
+click = "^7.0"
 minilog = "^1.5"
 
 [tool.poetry.dev-dependencies]
 
 # Formatters
-black = "19.10b0"
-isort = "4.3.21"
+black = "=20.8b1"
+isort = "=5.5.1"
 
 # Linters
 mypy = "*"
 pydocstyle = "*"
-pylint = { git = "https://github.com/PyCQA/pylint", rev = "e169e83e52fedc6624235d45e8e8737294a0fedf" } # use 2.4.5 when released
+pylint = "~2.6.0"
 
 # Testing
 pytest = "^5.3.2"
@@ -73,7 +73,7 @@ ipython = "^7.12.0"
 
 [tool.black]
 
-target-version = ["py36", "py37"]
+target-version = ["py36", "py37", "py38"]
 skip-string-normalization = true
 
 [build-system]
