@@ -3,14 +3,14 @@ GENERATED_PROJECT := TemplateDemo
 
 ENV := .venv
 
+.PHONY: all
+all: install
+
 .PHONY: doctor
 doctor:  ## Confirm system dependencies are available
 	{{cookiecutter.project_name}}/bin/verchew
 
 # MAIN #########################################################################
-
-.PHONY: all
-all: install
 
 .PHONY: ci
 ci: build
@@ -26,7 +26,7 @@ watch: install clean
 
 .PHONY: install
 install: $(ENV)
-$(ENV): pyproject.toml poetry.lock
+$(ENV): poetry.lock
 	@ poetry config virtualenvs.in-project true
 ifdef CI
 	poetry install --no-dev
@@ -34,6 +34,12 @@ else
 	poetry install
 endif
 	@ touch $@
+
+ifndef CI
+poetry.lock: pyproject.toml
+	poetry lock
+	@ touch $@
+endif
 
 # BUILD ########################################################################
 
