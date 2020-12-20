@@ -7,9 +7,9 @@ authors = ["Jace Browning <jacebrowning@gmail.com>"]
 
 [tool.poetry.dependencies]
 
-python = "^3"
+python = "^3.8"
 
-cookiecutter = "*"
+cookiecutter = "^1.7"
 
 [tool.poetry.dev-dependencies]
 
