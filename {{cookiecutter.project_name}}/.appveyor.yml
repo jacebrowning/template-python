@@ -15,7 +15,7 @@ install:
   - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%;%PATH%
   - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%\Scripts;%PATH%
   # Install system dependencies
-  - curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+  - curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
   - set PATH=%USERPROFILE%\.poetry\bin;%PATH%
   - make doctor
   # Install project dependencies
