@@ -14,8 +14,6 @@ doctor:  ## Confirm system dependencies are available
 
 .PHONY: ci
 ci: build
-	make doctor -C $(GENERATED_PROJECT)
-	make install -C $(GENERATED_PROJECT)
 	make ci -C $(GENERATED_PROJECT) CI=true
 
 .PHONY: watch
