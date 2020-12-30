@@ -36,6 +36,7 @@ DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetr
 install: $(DEPENDENCIES) .cache
 
 $(DEPENDENCIES): poetry.lock
+	@ rm -rf $(VIRTUAL_ENV)/.poetry-*
 	@ poetry config virtualenvs.in-project true
 	poetry install
 	@ touch $@
