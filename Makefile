@@ -46,7 +46,9 @@ build: install $(GENERATED_PROJECT)
 $(GENERATED_PROJECT): $(SOURCE_FILES)
 	cat cookiecutter.json
 	poetry run cookiecutter . --no-input --overwrite-if-exists
-	cd $(GENERATED_PROJECT) && poetry lock
+	mkdir -p $(GENERATED_PROJECT)/.git
+	echo '[remote "origin"]\nurl = https://github.com/jacebrowning/template-python-demo' > $(GENERATED_PROJECT)/.git/config
+	cd $(GENERATED_PROJECT) && poetry lock --no-update
 	@ touch $(GENERATED_PROJECT)
 
 # CLEANUP ######################################################################
