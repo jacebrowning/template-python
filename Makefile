@@ -14,7 +14,7 @@ doctor:  ## Confirm system dependencies are available
 
 .PHONY: ci
 ci: build
-	make ci -C $(GENERATED_PROJECT) CI=true
+	make ci -C $(GENERATED_PROJECT)
 
 .PHONY: watch
 watch: install clean
