@@ -1,2 +1,3 @@
 * text=auto
 CHANGELOG.md merge=union
+poetry.lock merge=binary
