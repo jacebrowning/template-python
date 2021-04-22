@@ -78,7 +78,7 @@ $ make run
 Launch an IPython session:
 
 ```text
-$ make ipython
+$ make shell
 ```
 
 # Release Tasks
