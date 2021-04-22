@@ -13,12 +13,12 @@ ci: format check test mkdocs ## Run all tasks that determine CI status
 watch: install .clean-test ## Continuously run all CI tasks when files chanage
 	poetry run sniffer
 
-.PHONY: run ## Start the program
-run: install
+.PHONY: run
+run: install ## Start the program
 	poetry run python $(PACKAGE)/__main__.py
 
-.PHONY: shell ## Launch an IPython session
-shell: install
+.PHONY: shell
+shell: install ## Launch an IPython session
 	poetry run ipython --ipython-dir=notebooks
 
 # SYSTEM DEPENDENCIES #########################################################
