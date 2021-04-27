@@ -10,6 +10,8 @@ jobs:
       matrix:
         python-version: [{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}]
 
+{%- raw %}
+
     steps:
     - uses: actions/checkout@v2
 
@@ -41,3 +43,5 @@ jobs:
       uses: codecov/codecov-action@v1
       with:
         fail_ci_if_error: true
+
+{%- endraw %}
