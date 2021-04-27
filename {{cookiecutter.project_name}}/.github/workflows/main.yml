@@ -1,0 +1,47 @@
+name: main
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}]
+
+{%- raw %}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - uses: Gr1N/setup-poetry@v4
+
+    - name: Check dependencies
+      run: make doctor
+
+    - uses: actions/cache@v2
+      with:
+        path: .venv
+        key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+
+    - name: Install dependencies
+      run: make install
+
+    - name: Check code
+      run: make check
+
+    - name: Test code
+      run: make test
+
+    - name: Upload coverage
+      uses: codecov/codecov-action@v1
+      with:
+        fail_ci_if_error: true
+
+{%- endraw %}
