@@ -6,7 +6,7 @@ This is a [cookiecutter](https://github.com/audreyr/cookiecutter) template for a
 
 ## Features
 
-* Preconfigured setup for [Travis CI](https://travis-ci.org/), [Coveralls](https://coveralls.io/), and [Scrutinizer](https://scrutinizer-ci.com/)
+* Preconfigured setup for CI, coverage, and analysis services
 * `pyproject.toml` for managing dependencies and package metadata
 * `Makefile` for automating common [development tasks](https://github.com/jacebrowning/template-python/blob/main/%7B%7Bcookiecutter.project_name%7D%7D/CONTRIBUTING.md):
     - Installing dependencies with `poetry`
