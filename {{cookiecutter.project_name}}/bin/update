@@ -48,7 +48,6 @@ def run():
 
 def copy():
     for filename in [
-        '.appveyor.yml',
         '.coveragerc',
         '.gitattributes',
         '.gitignore',
@@ -57,7 +56,6 @@ def copy():
         '.pydocstyle.ini',
         '.pylint.ini',
         '.scrutinizer.yml',
-        '.travis.yml',
         '.verchew.ini',
         'CONTRIBUTING.md',
         'Makefile',
