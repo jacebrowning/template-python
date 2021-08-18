@@ -10,7 +10,7 @@ all: install
 doctor:  ## Confirm system dependencies are available
 	{{cookiecutter.project_name}}/bin/verchew
 
-# MAIN #########################################################################
+# MAIN ########################################################################
 
 .PHONY: ci
 ci: build
@@ -20,7 +20,7 @@ ci: build
 watch: install clean
 	poetry run sniffer
 
-# DEPENDENCIES #################################################################
+# DEPENDENCIES ################################################################
 
 .PHONY: install
 install: $(ENV)
@@ -39,7 +39,7 @@ poetry.lock: pyproject.toml
 	@ touch $@
 endif
 
-# BUILD ########################################################################
+# BUILD #######################################################################
 
 .PHONY: build
 build: install $(GENERATED_PROJECT)
@@ -53,7 +53,7 @@ endif
 	cd $(GENERATED_PROJECT) && poetry lock --no-update
 	@ touch $(GENERATED_PROJECT)
 
-# CLEANUP ######################################################################
+# CLEANUP #####################################################################
 
 .PHONY: clean
 clean:

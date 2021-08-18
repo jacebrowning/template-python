@@ -41,16 +41,16 @@ black = "=20.8b1"
 isort = "=5.5.1"
 
 # Linters
-mypy = "*"
-pydocstyle = "*"
-pylint = "~2.6.0"
+mypy = "~0.812"
+pydocstyle = "^6.1"
+pylint = "~2.6"
 
 # Testing
-pytest = "^5.3.2"
-pytest-cov = "*"
-pytest-describe = { git = "https://github.com/pytest-dev/pytest-describe", rev = "453aa9045b265e313f356f1492d8991c02a6aea6" } # use 2.0 when released
+pytest = "^6.2"
+pytest-describe = "^2.0"
 pytest-expecter = "^2.1"
 pytest-random = "*"
+pytest-cov = "^2.12"
 freezegun = "*"
 
 # Reports
