@@ -48,7 +48,7 @@ pylint = "~2.6"
 # Testing
 pytest = "^6.2"
 pytest-describe = "^2.0"
-pytest-expecter = "^2.1"
+pytest-expecter = "^2.3"
 pytest-random = "*"
 pytest-cov = "^2.12"
 freezegun = "*"
