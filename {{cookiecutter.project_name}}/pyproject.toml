@@ -31,7 +31,7 @@ classifiers = [
 python = "^{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
 
 # TODO: Remove these and add your library's requirements
-click = "^7.0"
+click = "^8.0"
 minilog = "^2.0"
 
 [tool.poetry.dev-dependencies]
