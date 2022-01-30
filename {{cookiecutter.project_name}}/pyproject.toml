@@ -31,14 +31,14 @@ classifiers = [
 python = "^{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}"
 
 # TODO: Remove these and add your library's requirements
-click = "^8.0"
-minilog = "^2.0"
+click = "*"
+minilog = "*"
 
 [tool.poetry.dev-dependencies]
 
 # Formatters
-black = "~22.1"
-isort = "~5.10"
+black = "^22.1"
+isort = "^5.10"
 
 # Linters
 mypy = "~0.812"
