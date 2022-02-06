@@ -43,7 +43,7 @@ isort = "^5.10"
 # Linters
 mypy = "~0.812"
 pydocstyle = "^6.1"
-pylint = "~2.6"
+pylint = "~2.12.2"
 
 # Testing
 pytest = "^6.2"
