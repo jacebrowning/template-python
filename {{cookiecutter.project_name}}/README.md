@@ -8,8 +8,9 @@ This project was generated with [cookiecutter](https://github.com/audreyr/cookie
 [![Windows Build Status](https://img.shields.io/appveyor/ci/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}.svg?label=windows)](https://ci.appveyor.com/project/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})
 [![Coverage Status](https://img.shields.io/codecov/c/gh/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})](https://codecov.io/gh/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}.svg)](https://scrutinizer-ci.com/g/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})
-[![PyPI Version](https://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)](https://pypi.org/project/{{cookiecutter.project_name}})
 [![PyPI License](https://img.shields.io/pypi/l/{{cookiecutter.project_name}}.svg)](https://pypi.org/project/{{cookiecutter.project_name}})
+[![PyPI Version](https://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)](https://pypi.org/project/{{cookiecutter.project_name}})
+[![PyPI Downloads](https://img.shields.io/pypi/dm/{{cookiecutter.project_name}}.svg?color=orange)](https://pypistats.org/packages/{{cookiecutter.project_name}})
 
 # Setup
 
