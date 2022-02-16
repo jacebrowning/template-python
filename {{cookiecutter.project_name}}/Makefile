@@ -9,8 +9,8 @@ all: install
 .PHONY: ci
 ci: format check test mkdocs ## Run all tasks that determine CI status
 
-.PHONY: watch
-watch: install .clean-test ## Continuously run all CI tasks when files chanage
+.PHONY: dev
+dev: install .clean-test ## Continuously run all CI tasks when files chanage
 	poetry run sniffer
 
 .PHONY: run
@@ -39,6 +39,7 @@ $(DEPENDENCIES): poetry.lock
 	@ rm -rf $(VIRTUAL_ENV)/.poetry-*
 	@ poetry config virtualenvs.in-project true
 	poetry install
+	poetry run mypy --install-types --non-interactive
 	@ touch $@
 
 ifndef CI
@@ -63,14 +64,14 @@ check: install format  ## Run formaters, linters, and static analysis
 ifdef CI
 	git diff --exit-code
 endif
-	poetry run mypy $(PACKAGE) tests --config-file=.mypy.ini
+	poetry run mypy $(PACKAGE) tests
 	poetry run pylint $(PACKAGE) tests --rcfile=.pylint.ini
 	poetry run pydocstyle $(PACKAGE) tests
 
 # TESTS #######################################################################
 
 RANDOM_SEED ?= $(shell date +%s)
-FAILURES := .cache/v/cache/lastfailed
+FAILURES := .cache/pytest/v/cache/lastfailed
 
 PYTEST_OPTIONS := --random --random-seed=$(RANDOM_SEED)
 ifndef DISABLE_COVERAGE

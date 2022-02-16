@@ -16,8 +16,8 @@ doctor:  ## Confirm system dependencies are available
 ci: build
 	make ci -C $(GENERATED_PROJECT)
 
-.PHONY: watch
-watch: install clean
+.PHONY: dev
+dev: install clean
 	poetry run sniffer
 
 # DEPENDENCIES ################################################################
