@@ -44,6 +44,7 @@ isort = "^5.10"
 mypy = "~0.931"
 pydocstyle = "^6.1"
 pylint = "~2.12.2"
+types-setuptools = "*"
 
 # Testing
 pytest = "^6.2"
