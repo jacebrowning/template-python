@@ -39,7 +39,6 @@ $(DEPENDENCIES): poetry.lock
 	@ rm -rf $(VIRTUAL_ENV)/.poetry-*
 	@ poetry config virtualenvs.in-project true
 	poetry install
-	poetry run mypy --install-types --non-interactive
 	@ touch $@
 
 ifndef CI
