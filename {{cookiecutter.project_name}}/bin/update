@@ -51,8 +51,6 @@ def copy():
         '.coveragerc',
         '.gitattributes',
         '.gitignore',
-        '.isort.cfg',
-        '.mypy.ini',
         '.pydocstyle.ini',
         '.pylint.ini',
         '.scrutinizer.yml',
@@ -63,7 +61,6 @@ def copy():
         os.path.join('bin', 'open'),
         os.path.join('bin', 'update'),
         os.path.join('bin', 'verchew'),
-        'pytest.ini',
         'scent.py',
     ]:
         src = os.path.join(TMP, CONFIG['project_name'], filename)
