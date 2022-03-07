@@ -88,7 +88,7 @@ check_untyped_defs = true
 
 cache_dir = ".cache/mypy/"
 
-[tool.pytest]
+[tool.pytest.ini_options]
 
 addopts = """
 --strict-markers
@@ -96,7 +96,6 @@ addopts = """
 -r sxX
 --show-capture=log
 
---cov-report=xml
 --cov-report=html
 --cov-report=term-missing:skip-covered
 --no-cov-on-fail

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+from contextlib import suppress
 import importlib
 import tempfile
 import shutil
@@ -67,7 +68,7 @@ def copy():
         src = os.path.join(TMP, CONFIG['project_name'], filename)
         dst = os.path.join(CWD, filename)
         print("Updating " + filename)
-        with subprocess(FileNotFoundError):
+        with suppress(FileNotFoundError):
             shutil.copy(src, dst)
 
 
