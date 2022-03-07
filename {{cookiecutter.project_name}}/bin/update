@@ -48,6 +48,7 @@ def run():
 
 def copy():
     for filename in [
+        os.path.join('bin', 'update'),
         '.appveyor.yml',
         '.coveragerc',
         '.gitattributes',
@@ -60,7 +61,6 @@ def copy():
         'Makefile',
         os.path.join('bin', 'checksum'),
         os.path.join('bin', 'open'),
-        os.path.join('bin', 'update'),
         os.path.join('bin', 'verchew'),
         'scent.py',
     ]:
