@@ -76,6 +76,9 @@ PYTEST_OPTIONS := --random --random-seed=$(RANDOM_SEED)
 ifndef DISABLE_COVERAGE
 PYTEST_OPTIONS += --cov=$(PACKAGE)
 endif
+ifdef CI
+PYTEST_OPTIONS += --cov-report=xml
+endif
 PYTEST_RERUN_OPTIONS := --last-failed --exitfirst
 
 .PHONY: test
