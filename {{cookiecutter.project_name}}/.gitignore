@@ -34,6 +34,7 @@ Icon*
 /.coverage
 /.coverage.*
 /htmlcov/
+/prof/
 coverage.xml
 
 # Build and release directories
