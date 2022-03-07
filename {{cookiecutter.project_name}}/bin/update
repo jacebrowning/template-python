@@ -48,6 +48,7 @@ def run():
 
 def copy():
     for filename in [
+        '.appveyor.yml',
         '.coveragerc',
         '.gitattributes',
         '.gitignore',
