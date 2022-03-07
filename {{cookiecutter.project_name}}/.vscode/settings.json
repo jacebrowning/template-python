@@ -1,0 +1,41 @@
+{
+    "files.exclude": {
+      ".cache/": true,
+      ".venv/": true,
+      "*.egg-info": true,
+      "pip-wheel-metadata/": true,
+      "**/__pycache__": true,
+      "**/*.pyc": true,
+      "**/.ipynb_checkpoints": true,
+      "**/tmp/": true,
+      "dist/": true,
+      "htmlcov/": true,
+      "notebooks/*.yml": true,
+      "notebooks/files/": true,
+      "notebooks/inventory/": true,
+      "prof/": true,
+      "site/": true,
+      "geckodriver.log": true
+    },
+    "python.defaultInterpreterPath": ".venv/bin/python",
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": ["--rcfile", ".pylint.ini"],
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyArgs": ["--config-file", ".mypy.ini"],
+    "python.linting.pydocstyleEnabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackPath": ".venv/bin/black",
+    "cSpell.words": [
+      "builtins",
+      "codehilite",
+      "dataclasses",
+      "ipython",
+      "mkdocs",
+      "noclasses",
+      "pipx",
+      "ruamel",
+      "verchew"
+    ]
+  }
