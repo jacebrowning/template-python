@@ -121,6 +121,10 @@ MKDOCS_INDEX := site/index.html
 
 .PHONY: docs
 docs: mkdocs uml ## Generate documentation and UML
+ifndef CI
+	@ eval "sleep 3; bin/open http://127.0.0.1:8000" &
+	poetry run mkdocs serve
+endif
 
 .PHONY: mkdocs
 mkdocs: install $(MKDOCS_INDEX)
@@ -142,11 +146,6 @@ docs/*.png: $(MODULES)
 	poetry run pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
-
-.PHONY: mkdocs-serve
-mkdocs-serve: mkdocs
-	eval "sleep 3; bin/open http://127.0.0.1:8000" &
-	poetry run mkdocs serve
 
 # BUILD #######################################################################
 

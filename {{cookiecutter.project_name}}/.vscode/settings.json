@@ -29,6 +29,8 @@
     "python.formatting.blackPath": ".venv/bin/black",
     "cSpell.words": [
       "builtins",
+      "cygstart",
+      "cygwin",
       "codehilite",
       "dataclasses",
       "ipython",
