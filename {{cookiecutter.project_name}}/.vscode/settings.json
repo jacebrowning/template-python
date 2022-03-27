@@ -29,15 +29,19 @@
     "python.formatting.blackPath": ".venv/bin/black",
     "cSpell.words": [
       "builtins",
+      "codecov",
+      "codehilite",
       "cygstart",
       "cygwin",
-      "codehilite",
       "dataclasses",
+      "Graphviz",
       "ipython",
       "mkdocs",
       "noclasses",
       "pipx",
+      "pyenv",
       "ruamel",
+      "venv",
       "verchew"
     ]
   }

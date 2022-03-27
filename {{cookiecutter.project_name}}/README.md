@@ -12,13 +12,13 @@ This project was generated with [cookiecutter](https://github.com/audreyr/cookie
 [![PyPI Version](https://img.shields.io/pypi/v/{{cookiecutter.project_name}}.svg)](https://pypi.org/project/{{cookiecutter.project_name}})
 [![PyPI Downloads](https://img.shields.io/pypi/dm/{{cookiecutter.project_name}}.svg?color=orange)](https://pypistats.org/packages/{{cookiecutter.project_name}})
 
-# Setup
+## Setup
 
-## Requirements
+### Requirements
 
 * Python {{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}+
 
-## Installation
+### Installation
 
 Install it directly into an activated virtual environment:
 
@@ -32,7 +32,7 @@ or add it to your [Poetry](https://poetry.eustace.io/) project:
 $ poetry add {{cookiecutter.project_name}}
 ```
 
-# Usage
+## Usage
 
 After installation, the package can imported:
 
