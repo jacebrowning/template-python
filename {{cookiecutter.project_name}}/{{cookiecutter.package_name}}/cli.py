@@ -8,7 +8,7 @@ from . import utils
 
 @click.command()
 @click.argument('feet')
-def main(feet=None):
+def main(feet: str):
     log.init()
 
     meters = utils.feet_to_meters(feet)
@@ -18,4 +18,4 @@ def main(feet=None):
 
 
 if __name__ == '__main__':  # pragma: no cover
-    main()
+    main()  # pylint: disable=no-value-for-parameter

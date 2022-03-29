@@ -3,8 +3,8 @@
 """Package entry point."""
 
 
-from {{cookiecutter.package_name}}.gui import main
+from {{cookiecutter.package_name}}.cli import main
 
 
 if __name__ == '__main__':  # pragma: no cover
-    main()
+    main()  # pylint: disable=no-value-for-parameter
