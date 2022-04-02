@@ -139,6 +139,7 @@ $(MKDOCS_INDEX): docs/requirements.txt mkdocs.yml docs/*.md
 docs/requirements.txt: poetry.lock
 	@ poetry export --dev --without-hashes | grep mkdocs > $@
 	@ poetry export --dev --without-hashes | grep pygments >> $@
+	@ poetry export --dev --without-hashes | grep jinja2 >> $@
 
 .PHONY: uml
 uml: install docs/*.png
