@@ -55,7 +55,7 @@ pytest-cov = "^2.12"
 freezegun = "*"
 
 # Reports
-coveragespace = "^4.0"
+coveragespace = "^5.0"
 
 # Documentation
 mkdocs = "~1.3"
