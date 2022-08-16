@@ -1,3 +1,4 @@
+PROJECT := {{cookiecutter.project_name}}
 PACKAGE := {{cookiecutter.package_name}}
 MODULES := $(wildcard $(PACKAGE)/*.py)
 
@@ -174,7 +175,7 @@ $(PACKAGE).spec:
 upload: dist ## Upload the current version to PyPI
 	git diff --name-only --exit-code
 	poetry publish
-	bin/open https://pypi.org/project/$(PACKAGE)
+	bin/open https://pypi.org/project/$(PROJECT)
 
 # CLEANUP #####################################################################
 

@@ -1,15 +1,15 @@
 [tool.poetry]
 
-name = "{{cookiecutter.package_name}}"
+name = "{{cookiecutter.project_name}}"
 version = "0.0"
 description = "{{cookiecutter.project_short_description}}"
 
-license = "MIT"
+packages = [{ include = "{{cookiecutter.package_name}}" }]
 
+license = "MIT"
 authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
 
 readme = "README.md"
-
 homepage = "https://pypi.org/project/{{cookiecutter.package_name}}"
 documentation = "https://{{cookiecutter.package_name}}.readthedocs.io"
 repository = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}"
