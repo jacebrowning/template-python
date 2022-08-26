@@ -10,8 +10,8 @@ license = "MIT"
 authors = ["{{cookiecutter.full_name}} <{{cookiecutter.email}}>"]
 
 readme = "README.md"
-homepage = "https://pypi.org/project/{{cookiecutter.package_name}}"
-documentation = "https://{{cookiecutter.package_name}}.readthedocs.io"
+homepage = "https://pypi.org/project/{{cookiecutter.project_name}}"
+documentation = "https://{{cookiecutter.project_name}}.readthedocs.io"
 repository = "https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}"
 
 keywords = [
