@@ -18,7 +18,7 @@ install:
   - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%\Scripts;%PATH%
   # Install system dependencies
   - curl -sSL https://install.python-poetry.org | python -
-  - set PATH=C:\Users\appveyor\AppData\Roaming\Python\Scripts;%PATH%
+  - set PATH=%USERPROFILE%\AppData\Roaming\Python\Scripts;%PATH%
   - make doctor
   # Install project dependencies
   - make install
