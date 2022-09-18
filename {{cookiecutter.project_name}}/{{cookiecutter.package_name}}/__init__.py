@@ -1,9 +1,9 @@
-from pkg_resources import get_distribution, DistributionNotFound
+from importlib.metadata import PackageNotFoundError, version
 
 try:
-    __version__ = get_distribution('{{cookiecutter.project_name}}').version
-except DistributionNotFound:
+    __version__ = version('{{cookiecutter.project_name}}')
+except PackageNotFoundError:
     __version__ = '(local)'
 
-del DistributionNotFound
-del get_distribution
+del PackageNotFoundError
+del version
