@@ -47,15 +47,15 @@ pylint = "~2.12.2"
 types-setuptools = "*"
 
 # Testing
-pytest = "^6.2"
+pytest = "^7.1"
 pytest-describe = "^2.0"
-pytest-expecter = "^2.3"
+pytest-expecter = "^3.0"
 pytest-random = "*"
-pytest-cov = "^2.12"
+pytest-cov = "^3.0"
 freezegun = "*"
 
 # Reports
-coveragespace = "^5.0"
+coveragespace = "^6.0"
 
 # Documentation
 mkdocs = "~1.3"
