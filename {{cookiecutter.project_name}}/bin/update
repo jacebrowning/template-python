@@ -49,6 +49,10 @@ def run():
 
 def copy():
     for filename in [
+        os.path.join('bin', 'update'),
+        os.path.join('bin', 'checksum'),
+        os.path.join('bin', 'open'),
+        os.path.join('bin', 'verchew'),
         '.appveyor.yml',
         '.coveragerc',
         '.gitattributes',
@@ -59,10 +63,6 @@ def copy():
         '.verchew.ini',
         'CONTRIBUTING.md',
         'Makefile',
-        os.path.join('bin', 'checksum'),
-        os.path.join('bin', 'open'),
-        os.path.join('bin', 'update'),
-        os.path.join('bin', 'verchew'),
         'scent.py',
     ]:
         src = os.path.join(TMP, CONFIG['project_name'], filename)
