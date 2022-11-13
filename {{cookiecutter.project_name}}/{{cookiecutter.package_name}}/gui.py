@@ -1,5 +1,7 @@
 """A sample GUI."""
 
+# pylint: disable=wildcard-import,unused-wildcard-import
+
 from tkinter import *
 from tkinter.ttk import *  # type: ignore
 

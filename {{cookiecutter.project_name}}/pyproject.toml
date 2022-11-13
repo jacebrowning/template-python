@@ -38,13 +38,14 @@ minilog = "*"
 
 # Formatters
 black = "^22.1"
+tomli = "*" # missing 'black' dependency
 isort = "^5.10"
 
 # Linters
-mypy = "~0.931"
+mypy = "~0.961"
 pydocstyle = "^6.1"
-pylint = "~2.12.2"
-types-setuptools = "*"
+pylint = "~2.15"
+wrapt = "*" # missing 'pylint' dependency
 
 # Testing
 pytest = "^7.1"
