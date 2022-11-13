@@ -4,7 +4,7 @@
 
 This project was generated with [cookiecutter](https://github.com/audreyr/cookiecutter) using [jacebrowning/template-python](https://github.com/jacebrowning/template-python).
 
-[![Unix Build Status](https://img.shields.io/github/workflow/status/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}/main)](https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}/actions)
+[![Unix Build Status](https://img.shields.io/github/workflow/status/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}/main?label=linux)](https://github.com/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}/actions)
 [![Windows Build Status](https://img.shields.io/appveyor/ci/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}.svg?label=windows)](https://ci.appveyor.com/project/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})
 [![Coverage Status](https://img.shields.io/codecov/c/gh/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})](https://codecov.io/gh/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}}.svg)](https://scrutinizer-ci.com/g/{{cookiecutter.github_username}}/{{cookiecutter.github_repo}})
