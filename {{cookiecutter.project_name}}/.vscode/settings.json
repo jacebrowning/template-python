@@ -15,7 +15,8 @@
       "notebooks/inventory/": true,
       "prof/": true,
       "site/": true,
-      "geckodriver.log": true
+      "geckodriver.log": true,
+      "targets.log": true
     },
     "python.defaultInterpreterPath": ".venv/bin/python",
     "editor.formatOnSave": true,
