@@ -16,7 +16,8 @@
       "prof/": true,
       "site/": true,
       "geckodriver.log": true,
-      "targets.log": true
+      "targets.log": true,
+      "bin/verchew": true
     },
     "python.defaultInterpreterPath": ".venv/bin/python",
     "editor.formatOnSave": true,
