@@ -8,5 +8,6 @@
     "package_name": "demo",
     "project_short_description": "Sample project generated from Jace's Python Template.",
     "python_major_version": 3,
-    "python_minor_version": 11
+    "python_minor_version": 11,
+    "license": ["MIT", "Apache-2.0", "AGPL-3.0-only", "Unlicense"]
 }
