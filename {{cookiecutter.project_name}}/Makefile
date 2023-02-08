@@ -163,7 +163,6 @@ $(DIST_FILES): $(MODULES) pyproject.toml
 .PHONY: exe
 exe: install $(EXE_FILES)
 $(EXE_FILES): $(MODULES) $(PACKAGE).spec
-	# For framework/shared support: https://github.com/yyuu/pyenv/wiki
 	poetry run pyinstaller $(PACKAGE).spec --noconfirm --clean
 
 $(PACKAGE).spec:

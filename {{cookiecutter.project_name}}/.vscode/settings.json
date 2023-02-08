@@ -30,6 +30,7 @@
     "python.formatting.provider": "black",
     "python.formatting.blackPath": ".venv/bin/black",
     "cSpell.words": [
+      "asdf",
       "builtins",
       "codecov",
       "codehilite",

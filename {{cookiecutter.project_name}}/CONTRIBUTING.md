@@ -8,7 +8,7 @@
     * macOS: `$ xcode-select --install`
     * Linux: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
     * Windows: [https://mingw.org/download/installer](https://mingw.org/download/installer)
-* Python: `$ pyenv install`
+* Python: `$ asdf install`
 * Poetry: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
 * Graphviz:
     * macOS: `$ brew install graphviz`
