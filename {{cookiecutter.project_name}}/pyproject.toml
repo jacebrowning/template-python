@@ -42,7 +42,7 @@ tomli = "*" # missing 'black' dependency
 isort = "^5.10"
 
 # Linters
-mypy = "~0.990"
+mypy = "^1.0"
 pydocstyle = "^6.1"
 pylint = "~2.15"
 wrapt = "*" # missing 'pylint' dependency
