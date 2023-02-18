@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}]
+        python-version: ['{{cookiecutter.python_major_version}}.{{cookiecutter.python_minor_version}}']
 
 {%- raw %}
 
