@@ -5,11 +5,11 @@
 ### Requirements
 
 * Make:
-    * macOS: `$ xcode-select --install`
-    * Linux: [https://www.gnu.org/software/make](https://www.gnu.org/software/make)
-    * Windows: [https://mingw.org/download/installer](https://mingw.org/download/installer)
-* Python: `$ asdf install`
-* Poetry: [https://poetry.eustace.io/docs/#installation](https://poetry.eustace.io/docs/#installation)
+  - macOS: `$ xcode-select --install`
+  - Linux: [https://www.gnu.org](https://www.gnu.org/software/make)
+  - Windows: `$ choco install make` [https://chocolatey.org](https://chocolatey.org/install)
+* Python: `$ asdf install` (https://asdf-vm.com)[https://asdf-vm.com/guide/getting-started.html]
+* Poetry: [https://python-poetry.org](https://python-poetry.org/docs/#installation)
 * Graphviz:
     * macOS: `$ brew install graphviz`
     * Linux: [https://graphviz.org/download](https://graphviz.org/download/)
