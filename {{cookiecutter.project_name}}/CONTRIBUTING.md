@@ -61,12 +61,12 @@ $ make dev
 
 > In order to have OS X notifications, `brew install terminal-notifier`.
 
-## Continuous Integration
+### Continuous Integration
 
 The CI server will report overall build status:
 
 ```text
-$ make ci
+$ make all
 ```
 
 ## Demo Tasks
