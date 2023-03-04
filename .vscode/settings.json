@@ -1,0 +1,9 @@
+{
+    "cSpell.words": [
+        "cookiecutter",
+        "coveragerc",
+        "endraw",
+        "verchew"
+    ],
+    "python.formatting.provider": "black"
+}
