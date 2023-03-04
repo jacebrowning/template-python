@@ -3,24 +3,21 @@ GENERATED_PROJECT := TemplateDemo
 
 ENV := .venv
 
-.PHONY: all
-all: install
-
-.PHONY: doctor
-doctor:  ## Confirm system dependencies are available
-	{{cookiecutter.project_name}}/bin/verchew
-
 # MAIN ########################################################################
 
-.PHONY: ci
-ci: build
-	make ci -C $(GENERATED_PROJECT)
+.PHONY: all
+all: build
+	make all -C $(GENERATED_PROJECT)
 
 .PHONY: dev
 dev: install clean
 	poetry run sniffer
 
 # DEPENDENCIES ################################################################
+
+.PHONY: doctor
+doctor:
+	{{cookiecutter.project_name}}/bin/verchew
 
 .PHONY: install
 install: $(ENV)
@@ -62,3 +59,5 @@ clean:
 .PHONY: clean-all
 clean-all: clean
 	rm -rf $(ENV)
+
+.DEFAULT_GOAL := install

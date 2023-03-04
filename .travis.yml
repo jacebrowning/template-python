@@ -15,7 +15,7 @@ install:
   - make install
 
 script:
-  - make ci
+  - make all
 
 after_script: >
   echo $TRAVIS_BRANCH; echo $TRAVIS_PULL_REQUEST;

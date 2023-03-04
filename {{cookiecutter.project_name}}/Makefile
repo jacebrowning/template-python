@@ -5,22 +5,11 @@ MODULES := $(wildcard $(PACKAGE)/*.py)
 # MAIN TASKS ##################################################################
 
 .PHONY: all
-all: install
-
-.PHONY: ci
-ci: format check test mkdocs ## Run all tasks that determine CI status
+all: format check test mkdocs ## Run all tasks that determine CI status
 
 .PHONY: dev
-dev: install .clean-test ## Continuously run all CI tasks when files chanage
+dev: install .clean-test ## Continuously run CI tasks when files chanage
 	poetry run sniffer
-
-.PHONY: run
-run: install ## Start the program
-	poetry run python $(PACKAGE)/__main__.py
-
-.PHONY: shell
-shell: install ## Launch an IPython session
-	poetry run ipython --ipython-dir=notebooks
 
 # SYSTEM DEPENDENCIES #########################################################
 
@@ -34,7 +23,7 @@ VIRTUAL_ENV ?= .venv
 DEPENDENCIES := $(VIRTUAL_ENV)/.poetry-$(shell bin/checksum pyproject.toml poetry.lock)
 
 .PHONY: install
-install: $(DEPENDENCIES) .cache
+install: $(DEPENDENCIES) .cache ## Install project dependencies
 
 $(DEPENDENCIES): poetry.lock
 	@ rm -rf $(VIRTUAL_ENV)/.poetry-*
@@ -51,24 +40,7 @@ endif
 .cache:
 	@ mkdir -p .cache
 
-# CHECKS ######################################################################
-
-.PHONY: format
-format: install
-	poetry run isort $(PACKAGE) tests notebooks
-	poetry run black $(PACKAGE) tests notebooks
-	@ echo
-
-.PHONY: check
-check: install format  ## Run formaters, linters, and static analysis
-ifdef CI
-	git diff --exit-code
-endif
-	poetry run mypy $(PACKAGE) tests
-	poetry run pylint $(PACKAGE) tests --rcfile=.pylint.ini
-	poetry run pydocstyle $(PACKAGE) tests
-
-# TESTS #######################################################################
+# TEST ########################################################################
 
 RANDOM_SEED ?= $(shell date +%s)
 FAILURES := .cache/pytest/v/cache/lastfailed
@@ -116,6 +88,23 @@ endif
 read-coverage:
 	bin/open htmlcov/index.html
 
+# CHECK #######################################################################
+
+.PHONY: format
+format: install
+	poetry run isort $(PACKAGE) tests notebooks
+	poetry run black $(PACKAGE) tests notebooks
+	@ echo
+
+.PHONY: check
+check: install format  ## Run formaters, linters, and static analysis
+ifdef CI
+	git diff --exit-code
+endif
+	poetry run mypy $(PACKAGE) tests
+	poetry run pylint $(PACKAGE) tests --rcfile=.pylint.ini
+	poetry run pydocstyle $(PACKAGE) tests
+
 # DOCUMENTATION ###############################################################
 
 MKDOCS_INDEX := site/index.html
@@ -148,6 +137,16 @@ docs/*.png: $(MODULES)
 	poetry run pyreverse $(PACKAGE) -p $(PACKAGE) -a 1 -f ALL -o png --ignore tests
 	- mv -f classes_$(PACKAGE).png docs/classes.png
 	- mv -f packages_$(PACKAGE).png docs/packages.png
+
+# DEMO ########################################################################
+
+.PHONY: run
+run: install ## Start the program
+	poetry run python $(PACKAGE)/__main__.py
+
+.PHONY: shell
+shell: install ## Launch an IPython session
+	poetry run ipython --ipython-dir=notebooks
 
 # BUILD #######################################################################
 
@@ -205,7 +204,7 @@ clean-all: clean
 # HELP ########################################################################
 
 .PHONY: help
-help: all
+help: install
 	@ grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 .DEFAULT_GOAL := help
