@@ -5,7 +5,7 @@ MODULES := $(wildcard $(PACKAGE)/*.py)
 # MAIN TASKS ##################################################################
 
 .PHONY: all
-all: format check test mkdocs ## Run all tasks that determine CI status
+all: doctor format check test mkdocs ## Run all tasks that determine CI status
 
 .PHONY: dev
 dev: install .clean-test ## Continuously run CI tasks when files chanage
