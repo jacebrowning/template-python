@@ -3,6 +3,7 @@
         "cookiecutter",
         "coveragerc",
         "endraw",
+        "pync",
         "verchew"
     ],
     "python.formatting.provider": "black"
