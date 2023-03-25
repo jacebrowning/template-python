@@ -13,8 +13,14 @@ dev: install .clean-test ## Continuously run CI tasks when files chanage
 
 # SYSTEM DEPENDENCIES #########################################################
 
+.PHONY: boostrap
+boostrap: ## Attempt to install system dependencies
+	asdf plugin add python || asdf plugin update python
+	asdf plugin add poetry https://github.com/asdf-community/asdf-poetry.git || asdf plugin update poetry
+	asdf install
+
 .PHONY: doctor
-doctor:  ## Confirm system dependencies are available
+doctor: ## Confirm system dependencies are available
 	bin/verchew
 
 # PROJECT DEPENDENCIES ########################################################
@@ -97,7 +103,7 @@ format: install
 	@ echo
 
 .PHONY: check
-check: install format  ## Run formaters, linters, and static analysis
+check: install format ## Run formaters, linters, and static analysis
 ifdef CI
 	git diff --exit-code
 endif

@@ -15,6 +15,12 @@ dev: install clean
 
 # DEPENDENCIES ################################################################
 
+.PHONY: boostrap
+boostrap:
+	asdf plugin add python || asdf plugin update python
+	asdf plugin add poetry https://github.com/asdf-community/asdf-poetry.git || asdf plugin update poetry
+	asdf install
+
 .PHONY: doctor
 doctor:
 	{{cookiecutter.project_name}}/bin/verchew
