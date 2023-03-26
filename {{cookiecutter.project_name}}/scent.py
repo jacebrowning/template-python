@@ -21,29 +21,29 @@ class Options:
     rerun_args = None
 
     targets = [
-        (('make', 'test-unit', 'DISABLE_COVERAGE=true'), "Unit Tests", True),
-        (('make', 'test-all'), "Integration Tests", False),
-        (('make', 'check'), "Static Analysis", True),
-        (('make', 'docs', 'CI=true'), None, True),
+        (("make", "test-unit", "DISABLE_COVERAGE=true"), "Unit Tests", True),
+        (("make", "test-all"), "Integration Tests", False),
+        (("make", "check"), "Static Analysis", True),
+        (("make", "docs", "CI=true"), None, True),
     ]
 
 
-@select_runnable('run_targets')
+@select_runnable("run_targets")
 @file_validator
 def python_files(filename):
-    return filename.endswith('.py') and '.py.' not in filename
+    return filename.endswith(".py") and ".py." not in filename
 
 
-@select_runnable('run_targets')
+@select_runnable("run_targets")
 @file_validator
 def html_files(filename):
-    return filename.split('.')[-1] in ['html', 'css', 'js']
+    return filename.split(".")[-1] in ["html", "css", "js"]
 
 
 @runnable
 def run_targets(*args):
     """Run targets for Python."""
-    Options.show_coverage = 'coverage' in args
+    Options.show_coverage = "coverage" in args
 
     count = 0
     for count, (command, title, retry) in enumerate(Options.targets, start=1):
@@ -73,7 +73,7 @@ def call(command, title, retry):
             return False
 
     print("")
-    print("$ %s" % ' '.join(command))
+    print("$ %s" % " ".join(command))
     failure = subprocess.call(command)
 
     if failure and retry:
@@ -91,6 +91,6 @@ def show_notification(message, title):
 def show_coverage():
     """Launch the coverage report."""
     if Options.show_coverage:
-        subprocess.call(['make', 'read-coverage'])
+        subprocess.call(["make", "read-coverage"])
 
     Options.show_coverage = False
