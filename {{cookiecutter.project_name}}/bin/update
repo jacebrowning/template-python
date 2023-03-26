@@ -61,6 +61,7 @@ def copy():
         ".pydocstyle.ini",
         ".pylint.ini",
         ".scrutinizer.yml",
+        ".tool-versions",
         ".verchew.ini",
         "CONTRIBUTING.md",
         "Makefile",
