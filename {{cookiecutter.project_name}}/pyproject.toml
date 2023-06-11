@@ -48,11 +48,11 @@ pylint = "~2.15"
 wrapt = "*" # missing 'pylint' dependency
 
 # Testing
-pytest = "^7.1"
+pytest = "^7.3"
 pytest-describe = "^2.0"
 pytest-expecter = "^3.0"
 pytest-random = "*"
-pytest-cov = "^3.0"
+pytest-cov = "^4.1"
 freezegun = "*"
 
 # Reports
