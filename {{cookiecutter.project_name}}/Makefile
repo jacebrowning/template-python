@@ -33,6 +33,7 @@ install: $(DEPENDENCIES) .cache ## Install project dependencies
 
 $(DEPENDENCIES): poetry.lock
 	@ rm -rf $(VIRTUAL_ENV)/.poetry-*
+	@ rm -rf ~/Library/Preferences/pypoetry
 	@ poetry config virtualenvs.in-project true
 	poetry install
 	@ touch $@
