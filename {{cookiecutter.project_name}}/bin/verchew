@@ -37,7 +37,6 @@ import sys
 from collections import OrderedDict
 from subprocess import PIPE, STDOUT, Popen
 
-
 PY2 = sys.version_info[0] == 2
 
 if PY2:
@@ -47,7 +46,7 @@ else:
     import configparser
     from urllib.request import urlretrieve
 
-__version__ = '3.4'
+__version__ = "3.4.1"
 
 SCRIPT_URL = (
     "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/script.py"
@@ -56,7 +55,7 @@ WRAPPER_URL = (
     "https://raw.githubusercontent.com/jacebrowning/verchew/main/verchew/wrapper.sh"
 )
 
-CONFIG_FILENAMES = ['verchew.ini', '.verchew.ini', '.verchewrc', '.verchew']
+CONFIG_FILENAMES = ["verchew.ini", ".verchew.ini", ".verchewrc", ".verchew"]
 
 SAMPLE_CONFIG = """
 [Python]
@@ -111,8 +110,8 @@ def main():
     if args.quiet:
         QUIET = True
 
-    log.debug("PWD: %s", os.getenv('PWD'))
-    log.debug("PATH: %s", os.getenv('PATH'))
+    log.debug("PWD: %s", os.getenv("PWD"))
+    log.debug("PATH: %s", os.getenv("PATH"))
 
     if args.vendor:
         vendor_script(SCRIPT_URL, args.vendor)
@@ -127,36 +126,34 @@ def main():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="System dependency version checker.",)
+    parser = argparse.ArgumentParser(description="System dependency version checker.")
 
     version = "%(prog)s v" + __version__
+    parser.add_argument("--version", action="version", version=version)
     parser.add_argument(
-        '--version', action='version', version=version,
+        "-r", "--root", metavar="PATH", help="specify a custom project root directory"
     )
     parser.add_argument(
-        '-r', '--root', metavar='PATH', help="specify a custom project root directory"
-    )
-    parser.add_argument(
-        '--exit-code',
-        action='store_true',
+        "--exit-code",
+        action="store_true",
         help="return a non-zero exit code on failure",
     )
 
     group_logging = parser.add_mutually_exclusive_group()
     group_logging.add_argument(
-        '-v', '--verbose', action='count', default=0, help="enable verbose logging"
+        "-v", "--verbose", action="count", default=0, help="enable verbose logging"
     )
     group_logging.add_argument(
-        '-q', '--quiet', action='store_true', help="suppress all output on success"
+        "-q", "--quiet", action="store_true", help="suppress all output on success"
     )
 
-    group_commands = parser.add_argument_group('commands')
+    group_commands = parser.add_argument_group("commands")
     group_commands.add_argument(
-        '--init', action='store_true', help="generate a sample configuration file"
+        "--init", action="store_true", help="generate a sample configuration file"
     )
 
     group_commands.add_argument(
-        '--vendor', metavar='PATH', help="download the program for offline use"
+        "--vendor", metavar="PATH", help="download the program for offline use"
     )
 
     args = parser.parse_args()
@@ -217,8 +214,8 @@ def generate_config(root=None, filenames=None):
     path = os.path.join(root, filenames[0])
 
     log.info("Generating sample config: %s", path)
-    with open(path, 'w') as config:
-        config.write(SAMPLE_CONFIG + '\n')
+    with open(path, "w") as config:
+        config.write(SAMPLE_CONFIG + "\n")
 
     return path
 
@@ -236,13 +233,13 @@ def parse_config(path):
             data[section][name] = value
 
     for name in data:
-        version = data[name].get('version') or ""
-        data[name]['version'] = version
-        data[name]['patterns'] = [v.strip() for v in version.split('||')]
+        version = data[name].get("version") or ""
+        data[name]["version"] = version
+        data[name]["patterns"] = [v.strip() for v in version.split("||")]
 
-        data[name]['optional'] = data[name].get(
-            'optional', 'false'
-        ).strip().lower() in ('true', 'yes', 'y', True)
+        data[name]["optional"] = data[name].get(
+            "optional", "false"
+        ).strip().lower() in ("true", "yes", "y", True)
 
     return data
 
@@ -252,32 +249,32 @@ def check_dependencies(config):
 
     for name, settings in config.items():
         show("Checking for {0}...".format(name), head=True)
-        output = get_version(settings['cli'], settings.get('cli_version_arg'))
+        output = get_version(settings["cli"], settings.get("cli_version_arg"))
 
-        for pattern in settings['patterns']:
+        for pattern in settings["patterns"]:
             if match_version(pattern, output):
                 show(_("~") + " MATCHED: {0}".format(pattern or "<anything>"))
                 success.append(_("~"))
                 break
         else:
-            if settings.get('optional'):
-                show(_("?") + " EXPECTED (OPTIONAL): {0}".format(settings['version']))
+            if settings.get("optional"):
+                show(_("?") + " EXPECTED (OPTIONAL): {0}".format(settings["version"]))
                 success.append(_("?"))
             else:
                 if QUIET:
                     if "not found" in output:
                         actual = "Not found"
                     else:
-                        actual = output.split('\n', maxsplit=1)[0].strip('.')
-                    expected = settings['version'] or "<anything>"
+                        actual = output.split("\n", maxsplit=1)[0].strip(".")
+                    expected = settings["version"] or "<anything>"
                     print("{0}: {1}, EXPECTED: {2}".format(name, actual, expected))
                 show(
                     _("x")
-                    + " EXPECTED: {0}".format(settings['version'] or "<anything>")
+                    + " EXPECTED: {0}".format(settings["version"] or "<anything>")
                 )
                 success.append(_("x"))
-            if settings.get('message'):
-                show(_("#") + " MESSAGE: {0}".format(settings['message']))
+            if settings.get("message"):
+                show(_("#") + " MESSAGE: {0}".format(settings["message"]))
 
     show("Results: " + " ".join(success), head=True)
 
@@ -286,7 +283,7 @@ def check_dependencies(config):
 
 def get_version(program, argument=None):
     if argument is None:
-        args = [program, '--version']
+        args = [program, "--version"]
     elif argument:
         args = [program] + argument.split()
     else:
@@ -311,17 +308,17 @@ def get_version(program, argument=None):
 
 def match_version(pattern, output):
     lines = output.splitlines()
-    if "not found" in lines[0]:
+    if not lines or "not found" in lines[0]:
         return False
 
-    regex = pattern.replace('.', r'\.') + r'(\b|/)'
+    regex = pattern.replace(".", r"\.") + r"(\b|/)"
 
     for line in lines:
         log.debug("Matching %s: %s", regex, line)
         match = re.match(regex, line)
         if match is None:
             log.debug("Matching %s: %s", regex, line)
-            match = re.match(r'.*[^\d.]' + regex, line)
+            match = re.match(r".*[^\d.]" + regex, line)
         if match:
             return True
 
@@ -336,27 +333,27 @@ def call(args):
         output = "sh: command not found: {0}".format(args[0])
     else:
         raw = process.communicate()[0]
-        output = raw.decode('utf-8').strip()
+        output = raw.decode("utf-8").strip()
         log.debug("Command output: %r", output)
 
     return output
 
 
-def show(text, start='', end='\n', head=False):
+def show(text, start="", end="\n", head=False):
     """Python 2 and 3 compatible version of print."""
     if QUIET:
         return
 
     if head:
-        start = '\n'
-        end = '\n\n'
+        start = "\n"
+        end = "\n\n"
 
     if log.getEffectiveLevel() < logging.WARNING:
         log.info(text)
     else:
         formatted = start + text + end
         if PY2:
-            formatted = formatted.encode('utf-8')
+            formatted = formatted.encode("utf-8")
         sys.stdout.write(formatted)
         sys.stdout.flush()
 
@@ -366,11 +363,11 @@ def _(word, is_tty=None, supports_utf8=None, supports_ansi=None):
     formatted = word
 
     if is_tty is None:
-        is_tty = hasattr(sys.stdout, 'isatty') and sys.stdout.isatty()
+        is_tty = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
     if supports_utf8 is None:
-        supports_utf8 = str(sys.stdout.encoding).lower() == 'utf-8'
+        supports_utf8 = str(sys.stdout.encoding).lower() == "utf-8"
     if supports_ansi is None:
-        supports_ansi = sys.platform != 'win32' or 'ANSICON' in os.environ
+        supports_ansi = sys.platform != "win32" or "ANSICON" in os.environ
 
     style_support = supports_utf8
     color_support = is_tty and supports_ansi
@@ -384,5 +381,5 @@ def _(word, is_tty=None, supports_utf8=None, supports_ansi=None):
     return formatted
 
 
-if __name__ == '__main__':  # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     main()
