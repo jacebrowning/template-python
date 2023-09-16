@@ -47,6 +47,15 @@ endif
 .cache:
 	@ mkdir -p .cache
 
+.PHONY: clean
+clean: ## Delete all generated and temporary files
+	find $(PACKAGE) tests -name '__pycache__' -delete
+	rm -rf *.egg-info
+	rm -rf .cache .pytest .coverage htmlcov
+	rm -rf docs/*.png site
+	rm -rf *.spec dist build
+	rm -rf $(VIRTUAL_ENV)
+
 # TEST ########################################################################
 
 RANDOM_SEED ?= $(shell date +%s)
@@ -181,32 +190,6 @@ upload: dist ## Upload the current version to PyPI
 	git diff --name-only --exit-code
 	poetry publish
 	bin/open https://pypi.org/project/$(PROJECT)
-
-# CLEANUP #####################################################################
-
-.PHONY: clean
-clean: .clean-build .clean-docs .clean-test .clean-install ## Delete all generated and temporary files
-
-.PHONY: clean-all
-clean-all: clean
-	rm -rf $(VIRTUAL_ENV)
-
-.PHONY: .clean-install
-.clean-install:
-	find $(PACKAGE) tests -name '__pycache__' -delete
-	rm -rf *.egg-info
-
-.PHONY: .clean-test
-.clean-test:
-	rm -rf .cache .pytest .coverage htmlcov
-
-.PHONY: .clean-docs
-.clean-docs:
-	rm -rf docs/*.png site
-
-.PHONY: .clean-build
-.clean-build:
-	rm -rf *.spec dist build
 
 # HELP ########################################################################
 
