@@ -19,16 +19,8 @@
       "targets.log": true,
       "bin/verchew": true
     },
-    "python.defaultInterpreterPath": ".venv/bin/python",
     "editor.formatOnSave": true,
-    "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintArgs": ["--rcfile", ".pylint.ini"],
-    "python.linting.mypyEnabled": true,
-    "python.linting.mypyArgs": ["--config-file", ".mypy.ini"],
-    "python.linting.pydocstyleEnabled": true,
-    "python.formatting.provider": "black",
-    "python.formatting.blackPath": ".venv/bin/black",
+    "pylint.args": ["--rcfile=.pylint.ini"],
     "cSpell.words": [
       "asdf",
       "builtins",
