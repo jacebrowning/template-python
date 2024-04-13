@@ -61,9 +61,6 @@ endif
 .PHONY: clean
 clean:
 	rm -rf $(GENERATED_PROJECT)
-
-.PHONY: clean-all
-clean-all: clean
 	rm -rf $(ENV)
 
 .DEFAULT_GOAL := install
