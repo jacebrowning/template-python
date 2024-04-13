@@ -1,5 +1,5 @@
 """Sample integration test module using pytest-describe and expecter."""
-# pylint: disable=redefined-outer-name,unused-variable,expression-not-assigned
+# pylint: disable=unused-variable,expression-not-assigned
 
 import pytest
 from expecter import expect

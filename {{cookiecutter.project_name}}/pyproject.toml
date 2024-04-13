@@ -45,10 +45,11 @@ isort = "^5.10"
 mypy = "^1.0"
 pydocstyle = "^6.1"
 pylint = "~2.15"
+pylint-pytest = "*"
 wrapt = "*" # missing 'pylint' dependency
 
 # Testing
-pytest = "^7.3"
+pytest = "^8.1"
 pytest-describe = "^2.0"
 pytest-expecter = "^3.0"
 pytest-random = "*"

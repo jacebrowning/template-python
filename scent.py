@@ -29,7 +29,7 @@ def python(*_):
     for count, (command, title) in enumerate(
         (
             (("make", "build"), "Generate Sample"),
-            (("make", "ci"), "Test Sample"),
+            (("make", "all"), "Test Sample"),
         ),
         start=1,
     ):
