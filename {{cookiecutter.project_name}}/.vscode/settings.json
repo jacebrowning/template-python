@@ -26,6 +26,7 @@
       "builtins",
       "codecov",
       "codehilite",
+      "choco",
       "cygstart",
       "cygwin",
       "dataclasses",
@@ -37,6 +38,7 @@
       "pyenv",
       "ruamel",
       "showfspath",
+      "USERPROFILE",
       "venv",
       "verchew"
     ]

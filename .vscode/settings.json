@@ -1,9 +1,11 @@
 {
     "cSpell.words": [
+        "choco",
         "cookiecutter",
         "coveragerc",
         "endraw",
         "pync",
+        "USERPROFILE",
         "verchew"
     ],
     "python.formatting.provider": "black"

@@ -11,12 +11,8 @@ cache:
   - .venv -> poetry.lock
 
 install:
-  # Add Make and Python to the PATH
-  - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe
-  - set PATH=%PATH%;C:\MinGW\bin
-  - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%;%PATH%
-  - set PATH=C:\Python%PYTHON_MAJOR%%PYTHON_MINOR%\Scripts;%PATH%
   # Install system dependencies
+  - choco install make
   - curl -sSL https://install.python-poetry.org | python -
   - set PATH=%USERPROFILE%\AppData\Roaming\Python\Scripts;%PATH%
   - make doctor
