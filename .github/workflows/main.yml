@@ -35,7 +35,7 @@ jobs:
       run: make all
 
     - name: Checkout demo repo
-      if: github.ref_name == 'main' && github.event_name != 'pull_request'
+      # if: github.ref_name == 'main' && github.event_name != 'pull_request'
       uses: actions/checkout@v4
       with:
         repository: jacebrowning/template-python-demo
