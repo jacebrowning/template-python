@@ -44,11 +44,6 @@ jobs:
     - name: Test template in demo repo
       # if: github.ref_name == 'main' && github.event_name != 'pull_request'
       run: |
-        # Configure Git with GHA information, for more info see:
-        # https://github.com/actions/checkout?tab=readme-ov-file#push-a-commit-using-the-built-in-token
-        git config user.name "github-actions[bot]"
-        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
         # Delete the current repository
         rm -rf .git
 
@@ -58,6 +53,8 @@ jobs:
 
         # Rebuild the repository from the generated files and push to GitHub
         cd TemplateDemo
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git add --all
         git commit -m "Deploy GHA build ${{ github.run_id }} to GitHub"
         git push
