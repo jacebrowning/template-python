@@ -42,7 +42,7 @@ jobs:
         path: temp
 
     - name: Test template in demo repo
-      if: github.ref_name == 'main' && github.event_name != 'pull_request'
+      # if: github.ref_name == 'main' && github.event_name != 'pull_request'
       run: |
         # Configure Git with GHA information, for more info see:
         # https://github.com/actions/checkout?tab=readme-ov-file#push-a-commit-using-the-built-in-token
