@@ -31,33 +31,26 @@ jobs:
     - name: Install dependencies
       run: make install
 
-    - name: Check everything
+    - name: Build and test
       run: make all
 
-    - name: Checkout demo repo
+    - name: Publish the demo
       if: github.ref_name == 'main' && github.event_name != 'pull_request'
-      uses: actions/checkout@v4
-      with:
-        repository: jacebrowning/template-python-demo
-        path: temp
-
-    - name: Test template in demo repo
-      if: github.ref_name == 'main' && github.event_name != 'pull_request'
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
+
+        # Clone the existing live demo
+        git clone https://github.com/jacebrowning/template-python-demo temp
+        mv temp/.git TemplateDemo/.git
+        cd TemplateDemo
+
         # Configure Git with GHA information, for more info see:
         # https://github.com/actions/checkout?tab=readme-ov-file#push-a-commit-using-the-built-in-token
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-        # Delete the current repository
-        rm -rf .git
-
-        # Setup the destination repository
-        mv temp/.git TemplateDemo/.git
-        rm -rf temp
-
         # Rebuild the repository from the generated files and push to GitHub
-        cd TemplateDemo
         git add --all
         git commit -m "Deploy GHA build ${{ github.run_id }} to GitHub"
-        git push
+        git push -f https://${GH_TOKEN}@github.com/jacebrowning/template-python-demo main
