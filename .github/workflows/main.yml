@@ -35,7 +35,7 @@ jobs:
       run: make all
 
     - name: Publish the demo
-      # if: github.ref_name == 'main' && github.event_name != 'pull_request'
+      if: github.ref_name == 'main' && github.event_name != 'pull_request'
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
