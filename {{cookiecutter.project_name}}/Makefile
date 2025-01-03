@@ -8,7 +8,7 @@ MODULES := $(wildcard $(PACKAGE)/*.py)
 all: doctor format check test mkdocs ## Run all tasks that determine CI status
 
 .PHONY: dev
-dev: install ## Continuously run CI tasks when files chanage
+dev: install ## Continuously run CI tasks when files change
 	poetry run sniffer
 
 # SYSTEM DEPENDENCIES #########################################################
@@ -35,7 +35,7 @@ $(DEPENDENCIES): poetry.lock
 	@ rm -rf $(VIRTUAL_ENV)/.poetry-*
 	@ rm -rf ~/Library/Preferences/pypoetry
 	@ poetry config virtualenvs.in-project true
-	poetry install
+	poetry install --no-root
 	@ touch $@
 
 ifndef CI

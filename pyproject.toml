@@ -9,7 +9,7 @@ authors = ["Jace Browning <jacebrowning@gmail.com>"]
 
 python = "^3.8"
 
-cookiecutter = "^1.7.3"
+cookiecutter = "^2.6.0"
 
 black = "^23.1"
 sniffer = "*"
