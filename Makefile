@@ -30,9 +30,9 @@ install: $(ENV)
 $(ENV): poetry.lock
 	@ poetry config virtualenvs.in-project true
 ifdef CI
-	poetry install --no-dev
+	poetry install --no-root --only=main
 else
-	poetry install
+	poetry install --no-root
 endif
 	@ touch $@
 
