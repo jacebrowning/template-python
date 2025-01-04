@@ -6,7 +6,8 @@
         "endraw",
         "pync",
         "USERPROFILE",
-        "verchew"
+        "verchew",
+        "virtualenvs"
     ],
     "python.formatting.provider": "black"
 }
