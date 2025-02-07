@@ -10,7 +10,7 @@ all: build
 	make all -C $(GENERATED_PROJECT)
 
 .PHONY: dev
-dev: install clean
+dev: install
 	poetry run sniffer
 
 # DEPENDENCIES ################################################################
@@ -18,7 +18,7 @@ dev: install clean
 .PHONY: bootstrap
 bootstrap:
 	asdf plugin add python || asdf plugin update python
-	asdf plugin add poetry https://github.com/asdf-community/asdf-poetry.git || asdf plugin update poetry
+	asdf plugin add poetry || asdf plugin update poetry
 	asdf install
 
 .PHONY: doctor
