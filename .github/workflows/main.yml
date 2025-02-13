@@ -9,7 +9,6 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.11']
-        poetry-version: ['1.8.5']
 
     steps:
     - uses: actions/checkout@v4
@@ -19,9 +18,7 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - uses: abatilo/actions-poetry@v4
-      with:
-        poetry-version: ${{ matrix.poetry-version }}
+    - uses: Gr1N/setup-poetry@v8
 
     - name: Check dependencies
       run: make doctor

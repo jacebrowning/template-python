@@ -38,7 +38,7 @@ endif
 
 ifndef CI
 poetry.lock: pyproject.toml
-	poetry lock --no-update
+	poetry lock
 	@ touch $@
 endif
 
@@ -53,7 +53,7 @@ ifndef CI
 	mkdir -p $(GENERATED_PROJECT)/.git
 	echo '[remote "origin"]\nurl = https://github.com/jacebrowning/template-python-demo' > $(GENERATED_PROJECT)/.git/config
 endif
-	cd $(GENERATED_PROJECT) && poetry lock --no-update
+	cd $(GENERATED_PROJECT) && poetry lock
 	@ touch $(GENERATED_PROJECT)
 
 # CLEANUP #####################################################################
