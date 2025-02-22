@@ -113,7 +113,7 @@ format: install
 	@ echo
 
 .PHONY: check
-check: install format ## Run formaters, linters, and static analysis
+check: install format ## Run formatters, linters, and static analysis
 ifdef CI
 	git diff --exit-code
 endif
